@@ -1,0 +1,144 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 14: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Fourier Transform on $\mathbb{R}^d$} \\
+\noindent We will suppose that $x$ is a vector of dimension $d$. We looked at translations and their interactions with modulations and we looked at dilations. In higher dimensions, they still play an important role. \\
+
+\noindent \textbf{Rotation} \\
+\noindent There is only one rotation on the real line (flipping the sign. \\
+
+\noindent A rotation in $\mathbb{R}^d$ is a linear transformation that fulfills one of the following equivalent conditions:
+
+\begin{enumerate}[itemsep=0pt, parsep=0pt, partopsep=0pt, topsep=0pt]
+\item $Rx \cdot Ry = x \cdot y$ for all $x,y \in \mathbb{R}^d$.
+\item $\vert R x\vert = \vert x \vert$ for all $x,y \in \mathbb{R}^d$.
+\item $R^T = R^{-1}$
+\item $\text{det}(R) = \pm 1$
+\end{enumerate}
+\noindent All of these are equivalent statements. There is a useful property from the determinant, is that the Jacobian has determinant of 1, so  
+$$\int_{\mathbb{R}^d} f(Rx) \, dx = \int_{\mathbb{R}^d} f(x) \,dx$$
+Be careful of subsets of $\mathbb{R}^d$, as it may not hold. \\
+
+\noindent \textbf{Coarea Formula/ Polar Coordinates} \\
+\noindent Write $\gamma = (\cos \theta, \sin \theta)$. For the function $g$ on $S^1$ (unit circle), define
+$$\int_{S^1} g(\gamma) \,d\sigma(\gamma) = \int^{2\pi}_0 g(\cos \theta, \sin \theta) \, d\theta$$
+This allows us to switch to polar coordinates. It doesn't seem that helpful in the plane, by it will be in higher dimensions. Then, we can write
+$$\int_{\mathbb{R}^2} f(x) \,dx = \int^{2\pi}_0 \int_0^\infty f(\cos \theta, \sin \theta) r \,dr \, d\theta$$
+$$= \int^{2\pi}_0 \int_0^\infty f(r\gamma) r \,dr \, d\theta$$
+
+\noindent For $g$ on $S^2$, we define,
+$$\int_{s^2} g(\gamma) d\sigma(\gamma) = \int^{2\pi}_0 \int^\pi_0 g(\sin \theta, \cos \phi, \sin \theta \sin \phi, \cos \theta) \sin \phi \,d\phi \,d\theta$$
+Then,
+$$\int_{\mathbb{R}_3} f(x) \, dx = \int_{S_2} \int_0^\infty f(r\gamma) r^2 \, dr \,d\sigma(\gamma)$$
+\noindent In general, we can write 
+$$\int_{\mathbb{R}^d}f(x) \, dx = \int_{S^{d-1}} \int_0^\infty r^{d-1} \, dr \,d\sigma(\gamma)$$
+\noindent This will pop out the surface area and not the stuff inside it. The usefulness is that it simplifies the notation. We go back to Fourier transforms and will show how the polar representation are useful. \\
+
+\noindent \textbf{Schwartz Space} \\
+\noindent Let the Schwartz Space be defined by the following set: 
+$$\mathcal{S}(\mathbb{R}^d) = \{f \text{infintely differentiable and } \sup_{x\in\mathbb{R}^d} \vert x^\alpha (\frac{\partial}{\partial x}^\beta f(x)\vert < \infty\}$$
+
+\noindent \textbf{Example}: The function $e^{-a\vert x\vert^2}$ for $a >0$ is in $\mathcal{S}(\mathbb{R}^d)$. 
+
+\noindent \textbf{Fourier Transform} \\
+\noindent We define it as follows:
+$$\hat{f}(\xi) = \int_{\mathbb{R}^d} f(x) e^{-2\pi i x\cdot \xi} \, dx, \xi \in \mathbb{R}^d$$
+
+\textbf{Useful Facts} \\
+\begin{enumerate}
+\item For any $h \in \mathbb{R}^d$, 
+$$f(x+h) \rightarrow^{\text{FT}} \hat{f}(\xi) e^{2\pi i \xi \cdot h}$$
+\item Analogous...
+\item For any $\delta > 0$,
+$$f(\delta x)  \rightarrow^{\text{FT}} d^{-d} \hat{f}(d^{-1}\xi)$$
+\item For any $\alpha$, 
+$$(-2\pi i x)^\alpha  \rightarrow^{\text{FT}} (\frac{\partial}{\partial x})^\alpha \hat{f}(\xi)$$
+\item For any rotation $R$, 
+$$f(Rx)  \rightarrow^{\text{FT}} \hat{f}(R\xi)$$
+To sketch it out,
+$$\int_{\mathbb{R}^d} f(Rx)e^{-2\pi i x \xi} \,dx = \int_{\mathbb{R}^d} f(x) e^{-2\pi i R^{-1} x \cdot \xi} \,dx$$
+$$ = \int_{\mathbb{R}^d} f(x) e^{-2\pi i  xR\xi} \,dx$$
+$$ = \hat{f}(R \xi)$$
+\end{enumerate}
+\noindent Using some of the properties, we get the following theorem, \\
+
+\noindent \textbf{Theorem}: If $f \in \mathcal{S}(\mathbb{R}^d)$, then $\hat{f} \in \mathcal{S}(\mathbb{R}^d)$. \\
+
+\noindent This proof is exactly the same as in $\mathbb{R}$. 
+
+\noindent \textbf{Radial Functions} \\
+\noindent $f(x)$ is a radial if there is a function $f_0$ define on $\mathbb{R}_+$ such that 
+$$f(x) = f_0(\vert x \vert)$$
+\noindent Radial functions only depend on the distance. We can connect this to rotations in the following way. \\
+
+\noindent \textbf{Note}: $f$ radial if and only if $f(Rx) = f(x)$ for any rotation $R$. \\
+
+\noindent \textbf{Fact}: The Fourier transform of a radial function is radial. 
+\noindent Reason: $f(Rx) = f(x)$ for any rotation $R$, then $\hat{f}(R\xi) = \hat{f}(\xi)$ for all rotations $R$. \\
+
+\noindent Radial functions are a common assumption when working with Partial Differential Equations. \\
+
+\textbf{Example} : $e^{-a\vert x \vert^2}$ is radial. If we take a Fourier transform of the Gaussian, then
+$$\widehat{e^{-\pi\vert x\vert^2}}(\xi) = e^{-\pi} \vert \xi \vert^2$$
+
+\noindent \textbf{Theorem}: (Inverse and Plancharel) \\
+\noindent Suppose that $f \in \mathcal{S}(\mathbb{R}^d)$. Then $$ f(x) = \int_{\mathbb{R}^d} \hat{f}(\xi) e^{2\pi i x \cdot \xi} \, d\xi$$
+and 
+$$\Vert \hat{f} \Vert_2 = \Vert f \Vert_2$$
+
+This proof is analogous to the proof in one dimension. \\
+
+\noindent \textbf{Fourier Transform of $\sigma$ in $\mathbb{R}^3$}. 
+$$\hat{\sigma}(\xi) := \int_{S^2} e^{-2\pi i \xi \cdot \gamma} \,d\sigma(\gamma)$$
+
+\noindent \textbf{Theorem}: 
+$$\hat{\sigma}(\xi) = \frac{2\sin(2\pi \vert \xi \vert )}{\vert \xi \vert}$$
+The value decays because sine is bounded by one, but the distance of $\xi$ is not. It does not blow up at the origin because it is of the form $\sin(x)/x$. 
+\begin{proof}
+First note that the left hand side (written out) is radial in $\xi$. So, we only need to show for one $\xi$. 
+$$\int_{S^2} e^{-2\pi i R \xi \cdot \gamma} d\sigma(\gamma) = \int_{S^2} e^{-2\pi i \xi \cdot R^{-1} \cdot \gamma} d\sigma(\gamma)$$
+Let $\gamma^{\text{new}} = R^{-1}\gamma^{\text{old}}$
+$$= \int_{S^2} e^{-2\pi i \xi  \cdot \gamma} d\sigma(\gamma)$$
+So if $\vert \xi \vert = \rho$, then it is enough to prove the identity with $\xi = (0,0,\rho)$. We will use spherical coordinate. 
+$$\int_{S^2} e^{-2\pi i (0,0,\rho) \cdot \gamma} \,d\sigma(\gamma) = \int^{2\pi}_0 \int^\pi_0 e^{-2\pi i \rho \cos (\phi)} \sin(\phi) \,d\phi \,d\theta $$
+Let $u = -\cos(\phi)$,
+$$ 2\pi \int^1_{-1} e^{-2\pi i \rho u}  \,du = 2\pi \frac{1}{2\pi i \rho} [e^{2\pi i \rho u}]^1_{-1}$$
+$$= \frac{2\sin(2\pi \rho)}{\rho} = \frac{2\sin(2\pi \vert  \xi \vert )}{\vert \xi \vert}$$
+\end{proof}
+
+
+\end{document}

@@ -1,0 +1,125 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 16: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent Fix from last notes:
+\noindent \textbf{Rotations} \\
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt, label=(\alph*)]
+\item 
+\item 
+\item  \textcolor{white}{1} \\
+Which imply
+\item 
+\end{enumerate}
+
+$$\hat{f}(\xi) = \int^\infty_{-\infty} f(x) e^{-2\pi i x \cdot \xi} \, dx$$
+
+\hrulefill
+
+\noindent \textbf{Stationary Phase} \\
+\noindent For $\phi \in C^\infty$ and $a \in C^\infty_c$, define
+$$I(\lambda) = \int_{\mathbb{R}^d} e^{-\pi i \lambda \phi(x)}a(x) \,dx$$
+
+When we did the sphere in 3D, we might zoom in locally on parts of it. Something around a part of the sphere, and cut off the rest of the space. We can partition space using smooth functions. Picking a piece of the sphere you want to work on. Then as you may recall, we got evaluate our integral our Fourier transform, we were able to evaluate at the pole. We may use this strategy again, there may be some function of $x$ that arises. This is why we use $a(x)$ and $\phi(x)$. The $\lambda$ is going to be a scaling factor. There is some kind of parameter so we separate it using $\lambda$ and $\phi$. We ask the following question? \\
+
+\noindent How does $I(\lambda)$ behave as $\lambda \rightarrow \infty$? \\ 
+\noindent The idea is that there is going to be a lot of cancellation if $\lambda$ is large. (There is a large constant in the sines and cosines, and it may mean that it cancels out faster. If $\phi$ is a constant, there will not be any oscillations because it won't be changing with respect to $x$. \\
+
+\noindent \textbf{Warning}: If $\phi(x) =x$ then 
+$$I(\lambda) = e^{-\pi i \lambda c} \int_{\mathbb{R}^d} a(x) \,dx$$
+So there will not be decay, we need specific conditions on $\phi$. The integral $I(\lambda)$ is always going to be finite. Being infinitely differentiable, we can use integration by parts, it makes it easier to manipulate the statements. We need the following: \\
+
+\noindent \textbf{Definition}: A map $f$ is called a diffeomorphism if it is a bijection (we have an inverse), and it is differentiable and its inverse is differentiable as well. Its just a little strong than a homeomorphism (we add the condition of differentiability). We say it is smooth if $d \in C^{\infty}$ and $f^{-1} \in C^{\infty}$. This allows us to change coordinates between manifolds smoothly. \\
+
+\noindent Suppose that we have $\phi_1 = \phi_2 \circ G$, where $G$ is a smooth diffeomorphism. Then, 
+\begin{align*}
+\int e^{-\pi i \lambda \phi_2(x)}a(x) \,dx &= \int e^{-\pi i \lambda \phi_1(G^-1(x))} a(x) \,dx \\
+\end{align*}
+We do a quick change of variables, using $y=G^{-1}x$, so
+\begin{align*}
+\int e^{-\pi i \lambda \phi_2(x)}a(x) \,dx &= \int e^{-\pi i \lambda \phi_1(y} a(Gy) \vert J_G(y) \vert \,dy \\
+\end{align*}
+where $\vert J_G(y) \vert$ is the Jacobian. The function $a(gy) \vert J_G(y) \vert$ is going to be a smooth function. So bounds our independent of $a(x)$ will be smooth diffeomorphism invariant (they don't change under the mapping). If I prove a decay estimate, it doesn't matter if a change the space. There are two important cases we need to consider. \\
+
+\noindent \textbf{Two Cases}: \\
+\noindent Neighborhoods of points $p$ where 
+$$\nabla \phi(p) = 0$$
+(this is the stationary case) and
+$$\nabla \phi(p) \not = 0$$
+(this is non-stationary)
+
+\noindent The stationary condition, it is not as simple, but non-stationary should follow similarly to the Riemann-Lebesgue Lemma. \\
+
+\noindent \textbf{Straightening Lemma} \\
+\noindent Suppose $\Omega \subseteq \mathbb{R}^n$ is open, $f : \Omega \rightarrow \mathbb{R}$ is $C^{\infty}$ and $p \in \Omega$ and $\nabla f (p) \not = 0$. Then, there are neighborhoods $U$ and $V$ of the points $0$ and $p$, respectively, and a smooth diffeomorphism $G:U \rightarrow V$ with $G(0)=p$ and $(f \circ G)(x) = f(p) + x_n$. \\
+
+\noindent \textbf{Idea}: \\
+(1)
+
+\noindent We start with some of the tools necessary to prove the Straightening Lemma. \\
+
+\noindent \textbf{Inverse Function Theorem}: Let $A \subset \mathbb{R}^n$ be an open set and let $f: A\rightarrow \mathbb{R}^n$ be of class $C^1$ (once continuously differentiable). Let $x_0 \in A$ and suppose $\vert Df(x_0)\vert\not = 0$. Then, there is a neighborhood $U$ of $x_0$ in $A$ and an open neighborhood $W$ of $f(x_0)$ such that $f(U) = W$ and $f$ has a $C^1$ inverse $f^{-1}: W \rightarrow U$. Moreover, for $y \in W$, $x = f^{-1}(y)$, we have 
+$$Df^{-1}(y) = [Df(x)]^{-1}$$
+If $f$ is of class $C^p$, then so does the inverse. \\
+
+\noindent \textbf{Note}: In $\mathbb{R}$, recall that $(f^{-1})' (f(a)) = \frac{1}{f'(a)}$. \\
+
+\noindent \textbf{Implicit Function Theorem}: 
+\noindent Let $A \subset \mathbb{R}^n \times \mathbb{R}^m$ be an open set and let $F:A \rightarrow \mathbb{R}^n$ be a function of class $C^p$. Suppose $(x_0,y_0) \in A$ and $F(x_0,y_0) = 0$. Consider
+$$\Delta = \begin{bmatrix} \frac{\partial F_1}{\partial y_1} & \cdots &  \frac{\partial F_1}{\partial y_M} \\
+\vdots & & \vdots \\ \frac{\partial F_m}{\partial y_1} & \cdots &  \frac{\partial F_m}{\partial y_M} \end{bmatrix}$$
+evaluated at $(x_0, y_0)$ and suppose $\Delta \not = 0$, then there exists an open neighborhood $U \subseteq \mathbb{R}^n$ of $x_0$ and a neighborhood $V$ of $y_0$ in $\mathbb{R}^m$ and a unique function $f: U \rightarrow  V$ such that $F(x,f(x)) = 0$ for all $x \in U$. Furthermore, is of class $C^p$. (It matches the smoothness of the original function). 
+
+\begin{proof}
+Define $G: A \rightarrow \mathbb{R}^n \times \mathbb{R}^m$ by $G(x,y) = (x, F(x,y)$. Then $G$ is of class $C^p$ and 
+
+$$\vert DG(x_0,y_0)\vert \not - 0$$
+(2)
+
+So, by Inverse Function Theorem, there is an open set $W$ containing $(x_0,0)$ and $S$ open set containing $(x_0,y_0)$ such that $G(S) = W$ and $G$ has $C^p$ inverse $G^{-1}:W \rightarrow S$. There exists open sets $U \subseteq \mathbb{R}^n$ and $b \subseteq \mathbb{R}^m$ with $x_0 \in U$ and $y_0 \in V$ such that $U \times V \subseteq S$.  
+
+Let $G(U \times V) = Y$. Now $G^{-1}$ is of the form
+$$G^{-1}(x,w) = (x, H(x,w))$$
+Let $\pi: \mathbb{R}^n \times \mathbb{R}^m \rightarrow \mathbb{R}^m$ given by $\pi(x,y)=y$. Then,
+\begin{align*}
+F(x,H(x,w)) &= \pi \circ G(x, H(x,w)) \\
+&= \pi \circ G \circ G^{-1}(x,w) = w
+\end{align*}
+Define $f: U \rightarrow V$ by $f(x) = H(x,0)$, then 
+$$F(x,f(x)) = 0$$
+Since $H$ is of class $C^p$, then so is $f$ and since $H$ is unique by Inverse Function Theorem, then so must $f$. 
+\end{proof}
+\end{document}

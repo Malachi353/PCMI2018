@@ -1,0 +1,145 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 24: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{Harmonic Analysis on Fractals } \\
+(1)
+
+\noindent We are going to study harmonic function on fractals. We need to find a way to define a harmonic function in this context. Harmonic functions comes from Laplacian, so we need to understand how to talk about diffusion on a fractal. We can think of the Serpinski Gasket as a very porous plate. This idea is equivalent of how to define a Laplacian. Also equivalently is finding the minimizers of energy. One can prove that Brownian motion can be studied in terms of the Laplacian in the classical sense. We are going to begin by defining energy on the fractal. We are going to take discrete approximations of the object, then take a limit. 
+
+
+\noindent \textbf{Example}: Let's begin with the interval $[0,1]$. 
+(2)
+Suppose that we have some kind of string that is stretched across the interval.
+(3)
+
+We can define the initial energy $\varepsilon_0(u) = (a-b)^2$, and let $i:\{0,1\} \rightarrow \mathbb{R}$, $u(0)=a$ and $u(1)=b$. 
+
+(4)
+Suppose that we want to place some node so that we can minimize the energy. Where should we place the node so that the energy is minimized. Then, 
+$$\varepsilon_1(u) = c((a-x)^2 + (x-b)^2)$$
+We expect that it should be at the middle of $a$ and $b$ at $\frac{1}{2}$. 
+
+Let $f(x)= (a-x)^2+ (x-b)^2$, then
+$$f'(x) = -2(a-x) + 2(x-b) = 2(2x-(a+b)=0 \text{ if } \frac{a+b}{2}$$
+
+If we evaluate at $\frac{a+b}{2}$, then
+$$f(\frac{a+b}{2}) = (\frac{a-b}{2})^2 + (\frac{a-b}{2})^2 = \frac{1}{2} (a-b)^2$$
+
+Therefore, $\min \{\varepsilon(u), u(0)=a, u(1)=b\} = \varepsilon_0(u)$. Suppose that we continue to add dyadic points. Let 
+$$V_m = \{ 0 < \frac{1}{2^n} < \frac{2}{2^n} < \cdots < \frac{k}{2^n} < \cdots < \frac{2^n-1}{2^n} < 1\}$$
+Then, 
+$$\varepsilon_m(u) = 2^n\sum^{2^n}_{k=1}(u(\frac{k}{2^n}) - u(\frac{k-1}{2^n}))^2$$
+For homework, we will check that the minimizer $u$ of $\varepsilon_n$ satisfies, 
+$$u(\frac{2k+1}{2^m} = \frac{1}{2}\Big(u(\frac{k}{2^{n-1}}) + u (\frac{k+1}{2^{n-1}})\Big)$$
+$u$ is the restriction $t \mapsto (b-a)t + a$ to $V_n$. 
+
+Also, 
+$$\min \{ \varepsilon_n(u):u(0)=a, u(1)=b\} = \varepsilon_0(u)$$
+
+What happens when we take the limit? We become denser and denser on the interval. 
+(5)
+Then,
+
+$$\varepsilon_n(u) = 2^n \sum^{2^n}_{k=1} ( u( \frac{k}{2^n} - u(\frac{k-1}{2^n}))^2$$
+$$ = 2^n \sum^{2^n}_{k=1} ( u'(t_k) \cdot \frac{1}{2^n})^2, t_k \in (\frac{k-1}{2^n},\frac{k}{2^n})$$
+
+$$\varepsilon_n(u) = \sum^{2^n}_{k=1} (u'(t_k))^2 \cdot \frac{1}{2^n} \rightarrow \int^1_0 u'(t)^2 \, dt$$
+
+Since the function on the left is a Riemann sum, so we can express it as an integral on $[0,1]$. 
+
+We should make a note that minimizers are linear function and such functions are harmonic. 
+$$u(t) = (b-a)t + a \rightarrow u''(t)=0$$
+$$u'(t) = (b-a)$$
+$$\int^1_0 (u')^2 = (b-a)^2$$
+
+We start first by approximation, starting with discrete values. Let $S$= Sierpinski Gasket. We can define it as follows, 
+
+$S$ is a unique compact set such that $S\not=\emptyset$ and $S=F_1(S) \cup F_2(S) \cup F_3(S)$ where each $F: \mathbb{R}^2 \rightarrow \mathbb{R}^2$ and $f_i(x) = \frac{1}{2}(x-p_i) + p_i$. we can see this structure on the interval as well, 
+
+$I = f_1(I) \cup f_2(I)$ such that $f_1(t) = \frac{1}{2}t$ and $f_2(t) = \frac{1}{2}t + \frac{1}{2}$. 
+
+(6)
+
+We let $u(p_1)=a$, $u(p_2)=b$, and $u(p_3)=c$, then our initial energy is given by
+
+$$\varepsilon_0(u) = (a-b)^2 + (b-c)^2 + (c-a)^2$$
+
+We place nodes at the midpoints between $p_1$, $p_2$ and $p_3$, called $x$, $y$, and $z$. 
+
+$$\varepsilon_1(u) = c\sum_{x \sim y} (u(x)-u(y))^2$$
+
+
+$$f(x,y,z) = (a-x)^2 + (a-y)^2 + (a-z)^2 + (b-x)^2 + (b-y)^2 + (b-z)^2 + (c-x)^2 + (c-y)^2 + (c-z)^2$$ 
+We can solve this by taking three partial derivatives and solving the three equations that we get. The minimum is attained at the points 
+$$x^* = \frac{2a+2b+c}{5}$$
+$$y^* = \frac{2a+b+2c}{5}$$
+$$z^* = \frac{a+2b+2c}{5}$$
+$$f(x^*,y^*,z^*) = \frac{3}{5}\Big((a-b)^2 + (b-c)^2 + (c-a)^2 \Big)$$
+
+Therefore, 
+$$\min \{ \varepsilon_1(u): u_{V_0} = v \} = \varepsilon_0(v)$$
+
+$V_n$ is obtained by taking the midpoints of each triangle formed by the previous iteration. 
+$$V_{n+1} = F_1(V_n) \cup F_2(V_n) \cup F_3(V_n), n \geq 0$$
+
+How should we define the energy?
+
+Let $x \sim_n y = x$ and $y$ are adjacent at level $V_n$.
+$\varepsilon_n(u) = (\frac{5}{3})^m \sum_{x \sim_n y} ((u(x)-u(y))^2 \leftarrow 3^{m+1}$ terms in the sum. 
+
+The minimizer $u$ at each level satisfies 
+(7)
+$$u(y_i) = \frac{ u(x_i) + 2u(x_j) + 2u(x_k)}{5}, i,j,k \in \{1,2,3\}$$
+
+We can split the following sum into three pieces. 
+$$\varepsilon_n(u) = \Big(\frac{5}{3}\Big)^n \sum_{x \sim_n y} (u(x)-u(y))^2$$
+$$=\sum_I + \sum_J + \sum_K$$
+$$=\frac{5}{3}\sum_{n-1} (u \circ F_1) + \frac{5}{3}\sum_{n-1} (u \circ F_2) + \frac{5}{3}\sum_{n-1} (u \circ F_3)$$
+And the minimum, $\min \{\varepsilon_n(u) : u\vert_{V_0} = v \} = \varepsilon_0(v)$.
+
+Harmonic functions are going to be the functions $u: V_{*} \rightarrow \mathbb{R}$
+$V_{*} = \bigcup_{n \geq 0} V_n, u : V_{*} \rightarrow \mathbb{R}$ is harmonic if each $\varepsilon_n(u\vert_{V_m})$ 
+is minimal for each $n \geq 1$. $u(p_1)$, $u(p_2)$, $u(p_3)$ are called the boundary values. 
+(8)
+
+
+What happens when $n \rightarrow \infty$. If I take two adjacent points $x \sim_n y$, then 
+$$\vert u(x) - u(y) \leq C (\frac{3}{5})^m$$
+
+$$\vert \frac{a+2b-3c}{5} \vert \leq \vert \frac{a-b}{5} \vert + \vert \frac{3(b-c)}{5} \vert$$
+Therefore, $u$ is uniformly continuous, and we can extend to all $S$. 
+\end{document}

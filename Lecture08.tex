@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 8: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{Poisson Integral} (1) \\
+\noindent Recall that $\mathbb{B}$ is a unit ball, $\mathbb{S}$ is a unit sphere. For $x \in \mathbb{B}$, $\xi \in \mathbb{S}$.
+
+$$P(x, \xi) = \frac{1 - \vert x \vert^2}{\omega_d \vert x - \xi \vert^d}$$
+This is called the Poisson kernel for $\mathbb{B}$. There are certain properties.
+\begin{enumerate}[itemsep=0pt, parsep=0pt, partopsep=0pt, topsep=0pt]
+\item $P(x, \xi) > 0$; $P(0,\xi) = \frac{1}{\omega_d}$
+\item For each fixed $\xi$, $x \mapsto P(x,\xi)$ is harmonic (HW).
+\item For each fixed $x$, $\int_{\mathbb{S}} P(x,\xi)d\sigma(\xi)=1$. \\
+
+For $x=0$, 
+$$\int_{\mathbb{S}} P(0,\xi)d\sigma(\xi) = \int_\mathbb{S} \frac{1}{\omega_d} d\sigma(\xi)$$
+
+For $x \not= 0$,
+$$\frac{1}{\omega_d} \int_{\mathbb{S}}P(\vert x \vert \xi, \frac{x}{\vert x \vert }) d\sigma(\xi) = \frac{1}{\omega_d}$$
+$$P(\vert x \vert \xi, \frac{x}{\vert x \vert} = \frac{1 - \vert x \vert^2}{\omega_d \vert \vert x \vert \xi - \frac{x}{\vert x \vert } \vert^d} = \frac{1-\vert x \vert^2}{\omega_d \vert x - \xi \vert^d }$$
+(2)
+
+\noindent What happens when $x$ approaches the boundary? \\
+
+(3)
+
+$$P(x,\xi) = \frac{1-\vert x \vert^2}{\omega_d \vert x - \xi \vert^d }$$
+
+As we approach the boundary, the norm of $x$ approaches 1. So, we should expect that $P(x, \xi) =0$.
+
+\item If $\zeta \in \mathbb{S}$ and $\delta>0$, 
+$$\int_{\mathbb{S}: \vert \xi - \zeta \vert > \delta} P(x,\xi) d\sigma(\xi) \rightarrow 0$$
+when, $x \rightarrow \zeta$. 
+
+($\zeta$ is the boundary of the region). If $x$ is getting close to the boundary, the Poisson kernel is gets very small. When $x$ is close to the origin, it is uniformly distributed? But when $x$ is close to the boundary, everything is concentrated on $x$? \\
+
+If $\vert x- \zeta \vert < \frac{\delta}{2}$, then $\vert x - \xi \vert > \frac{\delta}{2}$ if $\vert \xi - \zeta \vert > \delta$. Thus
+$$P(x,\xi) = \frac{1-\vert x \vert^2}{\omega_d \vert x - \xi \vert^d } \leq \frac{1-\vert x \vert^2}{\omega_d(\frac{\delta}{2}^2}$$
+$$\int_{\vert \xi - \zeta \vert > \delta} P(x,\xi) d\sigma(\xi) \leq \frac{1-\vert x \vert^2}{\omega_d (\frac{\delta}{2})^d}$$
+
+(4)
+
+
+\noindent Choose the space $L^1(\mathbb{S})$. We choose this space because it respects limits.  So if we have a sequence of functions $f_n(x)$ converging to $f(x)$. Then $\int f_n \rightarrow \int f$. We use the Lebesgue measure because Riemann integrability does not work on non-continuous functions. The $L^1$ space is the closure of the space of continuous functions. \\
+
+\noindent Let $f \in L^1(\mathbb{S}) = \overline{C(\mathbb{S})}$. The Poisson integral of $f$ is
+$$u(x)=\mathcal{P}f(x) = \int_\mathbb{S} P(x,\xi) f(\xi)d\sigma(\xi)$$
+
+\item $u$ is harmonic in $\mathbb{B}$ \\
+\end{enumerate}
+
+\noindent \textbf{Theorem}: If $f \in C(\mathbb{S})$, then for $\zeta \in \mathbb{S}$
+$$\lim_{x \rightarrow \zeta} u(x) = f(\zeta).$$
+This means that $u = \mathcal{P}f$ solves the Dirichlet problem:
+$$\begin{cases}
+\Delta u = 0 \text{ in } \mathbb{B} \\
+u\vert_\mathbb{B} = f 
+\end{cases} $$
+\begin{proof}
+Give $\varepsilon >0$ there exists $\delta > 0$ such that $\vert x - \zeta \vert < \delta$, then $\vert u(x) - f(\zeta) \vert < \varepsilon$. Let $\varepsilon$ be given. We want to estimate the difference first:
+\begin{align*}
+u(x)-f(\zeta) 
+&= \int_\mathbb{S} P (x, \xi) f(\xi) d\sigma(\xi) - f(\zeta)\cdot 1 \\
+&= \int_\mathbb{S} P (x, \xi) f(\xi) d\sigma(\xi) - f(\zeta)\cdot \int_\mathbb{S} P(x, \xi) d\sigma(\xi) \\
+&= \int_\mathbb{S} P (x, \xi) f(\xi) d\sigma(\xi) - \int_\mathbb{S} P(x, \xi) f(\zeta) d\sigma(\xi) \\
+&= \int_\mathbb{S} P (x, \xi)( f(\xi) - f(\zeta)) d\sigma(\xi) 
+\end{align*}
+The value of $f(\xi) - f(\zeta)$ is small if $\xi$ is close to $\zeta$.
+\begin{align*}
+u(x)-f(\zeta) &= \int_\mathbb{S} P (x, \xi)( f(\xi) - f(\zeta)) d\sigma(\xi) \\
+&= \int_{\xi \approx \zeta} + \int_{\xi \not\approx \zeta}
+\end{align*}
+Let $\eta > 0$ such that if $\vert \xi - \zeta \vert < \eta$ then $f(\xi) - f(\zeta) \vert < \frac{\varepsilon}{2}$. \\
+Let $\delta > 0$ such that $x - \zeta\vert < \delta$, then $\int_{\vert \xi - \zeta \vert > \eta} P(x,\xi) d\sigma(\xi) < \frac{\varepsilon}{10u}$. So,
+$$\vert u(x) - f(\zeta) \vert \leq \int_{\vert \xi-\zeta \vert < 2} P(x,\xi) \frac{\varepsilon}{2} d\sigma + \int_{\vert \xi - \zeta \geq 2} P(x,\xi) \partial u d\sigma $$
+$$ < \frac{\varepsilon}{2} \cdot 1 + \partial u \frac{\varepsilon}{10u} < \varepsilon$$
+\end{proof}
+\noindent \textbf{Integral Operators}:
+$$ f \mapsto \int K(x,y) f(y) dy$$
+For $u(x) = \mathcal{P}f(x) = \int P(x,\xi)f(\xi)d\xi$
+\begin{enumerate}
+\addtocounter{enumi}{5}
+\item If $u$ is harmonic on $\overline{\mathbb{B}}$, then $u = \mathcal{P}(u\vert_\mathbb{S})$.
+\end{enumerate}
+
+\end{document}

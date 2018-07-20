@@ -1,5 +1,67 @@
-\documentclass{article}
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
 \begin{document}
-(Type your content here.)
+\noindent We study quantitative properties of functions in terms of powers. It is important to study spaces of functions whose modulus to a power $p$ is integral. These are Lebesgue spaces or $L^p$ spaces. Many problems deal with boundedness of operators on $L^p$ spaces, and interpolation is a framework to approach it in a simpler way. \\
+
+\noindent Let $X$ be a measure space with a strictly positive measure $\mu$. For $p \in (0, \infty)$, $L^p(X,\mu)$ be the set of all complex-valued $\mu$-measurable function on $X$ whose $p$th power is integrable. We say $f$ is integrable if there is a sequence of (are simple function always measurable?) simple functions $\{f_n\}$ which converge to $f$ for both the positive and negative values of $f$, and define $\int f d\mu = \int f_- + f_+ d\mu$. Equivalence of functions in $L^p$ spaces is defined by almost every equal (where the functions differ have measure zero). $l^p(\mathbb{Z})=l^p$ will be a space with the counting norm (cardinality of sets is the measure). \\
+
+\noindent $L^p$ quasinorm of a function $f$
+$$ \Vert f \Vert_{L^p(X,\mu)} = \Bigg(\int_X \vert f(x)\vert^p d\mu(x)\Bigg)^\frac{1}{p}$$ 
+
+\noindent The notation: $\text{ess.sup}$ means almost every one a set, except for values whose measure is zero. 
+
+For $p = \infty$,
+
+$$ \Vert f \Vert_{L^\infty(X,\mu)} = \text{ess.sup}\vert f \vert = \inf \{B>0 : \mu (\{x:\vert f(x) \vert > B\}) = 0\}$$
+
+Triangle inequality holds for all $p\in [1,\infty]$. 
+
+For all $p \in (0,1)$, the $L^p(X,\mu)$ is a quasinormed linear space since 
+$$ \Vert f \Vert_{L^p(X,\mu)} \leq 2^\frac{(1-p)}{p} ( \Vert f \Vert_{L^p(X,\mu)} + \Vert g \Vert_{L^p(X,\mu)})$$
+
+\noindent Example of duality in a linear space is $x_0 \mapsto f(x_0)$ ($x_0$ is a argument of the function $f$) and $f \mapsto f(x_0)$ ($x_0$ is a parameter for the functional $f$). \\
+
+\noindent The dual of $L^p$, denoted $(L^p)^*$ is isometric to $L^\frac{p}{p-1}$ or $L^{p'}$. \\
+
+\noindent \textbf{Proposition 1.1.3} Let $f$ and $g$ be measurable functions on $(X, \mu)$. Then for all $\alpha, \beta > 0$ we have
+\begin{enumerate}
+\item $\vert g \vert \leq \vert f \vert$, $\mu$-a.e. implies that $d_g \leq d_f$. 
+\begin{proof}
+Let $\vert g \vert \leq \vert f \vert$ $\mu$-a.e. Then, for all $x \in X$ such that $\vert g(x) \vert > \vert f(x) \vert$, $\mu(f(x))=\mu(g(x)) = 0$, so $f(x)=g(x)$ for all $x$ such that $\vert g(x) \vert > \vert f(x) \vert$.
+\end{proof}
+
+\end{enumerate}
+
+
 \end{document}

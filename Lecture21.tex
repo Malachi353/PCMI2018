@@ -1,0 +1,115 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 21: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{The Dirichlet Principle} \\
+\noindent Suppose we have the function
+$$\varepsilon(u,v) = \int_{\Omega} \nabla u \cdot \nabla v$$
+So, 
+$$(\varepsilon(u) = \sum_j \int_\Omega (\frac{\partial u}{\partial x_i})^2 \text{ is called "energy"}$$
+
+Suppose that we have a function 
+$f(t) = \varepsilon(u+tv), v \in C_c (\Omega)$
+(1)
+\begin{align*}
+f(t) &= \varepsilon(u+tv, u+tv) \\
+&= \varepsilon(u) + 2t\varepsilon(u,v) + t^2\varepsilon(v) \\
+f'(t) &= 2\varepsilon(u,v) + 2t \varepsilon(v); f'(0) = 2\varepsilon(u,v)
+\end{align*}
+$u$ is a minimum, (when $t=0$ is when we obtain the minimum) if and only if $\varepsilon(u,v)=0$.  When
+$$\Delta u =0 \text{ if and only if } \int \nabla u \cdot \nabla v  = - \int \Delta u \cdot v = 0, \forall v \in C_c$$
+This observation was proposed by Dirichlet, he claimed that this implies there are solutions to the Dirichlet problem. We need to define another space $H^1(\Omega)$. 
+$$H^1(\Omega) = \text{ closure of } C^1(\overline{\Omega})$$
+with norm,
+$$\Vert u \Vert_{H^1} = \sqrt{\int_\Omega \vert u \vert^2 + \vert \nabla u \vert^2}$$
+where 
+$$\vert \nabla u \vert^2 = (\frac{\partial u}{\partial x_1})2 + \cdots + (\frac{\partial u}{\partial x_d})^2$$
+It is called the Sobolev space of degree 1. (this means we are taking degree 1 derivatives). Remember that our goal is to solve the Dirichlet problem. 
+$$\begin{cases} \Delta u = 0 & u \in \Omega \\ u = f & \text{ on } \partial\Omega\end{cases}$$
+
+\noindent \textbf{Lemma}: There exists $C>0$ such that, for any $u \in C^1(\overline{\Omega})$, 
+$$\int_{\partial\Omega} \vert u \vert ^2 \, d\sigma \leq C \Vert u \Vert_{H^1}^2$$
+As a corollary, we obtain the following: \\
+
+\noindent \textbf{Corollary}: If I take $u \in H_1$, and I take its restriction to the boundary, then this mapping is continuous from $H_1(\Omega)$ to $L^2(\partial\Omega)$. \\
+
+This means that if we have $u \in H^1$, then we can find a sequence of function $u_n \in C^1$, such that $\Vert u_n - u \Vert_{H^1} \rightarrow 0$. Most of the time, we have convergence almost everywhere. (2)
+
+The function may not even be defined on the boundary. If I want to take the restriction of a function to boundary, I need to make sure it is actually defined. The corollary says that it is possible, because we have a continuous mapping from the function to its restriction onto the boundary. They must converge because we have continuity. We don't care exactly, we just want to be able to approximate it. This is because the Lemma states that 
+$$\Vert u\vert_{\partial\Omega} \Vert_{L^2} \leq C \Vert u \Vert$$
+$$\Vert u\vert_{\partial\Omega}-u \Vert_{L^2} \leq C \Vert u_n - u \Vert_{H^1}$$
+
+The proof is not hard if you consider the following observation:
+
+$$\int_{\partial\Omega} \vert u \vert^2 \, d\sigma = \int_{\partial\Omega} \vert u\vert^2 \hat{n} \cdot \hat{n} d\sigma $$
+This manipulation allows us to see this as a vector field so that we can use Green's Theorem. We say $\textbf{F}=\vert u \vert^2 \hat{n}$. Therefore,
+$$\int_{\partial\Omega} \vert u \vert^2 \, d\sigma = \int_{\partial\Omega} \vert u\vert^2 \hat{n} \cdot \hat{n} d\sigma = \int_\Omega \sum^d_{j=1} \frac{\partial}{\partial x_j} ((u)^2 n_j) \, dx = \sum^d_{j=1} \int_{\Omega} ( \partial u \frac{\partial u}{\partial x_j} n_j + \vert u \vert^2 \frac{\partial n_j}{\partial x_j}) \,dx  $$
+$$\leq C^1 \sum^d_{j=1} \int_\Omega (\partial u \frac{\partial u}{\partial x_j} + u^2) \, dx, \text{ where} C = \max_{\overline{\Omega}} \{ \vert n_j \vert , \vert \frac{\partial n_j}{\partial x_j}\} $$
+$$\leq C^1( \sum_j \partial(\int_{\Omega} u^2)^{1/2}(\int_\Omega (\frac{\partial u}{\partial x_j})^2)^{1/2} + d \int u^2 )$$
+$$\leq C^1( \sum^d_{j=1} ( \int u^2 + \int (\frac{\partial u}{\partial x_j})^2) + d \int u^2)$$
+$$\leq C^1(2d\int_\Omega \vert u \vert^2 + \sum \int (\frac{\partial u}{\partial x_j})^2 \leq C^1 2 d \vert u \Vert^2_{H^1}$$
+\noindent \textbf{Note}: Not every function $f \in L^2(\partial \Omega)$ is the restriction of some $u \in H^1(\Omega)$. (this tells us that we are not solving in full generality).
+
+We are going to modify the Dirichlet problem. We define another space (where they are 0 close to the boundary),
+$$H_0^1(\Omega) = \text{ closure of } C_c^1(\Omega) \text{ in } H^1(\Omega)$$
+(4)
+
+We restate the Dirichlet problem. Given $f \in H^1$ find $u \in ^1$ such that 
+$$\begin{cases} \Delta u = 0 & \text{ in } \Omega \\ u - f \in H_0^1(\Omega)\end{cases}$$
+
+Integration by parts, $v \in C_c^\infty(\Omega)$,
+$$\int_\Omega \frac{\partial u}{\partial x_j} v = - \int_\Omega \frac{\partial v}{\partial x_j}$$
+Even if $u$ is not differentiable, but $u \in L^2$, it does not make sense if the form on the left, but it does make sense in the form on the right. We call $\frac{\partial u}{\partial x_j} = f$ the weak derivative. The condition, $\Delta u = 0$ implies that $\int u \Delta v = 0$ for all $v \in C_c^\infty$. 
+
+\noindent \textbf{Theorem}: $u \in H^1$ is harmonic in $\Omega$ if and only if $u \perp H_0^1(\Omega)$ with respect to $\varepsilon(\cdot, \cdot)$. This means $\varepsilon(u,v) = 0$ for all $v \in H_0^1$. Harmonicity is now expressed as a geometric property. How do we imagine orthogonality in infinite dimension.  (5)
+
+\begin{proof}
+By Green's Identity,
+$$\int u \Delta v = - \int \nabla u \nabla v = -\varepsilon(u,v)$$
+So $\Delta u = 0$ if and only if $\int u \Delta v = 0$ for all $v \in C_c^\infty$ if and only if $\varepsilon(u,v)=0$ for all $v \in C^\infty_c$ if and only if $\varepsilon(u,v) = 0$ for all $v \in H_0^1$. 
+
+Given $f \in H^1$, let $v = \text{proj}_{H_0^1}(f)$. So if $f= u+v$,then $u \perp H_0^1$, so $u$ is harmonic. Also, $f-u \in H_0^1$.
+\end{proof}
+
+Now we can write Dirichlet's Principle in precise terms. \\
+
+\noindent \textbf{Theorem} (Dirichlet Principle): Let $u,f \in H^1(\Omega)$, then the following are equivalent:
+\begin{enumerate}
+\item $u$ is harmonic and $u-f \in H_0^1(\Omega)$.
+\item $\varepsilon(u) \leq \varepsilon(w)$ for all $w \in H^1$ such that $w-f \in H_0^1$. 
+\item $\varepsilon(u-f) \leq \varepsilon(w-f)$ for all harmonic $w$.
+\end{enumerate}
+\end{document}

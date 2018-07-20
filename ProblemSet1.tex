@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Introduction to Harmonic Analysis}
+\begin{enumerate}
+\item Let $R$ be a rotation in the plane. 
+\begin{enumerate}
+\item Consider the change of variables $(\xi, \eta)=R(x,y)$. Then
+$$\frac{\partial^2u}{\partial\xi^2} + \frac{\partial^2u}{\partial\eta^2} = \frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2}.$$
+\begin{proof}
+Let $(\xi, \eta) = R(x,y)$, then
+$$\begin{bmatrix} \xi \\ \eta \end{bmatrix}= \begin{bmatrix}\cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{bmatrix}\begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x\cos \theta + y \sin \theta \\ -x\sin \theta + y \cos \theta \end{bmatrix}.$$
+Therefore, 
+\begin{align*}
+\xi &= x \cos\theta + y \sin\theta, \text{ and}\\
+\eta &= -x\sin \theta + y\cos \theta.
+\end{align*}
+First, we compute our partial derivatives for $\xi$ and $\eta$ with respect to $x$ and $y$,
+\begin{align*}
+\frac{\partial \xi}{\partial x} &= \cos \theta & \frac{\partial \eta}{\partial x} &= -\sin \theta \\
+\frac{\partial \xi}{\partial y} &= \sin \theta & \frac{\partial \eta}{\partial y} &= \cos \theta \\
+\end{align*}
+We compute our partial derivatives for $x$,
+\begin{align*}
+\frac{\partial u}{\partial x} &= \frac{\partial u}{\partial \xi}\frac{\partial \xi}{\partial x}+ \frac{\partial u}{\partial \eta}\frac{\partial \eta}{\partial x} \\
+&= \frac{\partial u}{\partial \xi}[\cos\theta]- \frac{\partial u}{\partial \eta}[\sin \theta] \\
+\frac{\partial^2 u}{\partial x^2} &= \frac{\partial}{\partial x}\frac{\partial u}{\partial x} \\
+&= \frac{\partial}{\partial x}\Bigg(\frac{\partial u}{\partial \xi}[\cos\theta]- \frac{\partial u}{\partial \eta}[\sin \theta]\Bigg) \\
+&= \frac{\partial}{\partial x}\frac{\partial u}{\partial \xi}[\cos\theta]-\frac{\partial}{\partial x} \frac{\partial u}{\partial \eta}[\sin \theta] \\
+&= \frac{\partial}{\partial \xi}\frac{\partial u}{\partial x}[\cos\theta]-\frac{\partial}{\partial \eta} \frac{\partial u}{\partial x}[\sin \theta] \\
+&= \frac{\partial}{\partial \xi}\Bigg(\frac{\partial u}{\partial \xi}[\cos\theta]- \frac{\partial u}{\partial \eta}[\sin \theta]\Bigg)[\cos\theta]-\frac{\partial}{\partial \eta} \Bigg(\frac{\partial u}{\partial \xi}[\cos\theta]- \frac{\partial u}{\partial \eta}[\sin \theta]\Bigg)[\sin \theta] \\
+&= \frac{\partial}{\partial \xi}\frac{\partial u}{\partial \xi}\cos^2\theta-\frac{\partial}{\partial \xi} \frac{\partial u}{\partial \eta}\sin \theta\cos\theta-\frac{\partial}{\partial \eta}\frac{\partial u}{\partial \xi}\cos\theta\sin \theta- \frac{\partial}{\partial \xi}\frac{\partial u}{\partial \eta}\sin^2 \theta \\
+&= \frac{\partial^2 u}{\partial \xi^2} \cos^2\theta - \frac{\partial^2 u}{\partial \xi\partial\eta}\sin\theta\cos\theta - \frac{\partial^2 u}{\partial \eta\partial\xi}\cos\theta\sin\theta + \frac{\partial^2 u}{\partial \eta^2}\sin^2\theta 
+\end{align*}
+And we compute our partial derivatives for $y$,
+\begin{align*}
+\frac{\partial u}{\partial y} &= \frac{\partial u}{\partial \xi}\frac{\partial \xi}{\partial y}+ \frac{\partial u}{\partial \eta}\frac{\partial \eta}{\partial y} \\
+&= \frac{\partial u}{\partial \xi}[\sin\theta]+ \frac{\partial u}{\partial \eta}[\cos \theta] \\
+\frac{\partial^2 u}{\partial y^2} &= \frac{\partial}{\partial y}\frac{\partial u}{\partial y} \\
+&= \frac{\partial}{\partial y}\Bigg(\frac{\partial u}{\partial \xi}[\sin\theta]+ \frac{\partial u}{\partial \eta}[\cos \theta]\Bigg) \\
+&= \frac{\partial}{\partial y}\frac{\partial u}{\partial \xi}[\sin\theta]+\frac{\partial}{\partial y} \frac{\partial u}{\partial \eta}[\cos \theta] \\
+&= \frac{\partial}{\partial \xi}\frac{\partial u}{\partial y}[\sin\theta]+\frac{\partial}{\partial \eta} \frac{\partial u}{\partial y}[\cos \theta] \\
+&= \frac{\partial}{\partial \xi}\Bigg(\frac{\partial u}{\partial \xi}[\sin\theta]+ \frac{\partial u}{\partial \eta}[\cos \theta]\Bigg)[\sin\theta]+\frac{\partial}{\partial \eta} \Bigg(\frac{\partial u}{\partial \xi}[\sin\theta]+ \frac{\partial u}{\partial \eta}[\cos \theta]\Bigg)[\cos \theta] \\
+&= \frac{\partial}{\partial \xi}\frac{\partial u}{\partial \xi}\sin^2\theta+\frac{\partial}{\partial \xi} \frac{\partial u}{\partial \eta}\cos \theta\sin\theta+\frac{\partial}{\partial \eta}\frac{\partial u}{\partial \xi}\sin\theta\cos\theta- \frac{\partial}{\partial \xi}\frac{\partial u}{\partial \eta}\cos^2 \theta \\
+&= \frac{\partial^2 u}{\partial \xi^2} \sin^2\theta + \frac{\partial^2 u}{\partial \xi\partial\eta}\sin\theta\cos\theta +\frac{\partial^2 u}{\partial \eta\partial\xi}\cos\theta\sin\theta + \frac{\partial^2 u}{\partial \eta^2}\cos^2\theta 
+\end{align*}
+Therefore, by substitution,
+\begin{align*}
+\frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} &= \frac{\partial^2 u}{\partial \xi^2} \cos^2\theta - \frac{\partial^2 u}{\partial \xi\partial\eta}\sin\theta\cos\theta - \frac{\partial^2 u}{\partial \eta\partial\xi}\cos\theta\sin\theta + \frac{\partial^2 u}{\partial \eta^2}\sin^2\theta \\ &+ \frac{\partial^2 u}{\partial \xi^2} \sin^2\theta + \frac{\partial^2 u}{\partial \xi\partial\eta}\sin\theta\cos\theta +\frac{\partial^2 u}{\partial \eta\partial\xi}\cos\theta\sin\theta + \frac{\partial^2 u}{\partial \eta^2}\cos^2\theta \\
+&= \frac{\partial^2 u}{\partial \xi^2} (\cos^2 \theta + \sin^2 \theta) + \frac{\partial^2 u}{\partial \eta^2}(\cos^2 \theta + \sin^2 \theta) \\
+&= \frac{\partial^2 u}{\partial \xi^2}+ \frac{\partial^2 u}{\partial \eta^2}
+\end{align*}
+Therefore, 
+$$\frac{\partial^2u}{\partial\xi^2} + \frac{\partial^2u}{\partial\eta^2} = \frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2}.$$
+\end{proof}
+\item If $u$ is harmonic, then $u \circ R$ is also harmonic. 
+\begin{proof}
+Let $u(\xi,\eta)$ be a harmonic function, then $\Delta u  =0$, or 
+$$ \frac{\partial^2u}{\partial\xi^2} + \frac{\partial^2u}{\partial\eta^2} = 0$$
+By (a), 
+$$0 = \frac{\partial^2u}{\partial\xi^2} + \frac{\partial^2u}{\partial\eta^2} =\frac{\partial^2u}{\partial x^2} + \frac{\partial^2u}{\partial y^2}$$
+Therefore, $\Delta (u \circ R) = 0$. Therefore, $u \circ R$ is harmonic. 
+\end{proof}
+\end{enumerate}
+\item Let $(r, \theta)$ be the polar coordinates of the plane. Then 
+$$\Delta u  = \frac{\partial^2 u}{\partial r^2} + \frac{1}{r}\frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} $$
+
+\begin{proof}
+Let $(r,\theta)$ be polar coordinates in the plane. Then, 
+$$x = r\cos \theta \text{ and } y = r\sin \theta.$$
+
+First, we compute our partial derivatives for $x$ and $y$ with respect to $r$ and $\theta$,
+\begin{align*}
+\frac{\partial x}{\partial r} &= \cos \theta & \frac{\partial y}{\partial r} &= \sin \theta \\
+\frac{\partial x}{\partial \theta} &= -r\sin \theta & \frac{\partial y}{\partial \theta} &= r\cos \theta \\
+\end{align*}
+We compute our partial derivatives for $r$,
+\begin{align*}
+\frac{\partial u}{\partial r}&=\frac{\partial u}{\partial x}\frac{\partial x}{\partial r}+\frac{\partial u}{\partial y}\frac{\partial y}{\partial r} \\
+&= \frac{\partial u}{\partial x}\cos \theta + \frac{\partial u}{\partial y} \sin \theta \\
+\frac{\partial^2 u}{\partial r^2}&=\frac{\partial}{\partial r}\frac{\partial u}{\partial r} = \frac{\partial }{\partial r}\Big(\frac{\partial u}{\partial x}\cos\theta + \frac{\partial u}{\partial y} \sin \theta\Big) \\
+&= \frac{\partial }{\partial r}\frac{\partial u}{\partial x}\cos\theta + \frac{\partial }{\partial r}\frac{\partial u}{\partial y} \sin \theta \\
+&= \frac{\partial }{\partial x}\frac{\partial u}{\partial r}\cos\theta + \frac{\partial }{\partial y}\frac{\partial u}{\partial r} \sin \theta \\
+&= \frac{\partial }{\partial x}\Big(\frac{\partial u}{\partial x}\cos\theta + \frac{\partial u}{\partial y} \sin \theta\Big)\cos\theta + \frac{\partial }{\partial y}\Big(\frac{\partial u}{\partial x}\cos\theta + \frac{\partial u}{\partial y} \sin \theta\Big) \sin \theta \\
+&= \frac{\partial^2 u}{\partial x^2}\cos^2 \theta + \frac{\partial^2 u}{\partial x \partial y}\sin \theta \cos \theta + \frac{\partial^2 u}{\partial y \partial x}\sin \theta \cos \theta + \frac{\partial^2 u}{\partial y^2}\sin^2 \theta
+\end{align*}
+And we compute our partial derivatives for $\theta$,
+\begin{align*}
+\frac{\partial u}{\partial \theta}&=\frac{\partial u}{\partial x}\frac{\partial x}{\partial \theta}+\frac{\partial u}{\partial y}\frac{\partial y}{\partial \theta} \\
+&= -\frac{\partial u}{\partial x}r\sin \theta + \frac{\partial u}{\partial y} r\cos \theta  \\
+\frac{\partial^2 u}{\partial \theta^2}&=\frac{\partial}{\partial \theta}\frac{\partial u}{\partial \theta} = \frac{\partial }{\partial \theta}\Big(-\frac{\partial u}{\partial x}r\sin\theta + \frac{\partial u}{\partial y} r\cos \theta\Big)  \\
+&= -r \frac{\partial}{\partial \theta}\Big(\frac{\partial u}{\partial x}\sin\theta \Big) + r \frac{\partial}{\partial \theta}\Big(\frac{\partial u}{\partial y}\cos\theta \Big)  \\
+&= -r\Big(\frac{\partial}{\partial \theta}\frac{\partial u}{\partial x}\sin \theta + \frac{\partial u}{\partial x}\frac{\partial}{\partial \theta}\sin \theta \Big) + r\Big(\frac{\partial}{\partial \theta}\frac{\partial u}{\partial y}\cos \theta + \frac{\partial u}{\partial y}\frac{\partial}{\partial \theta}\cos \theta \Big)  \\
+&= -r\Big(\frac{\partial}{\partial x}\frac{\partial u}{\partial \theta}\sin \theta + \frac{\partial u}{\partial x}\cos \theta \Big) + r\Big(\frac{\partial}{\partial y}\frac{\partial u}{\partial \theta}\cos \theta - \frac{\partial u}{\partial y}\sin \theta \Big)  \\
+&= -r\Big(\frac{\partial}{\partial x}\Big[-\frac{\partial u}{\partial x}r\sin \theta + \frac{\partial u}{\partial y} r\cos \theta\Big]\sin \theta + \frac{\partial u}{\partial x}\cos \theta \Big) \\ &+ r\Big(\frac{\partial}{\partial y}\Big[-\frac{\partial u}{\partial x}r\sin \theta
++ \frac{\partial u}{\partial y} r\cos \theta\Big]\cos \theta - \frac{\partial u}{\partial y}\sin \theta \Big) \\
+&= r^2\sin^2\theta \frac{\partial^2 u}{\partial x^2} - r^2 \cos \theta \sin \theta \frac{\partial^2 u}{\partial x \partial y} - r\cos\theta \frac{\partial u}{\partial x} \\ &-r^2\sin\theta\cos\theta \frac{\partial^2 u}{\partial y \partial x} + r^2 \cos \theta \sin \theta \frac{\partial^2 u}{\partial y^2} - r\sin\theta \frac{\partial u}{\partial y} 
+\end{align*}
+Then, by substitution,
+\begin{align*}
+\frac{\partial^2 u}{\partial r^2} + \frac{1}{r}\frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} &= \frac{\partial^2 u}{\partial x^2}\cos^2 \theta + \frac{\partial^2 u}{\partial x \partial y}\sin \theta \cos \theta + \frac{\partial^2 u}{\partial y \partial x}\sin \theta \cos \theta + \frac{\partial^2 u}{\partial y^2}\sin^2 \theta \\
+&+ \frac{\partial u}{\partial x}\frac{\cos \theta}{r} + \frac{\partial u}{\partial y} \frac{\sin \theta}{r} \\
+&+ \sin^2\theta \frac{\partial^2 u}{\partial x^2} - \cos \theta \sin \theta \frac{\partial^2 u}{\partial x \partial y} - \frac{\cos\theta}{r} \frac{\partial u}{\partial x} \\ &-\sin\theta\cos\theta \frac{\partial^2 u}{\partial y \partial x} +  \cos \theta \sin \theta \frac{\partial^2 u}{\partial y^2} - \frac{\sin\theta}{r} \frac{\partial u}{\partial y} \\
+&= \frac{\partial^2 u}{\partial x^2} (\cos^2\theta + \sin^2\theta) + \frac{\partial^2 u}{\partial y^2} (\cos^2\theta + \sin^2\theta) \\
+&= \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = \Delta u
+\end{align*}
+Therefore,
+$$\Delta u  = \frac{\partial^2 u}{\partial r^2} + \frac{1}{r}\frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2} $$
+\end{proof}
+\item Let $u$ be a harmonic function on $\mathbb{R}^2$. Then there exists a harmonic function $v$ that is conjugate to $u$, so $f=u+iv$ is holomorphic. 
+\item 
+\begin{enumerate}
+\item If $v_1$ and $v_2$ are conjugate to $u$ in the plane, then $v_1-v_2$ is a constant.
+\begin{proof}
+Let $v_1$ and $v_2$ be conjugate to $u$, then the following Cauchy-Riemann equations are satisfied,
+$$ \frac{\partial u}{\partial x}  = \frac{\partial v_1}{\partial y} \hspace{25pt} \frac{\partial u}{\partial y}  = -\frac{\partial v_1}{\partial x}$$
+$$ \frac{\partial u}{\partial x}  = \frac{\partial v_2}{\partial y} \hspace{25pt} \frac{\partial u}{\partial y}  = -\frac{\partial v_2}{\partial x}$$
+We obtain the following by computing the difference between the left equations,
+\begin{align*}
+\frac{\partial u}{\partial x}-\frac{\partial u}{\partial x}  &= \frac{\partial v_1}{\partial y} -\frac{\partial v_2}{\partial y} \\
+0 &= \frac{\partial v_1}{\partial y} -\frac{\partial v_2}{\partial y} \\
+\int 0  \partial y &= \int \Big(\frac{\partial v_1}{\partial y} -\frac{\partial v_2}{\partial y}\Big) \partial y \\
+\phi_1(x)&=v_1-v_2
+\end{align*}
+
+And we obtain the following by computing the difference between the right equations,
+\begin{align*}
+\frac{\partial u}{\partial y}-\frac{\partial u}{\partial y}  &= -\frac{\partial v_1}{\partial x} +\frac{\partial v_2}{\partial x} \\
+0 &= -\frac{\partial v_1}{\partial x} +\frac{\partial v_2}{\partial x} \\
+\int 0  \partial x &= \int \Big(-\frac{\partial v_1}{\partial x} +\frac{\partial v_2}{\partial x}\Big) \partial x \\
+\phi_2(y)&=-v_1+v_2
+\end{align*}
+Then, we sum the functions obtained from partial integration, therefore, $\phi_1(x)+\phi_2(y)=v_1-v_2-v_1+v_2$, in other words, $\phi_1(x)+\phi_2(y)=0$ or $\phi_1(x)=-\phi_2(y)$. Therefore, there cannot exist non-constant terms in either $\phi_1$ or $\phi_2$. Therefore, $v_1-v_2$ is a constant. 
+\end{proof}
+
+\item If 0 is conjugate to $u$ in the plane, then $u$ is a constant.
+\begin{proof}
+Let 0 be conjugate to $u$, then the following Cauchy Riemann equations are satisfied.
+$$\frac{\partial u}{\partial x} = \frac{\partial 0}{\partial y} \hspace{25pt} \frac{\partial u}{\partial y} = -\frac{\partial 0}{\partial x}$$
+Therefore, by evaluating the partial derivatives,
+$$\frac{\partial u}{\partial x} = 0 \hspace{25pt} \frac{\partial u}{\partial y} = 0.$$
+Since, the partial derivative of $u$ with respect to each variable is 0, then $u$ is a constant. 
+\end{proof}
+\item If $f$ is holomorphic in $\mathbb{C}$ and real valued, then $f$ is a constant. 
+\begin{proof}
+Let $f$ be holomorphic and real-valued, then $f$ can be expressed by $f=u+iv$, there $v$ is the zero function. Therefore, by (b), $f$ is a constant.
+\end{proof}
+\end{enumerate}
+\end{enumerate}
+
+
+
+\end{document}

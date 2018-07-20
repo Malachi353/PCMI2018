@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 15: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{The Maximal Function} \\
+\noindent For $f \in L^1(\mathbb{R}^d)$ (or locally integrable), the maximal function $Mf(x)$ is given by:
+$$ Mf(x) = \sup_{r>0}\frac{1}{\vert B_r(x)\vert} \int_{B_r(x)} \vert f(y) \vert \,dy$$
+
+\noindent We are going to talk about the maximal function, the reason why we are interested in this, we need a uniform in $t$ estimate for $u(x,t) = \vert (x,t) \vert \leq A Mf(x)$. We need our integral $\int_{B_r(x)} \vert f(y)\vert  \,dy$ to be well-defined. If you have bounded function, we can still define the maximal function, or any other integral in $L^p$ spaces. We can see that when we take all of the averages of the absolute of $f$ over every ball, we obtain the maximal average. If $r$ is large, we actually approximate the integral of the absolute value of $f$. These integrals are bounded, and so the integral go to zero as $r \rightarrow \infty$. The problem is when we have a small $r$. We need to worry about $\vert B_r(x) \vert$ because it goes to zero and blows up the value of the maximal function. We need to control the maximal function. This itself is not an integrable function. 
+
+\begin{enumerate}
+\item In general, $Mf \not \in L^1$ \\
+\textbf{Example}: If $d = 1$, $f = \chi_{[0,1]}$
+
+(1)
+
+The maximal function the supremum over all of these intervals. So 
+$$Mf(x) \geq \frac{1}{2x}\int^{2x}_0 \chi_{[0,1]}(y) \,dy$$
+$$Mf(x) \geq \frac{1}{2x} \text{ for large } x$$
+This implies that the integral of the maximal function does not converge. It turns out that this is the worst that we can expect though. This if for any function, which brings us to the following theorem.
+\end{enumerate}
+
+\noindent \textbf{Hardy-Littlewood)} There exists $A>0$ $(A=3^d)$ such that, for each $\alpha>0$,
+$$\vert \{ x \in \mathbb{R}^d : Mf(x) > \alpha\}\vert \leq \frac{A}{\alpha}\Vert f \vert_1 $$
+This is hopeful for us because it implies that this value must be finite almost every. Being infinite means that you are bigger than any positive number. The following proof uses topology. We will state a lemma first.  \\
+
+\noindent \textbf{Lemma (Vitali?)}: If have a finite  collection of balls of any radius, $B_1, \dots, B_N$, then there exists $B_{i_1}, \dots, B_{i_k}$ such that $B_i \cup B_j = \emptyset$ for all $i \not = j$,  so that 
+$$\vert \bigcup_{i=1}^N B_i \vert \leq  \sum^k_{ij=1}\vert B_{ij}\vert$$
+(2) 
+
+We can choose such that we don't loose too much of the volume. 
+
+The proof goes as such, we have a bunch of balls, but there is a finite number of them. You begin by taking the larges, you erase all the ones that intersect the largest ball. If I choose a radius with three times as large, then  it will capture all of the rest of the balls. (3) \\
+
+
+\noindent\textbf{Note}: Let $E_\alpha = \{ x : Mf(x) > \alpha$. (Not every set is measurable). We say a set is measurable, if 
+$$E_{\alpha} \subset B_i = U$$
+$$U / E_\alpha \subset \cup C_i, \sum\vert C_i \vert < \varepsilon$$
+
+The measure of $E_\alpha$ is given by 
+$$\vert E_\alpha = \sup\{\vert F \vert : \text{ compact } F \subset E_\alpha\}$$
+\begin{proof}
+What we will do, let $F \subset E_\alpha$ compact, and then we show that it is estimable by $\frac{A}{\alpha}\Vert f \vert_1$. 
+
+Let $f \subseteq E_\alpha$ compact. Let $x \in F$ such that there exists $B_{r(x)}(x)$ so that $\frac{1}{\vert B_{r(x)}(x)\vert } \int_{B_{r(x)}(x)} \vert f \vert > \alpha$. Then, $\{B_{r(x)}(x)\}_{x \in F}$ is a cover for $F$ (topology), so it has a finite subcovering $B_1, B_2, \dots, B_k$ such that
+$$\vert F \vert \leq \vert \bigcup_{x\in F} B_{r(x_{ij})}(x) \vert \leq 3^d \sum^k_{i=1} \vert B_{r(x_{ij})} \vert$$
+and 
+$$\vert B_{r(x_{ij})}\vert <\frac{1}{\alpha} \int_{B_{r(x_{ij})}} \vert f \vert$$
+Then 
+$$\vert F \vert < 3^d \sum^k_{i=1} \frac{1}{\alpha} \int_{B_{r(x_{ij}})} \vert f \vert = \frac{3^d}{\alpha}  \int_{\cup B_{r(x_{ij}})} \vert f \vert \leq \frac{3^d}{\alpha} \int_{\mathbb{R}^d} \vert f \vert = \frac{3^d}{\alpha} \Vert f\Vert_1$$
+\end{proof}
+
+\textbf{Theorem}: If $f \in L^1$ and $u(x,t) = P_t * f(x)$, then $u(x,y) \rightarrow f(x)$ almost everywhere as $t \rightarrow 0$. 
+
+\begin{proof}
+Show that $E_\alpha = \{ x : \limsup_{t \rightarrow 0} \vert u(x,t) - f(x) \vert > \alpha\}$. For $\varepsilon>0$, choose $g \in C_c$ such that $\int \vert f-g \vert < \frac{\varepsilon}{IOA}$
+\begin{align*}
+P_t*f(x) - f(x) &= P_t * f(x) - P_t*g(x) + P_t*g(x)-g(x)+g(x)-f(x) \\
+\vert P_t*f(x) - f(x)\vert  &\leq \vert P_t * f(x) - P_t*g(x)\vert  + \vert P_t*g(x)-g(x)\vert +\vert g(x)-f(x)\vert 
+\end{align*}
+
+If we take the set 
+\begin{align*}
+E_\alpha = \{ x : \limsup_{t \rightarrow 0} \vert u(x,t) - f(x) \vert > \alpha\} &\subset \{ x : \limsup_{t \rightarrow 0} \vert P_t*f(x) - P_t*g(x) \vert > \frac{\alpha}{3}\} \\
+&\cup \{ x : \limsup_{t \rightarrow 0} \vert P_t*f(x) - g(x) \vert > \frac{\alpha}{3}\}=\emptyset \\
+&\cup \{ x : \limsup_{t \rightarrow 0} \vert f(x) - g(x) \vert > \frac{\alpha}{3}\}
+\end{align*}
+The set $\{ x : \limsup_{t \rightarrow 0} \vert f(x) - g(x) \vert > \frac{\alpha}{3}\}$ (we don't need to worry about the limsup in this case) has small measure since $$\{x : \vert g(x) - f(x) \vert > \frac{\alpha}{3} \} \vert = \int_{\vert g-f\vert > \frac{\alpha}{3}} 1 < \int \frac{\vert g-f\vert}{\alpha/3} \leq \frac{3}{\alpha} \Vert f-g\Vert$$.
+
+For the first set, then 
+$$P_t*f(x) - P_t*g(x) = P_t*(f-g)(x) \leq Mf(f-g)$$
+and the set
+$$\{ x : \limsup_{t\rightarrow 0} \vert P_t*f(x) - P_t*g(x) \vert > \frac{\alpha}{3}\} \subset \{x: M(f-g)(x) > \frac{\alpha}{3c}\}$$
+Therefore, 
+$$\vert \{ x: \limsup_{t\rightarrow 0} \vert P_t*f(x) - P_t*g(x) \vert > \frac{\alpha}{3}\} \vert < \frac{3cA}{\alpha} \Vert f-g \Vert_1$$
+Therefore, the measure is bounded. 
+\end{proof}
+
+\noindent HL: $\vert \{x: Mf(x) > \alpha\} \vert \leq \frac{A}{\alpha}\Vert f\Vert_1$ is the weak-$L^1$ estimate. 
+(4)
+
+\textbf{Theorem}: If $f \in L^1$, $u(x,t) = P_t * f(x)$, then, 
+$$ \lim_{(y,t) \rightarrow (x,0), (y,t) \in \Gamma_\theta(x)} u(y,t) = f(x) \text{a.e.} x$$
+
+The proof is the same as long as we prove that if $(y,t) \in \Gamma_\theta(x)$, then $P_t(y) \leq A_\theta P_t(x)$ and $\sup_{(y,t) \in \Gamma_\theta (x)} \vert u(y,t) \vert \leq  A uf(x)$. 
+
+We want to show that 
+$$\frac{t}{(\vert y \vert^2 + \vert t \vert^2)^{\frac{d+1}{2}}} \leq A_\theta \frac{t}{(\vert x \vert^2 + t^2)^{\frac{d+1}{2}}} $$
+
+We have that 
+$$\vert x - y \vert \leq \frac{1}{2} \vert x \vert \text{ and } \vert y \vert \leq \frac{1}{2} $$
+Therefore, $$\vert y \vert^2 + t^2 \geq \frac{1}{4} (\vert x \vert^2 + t^2)$$
+(5)
+\end{document}

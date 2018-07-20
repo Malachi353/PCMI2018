@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 22: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Corollary} \\
+\begin{enumerate}
+\item Assume $\nabla \phi(p) \not =0$, then 
+$$\vert \frac{d^jI(\lambda)}{d\lambda^j}\vert \leq C_{j,N}\lambda^{-N} \text{ for any } N$$
+\item Assume $\nabla \phi(p) =0$ and $H_{\phi}(p)$ is invertible, then
+$$ \vert \frac{d^k}{d\lambda^k} \Big(e^{\pi i \lambda \phi(p)} I(\lambda)\Big) \vert \leq C_k \lambda^{-(\frac{n}{2}+k)}$$
+ \\
+\end{enumerate}
+\noindent \textbf{Theorem}: Let $\sigma$ be the surface measure on the unit sphere $S^{n-1} \subseteq \mathbb{R}^n$, then $\sigma$ satisfies
+$$\hat{\sigma}(\xi)= \text{Re}(a(\vert \xi \vert) e^{2\pi i \vert \xi \vert})$$
+where for large $r = \vert \xi \vert$,
+$$\vert \frac{d^ja}{dr^j}\vert \leq C_j r^{-(\frac{n-1}{2}+j)}$$
+
+The only thing we should be concerned about is that the numerology is not exactly the same, when we are working in $\mathbb{R}^n$, we get less decay.  \\
+
+\noindent \textbf{Corollary}: We have $$\vert \hat{\sigma}(\xi) \vert \leq C \vert \xi \vert^{-(\frac{n-1}{2})}$$
+\begin{proof}
+Let $T$ be a rotation. Then, 
+\begin{align*}
+\hat{\sigma}(T \xi) &= \int e^{-2\pi i x \cdot T\xi}d\sigma(x) \\
+&= \int e^{-2\pi i x \cdot T^{-1}x\xi}d\sigma(x) \\
+&= \int e^{-2\pi i x \cdot\xi}d\sigma(Tx) \\
+&= \int e^{-2\pi i x \cdot\xi}d\sigma(x) = \hat{\sigma}(\xi)
+\end{align*}
+where, we let $x= T^{-1}x$, and by using the rotational invariant of $\sigma$ (we are on a sphere). This means we only need to choose our favorite point to prove. So $\hat{sigma}$ is rotationally invariant. Thus it is enough to calculate $\hat{\sigma}(\lambda e_n)$, where $\lambda>0$, and $e_n = (0,0,\dots, 1)$. 
+$$\hat{\sigma}(\lambda e_n) = \int e^{-2\pi i \lambda e_n \cdot x} d\sigma(x)$$
+We can shuffle this around so that $\phi(x)=2e_n\cdot x$
+$$\hat{\sigma}(\lambda e_n) = \int e^{-\pi i \lambda 2 e_n \cdot x} d\sigma(x) = \int e^{-\pi i \lambda \phi(x)} d\sigma(x)$$
+We need to find the critical points of $\phi(x)$, note that $\phi(x)=2x_n$ (since $e_n$ is the $n$th basis element). If we take the gradient, we will obtain only have a bunch of zeroes and only a 2 from the last coordinate. We are working only on the sphere, there are $n-1$ variables on the sphere. If we are on the equator, all of the speed is used, but if we are not on the equator, then our speed is reduced because some of the speed is going off the sphere. But if we are on the top or bottom of the sphere, we have 0 speed. Therefore, our critical points are only normal at $\pm e_n$ on the sphere. There are two distinct points where we have trouble, therefore, we can as much decay as we want on the rest of the sphere except the poles. 
+\end{proof}
+
+\begin{tabular}{c c c}
+\textbf{Location} & \textbf{Local Coordinates} & \textbf{Partition} \\
+North pole $e_n$ & $x \in \mathbb{R}^{n-1}$, $x \mapsto (x, \sqrt{1-\vert x \vert^2})$  & $a_1 \in C^\infty_c(\mathbb{R}^{n-1})$ with support on $B(0,r)$ \\ 
+& for $\vert x \vert$ small enough & \\
+South pole $-e_n$ & $x \in \mathbb{R}^{n-1}$, $x \mapsto (x, -\sqrt{1-\vert x \vert^2})$ & $a_2 \in C^\infty_c(\mathbb{R}^{n-1})$, $a_2 =a_1$. \\
+Everything else & Stay away from $\{\pm e_n\}$ & Have $\phi_j \in C^\infty(\mathbb{R}^n)$ with partition functions $a_j \in C^\infty_c$, $3\leq j \leq k$.
+\end{tabular}
+Around the north and south pole, note
+\begin{enumerate}
+\item For the change to local coordinates,
+$$\frac{\partial}{\partial x_i} \sqrt{1-\vert x \vert^2} = -\frac{x}{\sqrt{1-\vert x \vert^2}}$$
+So Jacobian,
+$$\Big(\sqrt{\frac{-x_1}{\sqrt{1-\vert x \vert^2}}}\Big)^2 + \cdots + \Big(\sqrt{\frac{-x_n}{\sqrt{1-\vert x \vert^2}}}\Big)^2$$
+$$= \sqrt{\frac{x_1^2+ \cdots +x^2_{n-1} + (1-\vert x \vert^2)}{1 - \vert x \vert^2}} = \frac{1}{\sqrt{1- \vert x \vert^2}}$$
+\end{enumerate}
+
+$\phi_1(x_1, \dots, x_{n-1}) = 2\sqrt{1-\vert x\vert^2}$ and the Hessian at $(0, \dots, 0, 1)$ (in local coordinates) is $(-2)I$ and is thus invertible. We can find the same at the south pole.
+$$ \hat{\sigma}(\lambda e_n)  = \int e^{-\pi i \lambda 2 e_n \cdot x} \sum^k_{j=1}a_j(x) d\sigma(x)$$
+$$= \int_{B(0,r)} e^{-\pi \lambda 2 \sqrt{1-\vert x \vert^2}} \frac{a_1(x)}{\sqrt{1-\vert x \vert^2}} dx + \int_{B(0,r)} e^{-\pi \lambda 2 \sqrt{1-\vert x \vert^2}} \frac{a_2(x)}{\sqrt{1-\vert x \vert^2}} dx + \sum^k_{j=3} \int e^{-\pi i \lambda \phi_j(x)} a_j(x) dx$$
+The first two integrals are actually conjugates of each other, therefore, the imaginary portions cancel out, so we can write it as follows:
+$$\text{Re}(e^{\phi(0) \pi i \lambda}a(\lambda) + y(\lambda)$$
+$$\text{Re}(e^{2\pi i \lambda}a(\lambda)) + y(\lambda)$$
+with
+$$\vert \frac{d^ja}{d\lambda^j} \vert \leq C_j \lambda^{-(\frac{n-1}{2} + j)} \text{ stationary phase }$$
+and 
+$$\vert \frac{d^jy(\lambda)}{d\lambda^j}\vert \leq \tilde{C}_{jN} \lambda^{-N} \text{ for any } N$$
+
+\noindent \textbf{Measure Theory} \\
+Let $S$ be a set and let $\mathcal{F}$ be a collection of subsets called a $\sigma$-algebra over $S$ if
+\begin{enumerate}
+\item $S \in \mathcal{F}$.
+\item If $A \in \mathcal{F}$, then $A^c \in \mathcal{F}$.
+\item If $\{A_n\}$ is a sequence of sets in $\mathcal{F}$, then their union is in $\mathcal{F}$.
+\end{enumerate}
+
+\textbf{Example}: Borel $\sigma$-algebra on $\mathbb{R}$ formed by open sets, countable unions and intersections and complements.
+
+\noindent Let $\mu: \mathcal{F} \rightarrow [0,\infty]$ is called a measure if $\mu(\emptyset)=0$ and $\mu$ is countably additive. 
+
+Countably additive: For pairwise disjoint sets $F_n \in \mathcal{F}$, then 
+$$ \mu\Big( \bigcup^\infty_{n=1} F_n\Big) = \sum^\infty_{n=1} \mu (F_n)$$
+
+\end{document}

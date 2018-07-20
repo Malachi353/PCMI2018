@@ -1,0 +1,122 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 12: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{The Poisson Kernel for the Upper Half Space} 
+$$\mathbb{R}^{d-1}_+ = \{(x,t) : x \in \mathbb{R}^d, t>0\}$$
+
+\noindent The Poisson kernel is given by
+$$ P_t(x) = \frac{2t}{\omega_{d+1}(\vert x \vert^2 + t^2)^{\frac{d+1}{2}} }$$
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt]
+\item The Poisson kernel is $P_t(x) > 0$.
+\item $(x,t) \mapsto P_t(x)$ is harmonic in $\mathbb{R}^{d+1}_+$. 
+\item $P_t(x)$ is a dilation of $P_1$, so $P_t(x) = \frac{1}{t^d} P_1 (\frac{x}{t})$.
+\item For every $t>0$, $\int_{\mathbb{R}^d} P_t(x) \, dx = 1$.
+\item (2) For each $\delta> 0$, $\int_{\vert x \vert \geq \delta} P_t(x) \,dx \rightarrow 0$ as $t \rightarrow 0$. 
+$$P_t(x) \leq \frac{2t}{\omega_{d+1}\vert x \vert^{d+1}}, \int_{\vert x \vert \geq \delta} P_t(x) \,dx \leq \frac{2t}{\omega_{d+1} \delta} \rightarrow 0$$
+
+\noindent We define the Poisson integral of $f \in L'(\mathbb{R})$ (this just means that the integral is finite). There needs to be some decay in order for the integral to be finite. So bounded functions are not necessarily finite integrable.
+
+\noindent Let $$u(x,t) = P_t * f(x) = \int_{\mathbb{R}^d} P_y(t) f(x-y) \, dy$$
+
+\item Let $x \mapsto u(x,t)$ is integrable on $\mathbb{R}^d$. 
+$$ \int \vert P_t * f(x) \vert \, dx \leq \iint P_t(y) \vert f(x-y) \,dy \,dx \leq  \int P_t(y) \int \vert f(x-y)\vert \,dx \,dy = \int \vert f \vert'$$
+
+
+If you have any function $\int_{\mathbb{R}^d} \frac{1}{t^d} F(\frac{x}{t} \, dx = \int_{\mathbb{R}^d} F(x) dx$. 
+
+\noindent So $\{P_t(x)\}_{t>0}$ is a collection of good kernels.
+\item If $f \in C_c(\mathbb{R}^d)$, then $\lim_{t \rightarrow 0} u (x,t) = f(x)$ uniformly in $x$. 
+
+\item  If $f \in L^1(\mathbb{R}^d)$, then $\int \vert u(x,t) - f(x) \vert \, dx \rightarrow 0$ as $t \rightarrow 0$. We estimate $f$ with a continuous function, so let
+$$g \in C_c, \Vert f-g \Vert_1 < \varepsilon$$
+$$ \Vert P_t(f) - f \Vert_1 \leq \Vert P_t(f-g)\Vert_1 + \Vert P_t(g) -g \Vert_1 + \Vert g-f \Vert_1$$
+
+We want to estimate the whole integral. When we have $$\int \Vert P_tg(x) - g(x) \vert \,dx \leq \iint P_t(y) \vert g(x-y) - g(x)\vert \,dy \,dx$$
+$$\leq \int P_t(y) \int \vert g(x-y) - g(x) \vert \, dx \, dy$$
+We split the integral into two different integrals with different bounds. For some, the domain of the first will be $<N$ and the second will be $\geq N$. We choose $N$ in $\int \vert f \vert < \infty$. \\
+
+\noindent There is something that is not like before in the other context. Let $f \in L^1(\mathbb{R}^d)$. $f$ is not necessarily continuous, it could be discontinuous every. Is
+$$\lim_{t\rightarrow 0 }u(x,t) = f(x) \text{ at each } x ?$$
+It is not uniformly convergent. \\
+
+Almost every $x$, if the set where it does not work has measure 0. if it can be covered by arbitrarily small covers. For any $\varepsilon$, we can cover the set of all problem points with balls, and the volume of the balls will be less than $\varepsilon$. 
+\end{enumerate}
+
+(3) 
+
+It is possible for a sequence of function $\int \vert f_n - f \vert \rightarrow$ but $f_n(x) \not\rightarrow f(x)$ for all $x$ .
+
+(4)
+
+Let $\alpha>0$, and $E_{\alpha} = \{ \limsup_t\rightarrow 0 \vert u(x,t) - f(x) \vert > \alpha\}$
+
+It is the upper bound on all the limits, the limit infimum is the lower bound on all the limits. If limit supremum and limit infimum is equal. 
+
+We want to prove that $E_\alpha$ has measure 0. We have to approximate using a continuous function. 
+
+$$P_t(x) * f(x) - f(x) = P_t*(f-g) + P_t(g(x)-g(x) + g(x) - f(x)$$
+for $g \in C$ such that $\Vert g-f \Vert_1 < \varepsilon$. 
+
+$g(x)-f(x)$ is not a problem becuase if you take the measure of the size
+$$ \vert \{ x : \vert f(x) - g(x) \vert > \alpha \} \vert = \int_{\vert f-g\vert > \alpha} 1 \,dx \leq \int \frac{\vert f-g\vert }{\alpha} \, dx
+ = \frac{1}{\alpha} \Vert f-g \Vert_1 < \frac{\varepsilon}{\alpha} $$
+ 
+$$\int P_t(y) (f(x-y)-g(x-y)) \,dx = ?$$
+
+Hardy-Littlewood maximal function. Let $f \in L^1(\mathbb{R}^d)$, we will consider 
+$$Mf(x) = \sup_{r>0}\frac{1}{\vert B_r(x)\vert}\int_{B_r(x)} \vert f(y)\vert \,dy $$
+
+We consider all possible balls around $x$, larger balls make the integral go to zero because you divide by its volume. The problem is when $r$ is small. If we can control the maximal function, then we can control the original integral we are trying to estimate above. \\ 
+
+\noindent \textbf{Theorem}: There exists a constant $A > 0$ such that for every $f \in L^1(\mathbb{R}^d)$
+$$\vert u(x,t) \vert \leq A Mf(x) \text{ for all } t > 0$$
+(5)
+
+\noindent The idea is to take a Poisson integral, and split the integral into parts. We are going to split the integral into
+$$u(c,y) = \int P_t(y)f(x-y) \,dy$$
+$$ = \int_{\vert y \vert \leq t} + \sum_{j=1}^\infty \int_{2t < \vert y \vert \leq 2^jt}$$
+
+Each one of the integrals can be compared to an average of $f$. The first is given by 
+$$\int_{\vert y \vert \leq t} \frac{2t}{\omega_{d+1}(\vert y\vert^2 + \vert x \vert^2)^{(d+1)/2}} \vert f(y) \vert \,dy \leq \frac{2}{\omega_{d+1}} \frac{1}{t^d} \int_{\vert y \vert \leq t} \vert f(x-y) \vert \,dt = \frac{2\omega_d}{\omega_{d+1}} \frac{1}{\vert B_t(x)\vert } \int_{\vert B_t(x)\vert } \vert f \vert \leq A Mf(x)$$
+$$ \int_{2^{j-1}t < \vert y \vert \leq 2^jt} \frac{2t}{\omega_{d+1}(\vert y\vert^2 + \vert x \vert^2)^{(d+1)/2}} \vert f(x-y) \vert \,dy $$ 
+$$\leq \int_{2^{j-1}t < \vert y \vert \leq 2^jt} \frac{2t}{\omega_{d+1}}(\vert y\vert^{d+1} \vert f(x-y) \vert \,dy $$
+$$\leq A \frac{t}{(2^{j-i}t)^{d+1}} \int_{2^{j-1}t < \vert y \vert \leq 2^jt} \vert f(x-y) \vert \,dy$$
+$$\leq \frac{A}{2^j \vert B_{2^it}(x)\vert} \int_{B_2^it} \vert f \vert \leq \frac{A}{2^j} Mf(x)$$
+Therefore, 
+$$\vert u(x,t) \vert \leq \sum^\infty_{j=0} \frac{A}{2^j} Mf(x) = 2 A Mf(x)$$
+
+\end{document}

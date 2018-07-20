@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 11: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Pointwise Convergence of Fourier Series} \\
+\noindent \textbf{Theorem}: Let $f$ be a (square) integrable function on the circle which is differentiable at $x_0$. Then,
+$$ S_N(f)(x_0) \rightarrow f(x_0) \text{ as } N \rightarrow \infty$$
+\begin{proof}
+\begin{align*}
+S_N(f)(x_0) - f(x_0) &= \frac{1}{2\pi} \int^\pi_{-\pi} f(x_0 - t) D_N(t) \, dt - f(x_0) \frac{1}{2\pi} \int^\pi_{-\pi} D_N(t) \, dt \\
+&= \frac{1}{2\pi} \int^\pi_{-\pi} f(x_0 - t) - f(x_0) D_N(t) \, dt \\
+&= \frac{1}{2\pi} \int^\pi_{-\pi} f(x_0 - t) - f(x_0) \frac{\sin(N+\frac{1}{2})t}{\sin(\frac{t}{2}} \, dt \\
+&= \frac{1}{2\pi} \int^\pi_{-\pi} \frac{f(x_0 - t) - f(x_0)}{t}\frac{t}{\sin(t/2)} \cos (t/2)\sin(Nt)  \, dt \\
+&+ \frac{1}{2\pi} \int^\pi_{-\pi} \frac{f(x_0 - t) - f(x_0)}{t}\frac{t}{\sin(t/2)} \sin(t/2)\cos(Nt)  \, dt \\
+\end{align*}
+\noindent For the top part of the equation, the value of $\frac{f(x_0 - t) - f(x_0)}{t}$ goes to $f'(x_0)$, the value of $(\frac{t}{\sin(t/2)}$ goes to 2 and $\cos(t/2)$ goes to 1 as $t \rightarrow 0$.  \\
+
+\noindent For the bottom part of the equation, the value of $\frac{f(x_0 - t) - f(x_0)}{t}$ goes to $f'(x_0)$, the value of $(\frac{t}{\sin(t/2)}$ goes to 2 and $\sin(t/2)$ goes to 0 as $t \rightarrow 0$.  \\
+
+\noindent Therefore, we are bounded at the origin, and we do not need to worry about the function blowing up too much. If we go away from the origin, since both $\frac{t}{\sin(t/2)} \cos (t/2)\sin(Nt)$ and $\frac{t}{\sin(t/2)} \sin(t/2)\cos(Nt)$ are (square) integrable, we can conclude by the Riemann-Lebesgue Lemma $\vert S_N(f)(x_0) - f(x_0) \vert \rightarrow 0$ as $N \rightarrow \infty$.
+\end{proof}
+
+\noindent This theorem does not address the problem with jumps in our function, however, there is another theorem which addresses this. \\
+
+\noindent \textbf{Theorem}: Let $f$ be a (square) integrable function on the circle such that $f'(x_0^+)$ and $f'(x_0^-)$ exists. Then $S_N(f)(x_0) \rightarrow \frac{x_0^+ + x_0^-}{2}$. \\
+
+\noindent The proof is very similar to the previous theorem's proof. \\
+
+\noindent \textbf{Non-Convergence} \\
+\noindent There exists an integrable function which is continuous at a point $x_0$ such that the partial sum $S_N(f)(x_0)$ does not converge. \\
+
+\noindent You can fail at infinitely many points, but those points will be in a set of measure 0. If you ever have $\vert f(x)-f(y)\vert \leq C \vert x-y \vert^\alpha$ for any $\alpha>0$, will imply uniform continuity. \\
+
+\noindent \textbf{Gibbs Phenomenon} \\
+\noindent Suppose we had the following trigonometric series, 
+$$ \sum^N_{k=1} \frac{1}{k} \sin(kx) = S_N(f)(x) \rightarrow f(x) = \frac{\pi}{2} -x \text{ on } (0, 2\pi]$$
+
+\noindent For a fixed big $N$, (1) \\
+
+\noindent Things look bad near the endpoints, when there is no uniform convergence. \\
+
+\noindent \textbf{Uniform Convergence of Fourier Series} \\
+\noindent \textbf{Theorem}: Let $f$ be continuously differentiable (once but not twice) on the circle. Then its Fourier converges uniformly to $f$.
+\begin{proof}
+Since $f'$ is continuous, then it is square integrable and Parseval's identity holds. In addition, from a Corollary, $\widehat{f'}(n) = in\hat{f}(n)$. We want to show the convergence of the following:
+$$\sum^\infty_{n=-\infty} \vert \hat{f}(n) \vert = \sum^\infty_{n=-\infty} \frac{1}{n} \vert \widehat{f'}(n) \vert \leq \Big(\sum^\infty_{n=-\infty} \frac{1}{n^2}\Big)^{\frac{1}{2}}\Big(\sum^\infty_{n=-\infty} \vert \widehat{f'}(n) \vert^2 \Big)^{\frac{1}{2}}= \infty$$
+\end{proof}
+\noindent The proof requires a case when $n=0$. 
+
+\noindent \textbf{Fourier Transforms on the Real Line ($\mathbb{R}$)} \\
+\noindent The main ideas is that if we have a function $f$ on $[0,1]$ with period 1, $n \in \mathbb{N}$. Then, we want to find out when the following equality holds.
+$$\hat{f}(n) = \int^1_0 f(x)e^{-2\pi inx} \, dx, f(x) = \sum^\infty_{n=-\infty} \hat{f}(n) e^{2\pi i nx}$$
+
+\noindent Let $f$ on $\mathbb{R}$ with no period, $\xi \in \mathbb{R}$, then we are interested when the following equality holds.
+$$\hat{f}(\xi) = \int^\infty_{n=-\infty} f(x) e^{2\pi i n \xi x} \, dx, f(x) = \sum^\infty_{n=-\infty} \hat{f}(\xi) e^{2\pi i \xi x}d \xi$$
+
+\noindent We need more than just $f$ is integrable. We will look at the Schwartz space to see how much is really needed. \\
+
+\noindent \textbf{The Schwartz Space} \\
+\noindent The Schwartz Space on $\mathbb{R}$, denoted by $\mathcal{S}(\mathbb{R})$ consists of all indefinitely differentiable functions $f$ such that $ \sup_{x\in \mathbb{R}}\vert x \vert^k \vert f^{(i)}(x) \vert < \infty$ for every $k, i \geq 0$. The purpose is if we multiply by any polynomial, it will still decay fast enough. \\
+
+\noindent \textbf{Note}: If $f \in \mathcal{S}(\mathbb{R})$ then $x^kf^{(i)}(x) \in \mathcal{S}(\mathbb{R})$ for all $k,i \geq 0$.  \\
+
+\noindent \textbf{Note}: The space $\mathcal{S}(\mathbb{R})$ is a vector space. \\
+\noindent \textbf{Example}: $e^{-ax^2}$, for $a>0$ is in $\mathcal{S}(\mathbb{R})$, in other words, we are not looking at the empty set. \\
+
+\noindent For $f \in \mathcal{S}(\mathbb{R})$ define Fourier transform, 
+$$\hat{f}(\xi) = \int^{\infty}_{-\infty} f(x) e^{-2\pi i \xi x} \, dx$$
+
+\noindent We use this because this set of function is dense, so we are able to obtain any function we would like.  \\
+
+\noindent \textbf{Useful Facts} \\
+\noindent i) $f(x+h) \Longrightarrow^{\text{Fourier Transform}} e^{2\pi ih \xi} \hat{f}(\xi)$ \\
+\noindent ii) $f(x)e^{-2\pi ixh} \Longrightarrow^{\text{Fourier Transform}} \hat{f}(\xi + h)$ \\
+\noindent iii) $f(\delta x) \Longrightarrow^{\text{Fourier Transform}} \delta^{-1}\hat{f}(\delta^{-1}\xi), \delta >0$ \\
+\noindent iv) $f'(x) \Longrightarrow^{\text{Fourier Transform}} 2\pi i \xi \hat{f}(\xi)$ \\
+\noindent v) $-2\pi ix f(x) \Longrightarrow^{\text{Fourier Transform}} \frac{d}{d\xi} \hat{f}(\xi)$
+\end{document}

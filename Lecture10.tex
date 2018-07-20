@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 8: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{Spherical Harmonics} \\
+\noindent We are interested in developing the Fundamental Harmonics on the Sphere (for any dimension). Let $\mathcal{P}_k$ be the set of homogeneous polynomials of degree $k$ with $d$ variables. \\
+
+\textbf{Example}: Let $d=3$, then
+\begin{align*} P_4 &= \{x_1^4,x_1^2x_2^2, x_1^4 + 2x_2^2x_2^2 - x_3^4, \dots \} \\
+&= \text{span}\{x_1^{\alpha_1}x_2^{\alpha_2}x_3^{\alpha_3} = 4\}
+\end{align*}
+
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+\item The set $\mathcal{P}_k$ forms a vector space with dimension
+$$\dim(\mathcal{P}_k) = \binom{k+d-1}{k},$$
+where $d$ is the number of variables. To see this, find how many solutions to the equation $\alpha_1 + \cdots + \alpha_d = k$ (or how many ways to buy $k$ bagels with $d$ choices). \\ 
+\end{enumerate}
+
+\noindent Let $p \in \mathcal{P}_k$, then we have the following identities:\\
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+\addtocounter{enumi}{1}
+\item For $t \in \mathbb{R}$, then $p(t\textbf{x}) = t^kp(\textbf{x})$. \\
+\item (Euler's Identity) The polynomial $p \in \mathcal{P}_k$ if and only if $\sum x_j \partial_j p = kp$ (in fact, this property holds for all homogeneous differentiable functions, but for our purpose, we focus on all homogeneous polynomials). \\
+\end{enumerate}
+
+\noindent Let $\mathcal{H}_k = \{p \in \mathcal{P}_k : \Delta p=0\}$. Using this space of polynomials, we can find infinitely many harmonics by taking linear combinations of its basis elements. Therefore, it is of much interest to find this basis. \\
+
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+\addtocounter{enumi}{3}
+\item For all $k \in \mathbb{N}$, $\mathcal{P}_k = \mathcal{H}_k \oplus \vert x \vert^2 \mathcal{P}_{k-2}$, where $\oplus$ is a direct sum of vector spaces. \\
+\end{enumerate}
+
+\noindent  This means, for all $p \in \mathcal{P}_k$, there exists $h \in \mathcal{H}_k$ and $f \in \mathcal{P}_{k-2}$ such that $p = h + f$. If $\vert x \vert^2 \mathcal{P}_{k-2}$ and $\mathcal{H}_k$ share no basis elements ($\vert x \vert^2 \mathcal{P}_{k-2} \cap \mathcal{H}_k = \{0\}$), then $h+f$ is unique and 
+$\dim(\mathcal{P}_k) = \dim(\mathcal{H}_k) + \dim(\vert x \vert^2 \mathcal{P}_{k-2})$. Using (4), we can show the dimension of $\mathcal{H}_k$. \\
+
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+\addtocounter{enumi}{4}
+\item For all $k \in \mathbb{N}$, 
+$$\dim(\mathcal{H}_k) = \binom{k+d-1}{k} - \binom{k+d-3}{k-2} = \frac{(2k+d-2)(k+d-3)!}{k!(d-2)!}$$
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,129 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 23: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Examples (of measures)} \\
+\begin{enumerate}
+\item Counting measure, $\#\{1, 3, 9 ,11\} = 4$. The number of elements in a set.
+\item Dirac measures
+$$\delta_0([-1,1])=1, \delta([1,3])=0$$
+\item Gaussian probability measure
+$$P(E)=\int_E e^{-\pi x^2} \, dx$$
+Note $P(\mathbb{R})=1$. 
+\item Lebesgue measure
+$$\vert E \vert = \int_{\mathbb{R}} \chi_E(x) \,dx$$
+We can definitely calculate this if 
+$$\chi_E(x) = \begin{cases} 1 & \text{ if } x\in E \\ 0 & \text{else} \end{cases}$$
+Riemann integrable, $\mathbb{Q}$ countable so label $\mathbb{Q}=\{q_1, q_2, \dots\}$
+$$\vert \mathbb{Q} \vert = \vert \bigcup^\infty_{n=1}\vert = \sum^\infty_{n=1} \vert \{q_n\} \vert = 0$$
+\item Spherical measure, 
+$$\sigma(E) = \int_{E\cap S^{d-1}} d\sigma(\gamma)$$
+\end{enumerate}
+These are examples of measures, we are going to look at a little bit of theory. \\
+
+\noindent \textbf{Theory}: We look at simple step functions to develop the integral with respect to the measure.
+\noindent For an elementary function
+$$f= \sum_{i=1}^n \alpha_i \chi_{A_i}$$
+with disjoint sets $A_i$ define 
+$$\int f \, d\mu  = \int f(x) d\mu(x) := \sum^n_{i=1} \alpha_i \mu(A_i)$$
+We can extend this to more general functions (not just step functions) by 
+$\int f \, d\mu = \sup g \, d\mu$, where $g \leq f$ and $g$ is elementary. In particular, this means that
+$$\mu(A)= \int_A \, d\mu$$
+
+\noindent \textbf{Example}: If $f(x)$ is integrable, then $d\mu(x) = f(x)dx$ is a well defined measure. This shows you that for any integrable function, we can define a measure. Therefore, measures are an extension of integrals. For Fourier transform of a measure, 
+$$\hat{\mu}(\xi) = \int_{\mathbb{R}^d} e^{-2\pi i x \cdot \xi} \, d\mu(x)$$
+This is an extension of what we've done before. \\
+
+\noindent \textbf{Example}: We calculated $\hat{\sigma}(\xi)$. \\
+
+\noindent \textbf{Hausdorff dimension}:
+\noindent Let $E \subseteq \mathbb{R}^d$. We want to figure out how to assign a dimension to it. For $\alpha, \varepsilon > 0$, define,
+$$H_\alpha^\varepsilon(E) = \inf \Big(\sum^\infty_{j=1} r_j^\alpha\Big) $$
+where $E$ is covered by balls of radius $r_j < \varepsilon$. Define
+$$H_\alpha(E)=\lim_{\varepsilon \rightarrow 0^+} H_\alpha^\varepsilon(E)$$
+One thing to point out is that this is an increasing quantity. This value increases as the $\varepsilon$ goes down. It makes it more difficult to choose the proper ball to cover $E$. We say $\dim_H(E) = \alpha_0$ if $H_\alpha(E)$ for any $\alpha < \alpha_0$ and $H_\alpha(E)=0$ for $\alpha > \alpha_0$.  \\
+
+Imagine that we have a subset of a plane in 3D, if we are trying to measure it with a dimension that is too large (you get zero because the volume of plane is 0), but if its too small we get infinity (think about that there are infinitely many lines in a plane). \\
+
+\noindent \textbf{Example}: $\dim_H([0,1]^2) = 2$. Here is the idea of how to calculate:
+(1)
+
+\noindent If covering with balls of radius $\varepsilon$ then need about $\frac{1}{\varepsilon^2}$ balls. 
+
+$$\sum r_j^\alpha = \begin{cases} \frac{1}{\varepsilon^2} \varepsilon^\alpha = \varepsilon^{\alpha-2} \rightarrow 0 \text{ as } \varepsilon \rightarrow 0 & \text{ if } \alpha>2 \\ 1 & \text{ if } \alpha = 2 \\ \varepsilon^{\alpha-2} \rightarrow \infty \text{ as } \varepsilon \rightarrow 0 & \text{ if } \alpha < 2 \end{cases}$$
+
+\noindent \textbf{Example}: Cantor middle third set has Hausdorff dimension $\frac{\ln(2)}{\ln(3)}$. \\
+
+\noindent \textbf{Frostman's Lemma} \\
+\noindent For $A \subseteq \mathbb{R}^d$ compact, $H_s(A) > 0$ if and only  there is a probability measure $\mu$ supported on $A$ and a constant $c>0$ such that (*) $\mu(B(x,r)) \leq C r^s$ for all $x \in \mathbb{R}^d$, for all $r>0$. \\
+
+\noindent This means that since this is positive, then this is not too large of an $s$, if it was too large, the measure would be 0, this $s$ is a lower bound on your dimension. This happens if and only if you get a measure, not only do you get a probability measure, you get a really nice measure. We get that the volume of the ball is the radius raised to the appropriate $s$. This conditions means that it is spread out and not concentrated at a subset.
+
+In particular, one gets
+$$\dim_H(A) = \sup \{ s: \text{ there is a probability measure } \mu \text{ such that (*) holds} \}$$
+
+A measure satisfying (*) is often called a Frostman measure. \\
+
+Here is the idea of the proof:
+
+\noindent $(\Leftarrow)$: If you have $\mu$ satisfying (*) and $B_j$ are balls covering $A$ of radius $r_j$,
+$$\sum_j r_j^s \geq \frac{1}{c} \sum_j \mu(B_j) \geq \frac{1}{c} \mu(A) = \frac{1}{c} \cdot 1  > 0$$
+This implies that $H_s(A) > 0$.  \\
+
+\noindent $(\Rightarrow)$: (2) We build a particular measure by constructing measures and taking the limit of all of the measures and its limits will converge to a measure that does exactly what we want.
+
+\noindent \textbf{Energy Integrals}
+The $s$-energy, $s>0$, of a measure $\mu$,
+$$I_s(\mu) = \iint_{\mathbb{R}^{2d}} \vert x - y\vert^{-s} \, d\mu(x) \, d\mu(y)$$
+($\vert x- y \vert^{-s}$ is a repelling factor)
+
+Idea: 
+$$I_s(\mu)= \iint \vert x - y\vert^{-s} \, d\mu(x) \, d\mu(y)$$
+$$\iint \int \widehat{\vert x-y \vert^{-s}}(\xi) e^{2\pi i (x-y) \cdot \xi} \, d\xi \, d\mu(x) \, d\mu(y)$$
+$$= \gamma(s,d) \vert \xi \vert^{s-d} \int e^{2\pi i x \xi} \, d\mu(x) \int e^{-2\pi i y \xi} \, d\mu(y) d \xi$$
+
+$$\int e^{2\pi i x \xi} \, d\mu(x) \text{ and } \int e^{-2\pi i y \xi} \, d\mu(y) \text{ are conjugates of each other} $$
+$$= \gamma(s,d) \int \vert \hat{\mu}(\xi)\vert^2 \vert \xi \vert^{s-d} \, d\xi$$
+
+\noindent \textbf{Summary}: \\
+\noindent $I_s(\mu) = \gamma(s,d) \int \vert \hat{\mu}(\xi)\vert^2 \vert \xi \vert^{s-d} \, d\xi$ where $\gamma = \pi^{s-\frac{d}{2}} \frac{\Gamma(\frac{d-s}{2})}{\Gamma(\frac{s}{2})}$
+
+\noindent \textbf{Theorem}: For $A \subseteq \mathbb{R}^d$ compact,
+$$\dim_H(a) = \sup \{ s: \text{ there is a measure } \mu \text{ supported on } A \text{ such that } I_s(\mu)<\infty\}$$
+
+
+
+\end{document}

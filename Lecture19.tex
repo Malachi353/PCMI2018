@@ -1,0 +1,154 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 19: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{The Hilbert Transform} \\
+\noindent The Hilbert transform is given by the following formula:
+
+$$Hf(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert t \vert \geq \varepsilon} \frac{f(x-t)}{t} \,dt$$
+
+(1)
+This was motivated by taking a function, finding its conjugate and finding what happens as it approaches the boundary. So, if the limit exists (for the equation above), then they are equal. 
+
+\begin{enumerate}
+\item If we take the integral of $Hf$ we get the same value for $f$, so
+$$ \Vert Hf\Vert_2 = \Vert f \Vert_2$$
+In other words, the distance is preserved by the $L^2$ norm. 
+\item There is no $A>0$ such that 
+$$\Vert Hf\Vert_1 \leq A \Vert f \Vert_1$$
+\end{enumerate}
+
+Recall, for the maximal function, 
+
+$$\vert \{ x : Mf(x) > \alpha \} \vert \leq \frac{A}{\alpha} \Vert f \Vert_1$$
+This is the next best thing. This is the weak-$L^1$ bound. We can hope for the Hilbert transform to be of the weak-$L^1$ type. We define weak-$L^1$ to be:  \\
+
+\noindent \textbf{Theorem}: There is $A > 0$ such that for $f \in L^1$ and for $\alpha>0$, $\vert \{ x : Hf(x) > \alpha\} \vert \leq \frac{A}{\alpha}\Vert f \Vert_1$.
+
+This proof is harder, but it is not too hard. \\
+
+\begin{proof}
+We write $f = g + b$, the function $g$ is a $L^2$ function. To construct, we decompose the real line. First, we take dyadic intervals (see (2)). We will choose $m$ to be large enough so that the following is satisfied,
+$$\frac{1}{\vert I \vert} \int_I \vert f \vert \leq \alpha$$
+(2)
+Remember, that any $L^1$ function is finite. So, eventually, the equation above will be bounded for some $m$. 
+
+(3)
+
+If we subdivide an interval, we get two possible cases:
+
+$$\frac{1}{\vert I' \vert} \int_{I'} \vert f \vert \leq \alpha \text{ or } \frac{1}{\vert I' \vert} \int_{I'} \vert f \vert > \alpha$$
+If
+$$\frac{1}{\vert I' \vert} \int_{I'} \vert f \vert > \alpha$$
+We will put $I' \in \mathcal{I}$. Then 
+$$\frac{1}{2\vert I \vert} \int_{I'} \vert f \vert  \leq \frac{1}{\vert I \vert} \int_{I} \vert f \vert \leq \alpha$$ 
+If we have a nice smaller average, if we subdivide again and we look at the averages, if both intervals are larger than $\alpha$, we will subdivide both intervals. We continue forever (limit). So, at the end, we get the set $\Omega = \bigcup_{I \in \mathcal{I}} I$. If $x \not \in \Omega$, then $\frac{1}{\vert I \vert} \int_{I} \vert f \vert \leq \alpha$ for all dyadic intervals that contain $x$, so $f(x) \leq \alpha$ for almost every $x$. This is due to the Lebesgue Theorem, the average of all intervals converges to the value of $f(x)$ for almost every $x$. So, this is going to give way to define the good function. 
+
+$$g(x) = \begin{cases} f(x) & x \not \in \Omega \\
+\frac{1}{\vert I \vert} \int_I f  & x\in I, I \in \mathcal{I} \end{cases}$$
+So if $x \not \in \Omega$, then $\vert g(x)\vert = \vert f(x) \vert \leq \alpha$. For $x \in \Omega$, then $\vert g(x) \vert \leq 2 \alpha$. That means $\vert g(x) \vert 2\alpha$, for all $x$. This is a good function since it is in $L^2$. If I take, the integral of the square of $g$, 
+$$\int \vert g \vert^2 = \int_{\mathbb{R}/\Omega} \vert g \vert^2 + \int_\Omega \vert g \vert^2$$
+We compare one to $f$ and one to $\alpha$ to bound the value. So,
+$$\leq \int_{\mathbb{R}/\Omega} \alpha \vert f \vert  + \int_\Omega (2\alpha)^2$$
+$$ \leq \alpha \Vert f \Vert_1 + 4\alpha^2 \vert \Omega \vert$$
+
+\noindent The measure of $\vert Omega \vert$ is the sum of all the intervals. 
+
+$$ \vert \Omega \vert = \sum_{I \in \mathcal{I}} \vert I \vert \leq \sum_{I \in \mathcal{I}} \frac{1}{\alpha} \int_I \vert f \vert  = \frac{1}{\alpha} \int_\Omega \vert f \vert$$
+This may be the bad set, however, it still has measure $\leq \frac{1}{\alpha} \Vert f \Vert_1$. Therefore, 
+This is because, for $I \in \mathcal{I}$, $\alpha < \frac{1}{\vert  I \vert} \int_I \vert f \vert \leq 2\alpha$. \\
+
+Therefore, the value of $\int \vert g \vert^2 \leq 5\alpha \Vert f \Vert_1$. So taking the Hilbert transform of $f= g +b$, 
+$$Hf = Hg + Hb$$
+$$\{x : Hf(x) > \alpha\} \subset \{x: Hg(x) > \alpha/2\} \cup \{x: Hb(x)> \alpha/2\}$$
+$$\vert \{ x: Hg(x) > \alpha/2\} \vert = \int_{\vert Hg \vert > \alpha/2} 1 \leq \int \frac{\vert Hg\vert^2}{(\alpha/2)^2} = \frac{4}{\alpha^2}\int \vert Hg \vert^2
+= \frac{4}{\alpha^2} \int \vert g \vert^2 \leq \frac{20}{\alpha} \Vert f \Vert_1$$
+
+\noindent Now for the bad function $b$. We are going to let $b = f-g = \sum_{I \in \mathcal{I}} b_{I}$, where $$b_I(x) = \begin{cases}
+f(x)- \frac{1}{\vert I \vert} \int_I f & x \in I \\
+0 & x \not \in I
+\end{cases}$$ 
+
+The good thing about the integrals of $b_I$ is that their integral is $0$. 
+$$\int b_I = \int_I (f(x) - \frac{1}{\vert I \vert} \int f) \,dx = \int f(x)\,dx - \int_I f= 0$$
+$$ \int \vert b_I \vert \leq \int_I \vert f(x) \vert \,dx + \int_I \vert f \vert \leq 4\alpha\vert I \vert$$
+
+Now we take the Hilbert transform,
+$$Hb = \sum Hb_I$$
+$$Hb_I(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert t \vert \geq \varepsilon} \frac{b_I(x-t)}{t} \,dt$$
+First, let us focus on $x \not \in 3I$, 
+(4)
+Let's suppose we do a change of variables,
+$$Hb_I(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert x-t \vert \geq \varepsilon} \frac{b_I(t)}{x-t} \,dt$$
+Therefore, we don't really need to care about the $t$,
+$$Hb_I(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_I \frac{b_I(t)}{x-t} \,dt$$
+We are going to use the fact that the integrals of the $b_I$ are zero. 
+So, 
+$$Hb_I(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert x-t \vert \geq \varepsilon} \frac{b_I(t)}{x-t} \,dt - \frac{1}{\pi} \int_I \frac{b_I(t)}{x-t_0} \,dt$$
+$$= \frac{1}{\pi} \int_I \Big(\frac{1}{x-t} - \frac{1}{x-t_0} \Big) b_I(t) \, dt$$
+Remember that the integral outside of $I$ is zero as well. So, 
+
+$$= \frac{1}{\pi} \int_I \frac{t-t_0}{(x-s)^2} b_I(t) \, dt$$
+for some $s = s(t)$ between $t_0$ and $t$ (we can do this because of the Mean Value Theorem). Therefore, 
+$$\vert Hb_I(x)\vert \leq \frac{1}{\pi}\int \frac{\vert t-t_0\vert}{(x-s)^2}\vert b_I(t)\vert \,dt$$
+$$ \leq \frac{\vert I \vert}{\pi} \int \frac{\vert b_I(t) \vert}{(x-s)^2} \,dt$$
+Now we integrate both sides from the values outside of $3I$,
+$$\int_{x\not\in 3I} \vert Hb_I(x)\vert \,dx \leq \frac{\vert I \vert}{\pi} \int_{x \not \in 3I} \int_I \frac{\vert b_I(t)\vert}{(x-s)^2}\,dt\,dx$$
+$$= \frac{\vert I \vert}{\pi} \int_I \vert b_I(t)\vert \int \frac{\,dx}{(x-s)^2} \,dt$$
+
+We can compare this integral to 
+$$ \int^\infty_{\vert I \vert } \frac{2\,dx}{x^2} \,dt
+ = \frac{2}{\pi} \int_I \vert b_I \vert  = A \alpha \vert I \vert$$
+ 
+ Now we can finally integrate it. Let 
+ $$\Omega* = \bigcup_{I \in \mathcal{I}} 3I (\vert \Omega* \vert \leq 3 \vert \Omega \vert$$
+ Then, by applying the Hilbert transform,
+ $$\int_{\mathbb{R}/ \Omega*} \vert Hb(x) \vert \,dx \leq \sum_{I \in \mathcal{I}} \int_{x \not \in 3I} \vert Hb_I(x)\vert \,dx \leq A \alpha \sum_{I \in \mathcal{I}} \vert I \vert = A \alpha \vert \Omega \vert \leq A \Vert f\Vert_1$$
+ 
+ Now, let look at when $x \not \in \Omega*$. 
+ $$\vert \{ x \not \in \Omega* : \vert Hb(x) > \alpha/2\}\vert \leq \int_{\mathbb{R}/\Omega*} \frac{\vert Hb(x)\vert}{\alpha/2} \,dx \leq \frac{A'}{\alpha} \Vert f \Vert_1$$
+ 
+ This works, but we introduced a singularity, what happens inside of $\Omega*$?
+ 
+ $$\vert \{ x \in \Omega* : Hb(x) > \alpha/2\} \vert \leq \vert \Omega*\vert = 3 \vert \Omega\vert \leq \frac{3}{\alpha} \Vert f \Vert_1$$
+ 
+ This is called the Calder\'on-Zygmund decomposition. 
+ 
+ The Hilbert transform $Hf$ is essentially convolution with $\frac{1}{x}$ and the function $f$. We could replace with some function $K$, where $\hat{K} \in L^2$. This function will be less than $\frac{1}{x^2}$. Therefore, 
+ $$\int_{\vert x\vert \geq \vert t\vert} \vert K(x-t) - K(x)\vert \leq A$$ for some constant $A$. This proof can be modified for other dimensions.
+ \end{proof}
+
+\end{document}

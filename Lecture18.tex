@@ -1,0 +1,110 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 18: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Fourier Transformation} \\
+$$\hat{f}(\xi) = \int f(x) e^{-2\pi i \xi \cdot x} \, dx$$
+
+\noindent \textbf{Straightening Lemma with $f(p)=0$} \\
+\noindent Let $A \subseteq \mathbb{R}^n$ be an open set and let $f:A\rightarrow \mathbb{R}$ be a function of class $C^p$, $p \geq 1$. Let $p \in A$ and suppose $f(p)=0$ and $\nabla f(p) \not =0$. Then there is an open set $U$, an open set $V$ containing $p$ and a function $h: U \rightarrow V$ of class $C^p$ with inverse $h^{-1}: V \rightarrow U$ of class $C^p$ such that
+$$ f(h(x_1, \dots, x_n)) = x_n$$
+
+(1)
+
+\begin{proof}
+Since $\nabla f(p) \not = 0$. And because of that, one of the coordinates must not be zero. Therefore, there exists $i$, such that $\frac{\partial f}{\partial x_i}(p) \not =0$. I know that one is nonzero, and I am going to flip it to the last variable. Define $g: \mathbb{R}^n \rightarrow \mathbb{R}^n$ by $g(x_1, \dots, x_n) = (x_1, \dots, x_{i-1}, x_n, \dots, x_{n-1}, x_i)$.  The map $g$ is linear so $f \circ g$ is of class $C^p$ and 
+$$\frac{\partial(f \circ g)}{\partial x_n}(g^{-1}(p)) = \frac{\partial f}{\partial x_i}(p) \not = 0$$
+Thus, $(f \circ g) : g^{-1}(A) \subseteq \mathbb{R}^{n-1} \times \mathbb{R}$ is a map as in the Implicit Function Theorem. We will reuse some of the tools from the Implicit Function Theorem, since we cannot apply it directly. We define $G: g^{-1}(A) \rightarrow \mathbb{R}^{n-1} \rightarrow \mathbb{R}$ by $G(x,y)= (x,(f\circ g)(x,y))$. As in the proof of the Implicit Function Theorem, there are open sets $W \subseteq \mathbb{R}^n$ and $U \mathbb{R}^n$ with $g^{-1}(p) \in W$ and $(\tilde{p}_1, \tilde{p}_2, \dots, \tilde{p}_{n-1}, 0) \in U$ where $g^{-1}(p) = (\tilde{p}_1, \dots, \tilde{p}_{n})$ such that $G: W \rightarrow U$ has an inverse $G^{-1}:U \rightarrow W$ of class $C^p$. 
+$$(f \circ g) \circ G^{-1}(x_1, \dots, x_n) = (\pi \circ G) \circ G^{-1}(x_1, \dots, x_n) = x_n.$$
+where $\pi$ is a projection of the last coordinate. Define $V = g(W)$ and $h: U \rightarrow V$ by $h = g \circ G^{-1}$. Then $h$ is a $C^p$ function with a $C^p$ inverse such that $f(h(x_1, \dots, x_n)) = x_n$. 
+\end{proof}
+
+\noindent We can tackle one of the important problems involving non-stationary phase. \\
+
+\noindent \textbf{Proposition}: (Non-stationary phase) \\
+\noindent Suppose $\Omega \subseteq \mathbb{R}^n$ is open, $\phi: \Omega \rightarrow \mathbb{R}$ is $C^\infty$, $p \in \Omega$ and $\nabla \phi(p) \not= 0$. Suppose that $a \in C^\infty_c$ has its support in a sufficiently small neighborhood of $p$. Then, for any $N$, there exists a constant $C_N$  such that $\vert I (\lambda) \vert \leq C_N\lambda^{-N}$. (You desire a certain amount of decay, we can find a constant that realizes that decay. For any fixed amount of decay works, not necessarily for all $N$ because it may blow up after some value).
+
+\begin{proof}
+The straightening lemma and smooth diffeomorphism invariance reduce this to the case
+$$\phi(x)= x_n + C$$
+(this constant will be irrelevant. Through diffeomorphism and straightening lemma we've simplified down the problem significantly). Letting $e_n = (0 , \dots, 0 ,1) $ get 
+$$I(\lambda) = \int e^{-\pi i \lambda (x_n + C)}a(x) \,dx$$
+($a$ should be supported closely to $p$, this rewriting through the diffeomorphism is happening only within a small neighborhood, that's why we assumed sufficiently close to $p$. Notice that $I(\lambda)$ looks suspiciously like a Fourier transform). 
+$$=(\int a(x) e^{2\pi i (\frac{\lambda}{2}e_n) \cdot x} \, dx) e^{-\pi i \lambda c}$$
+$$ = e^{-\pi i \lambda c} \hat{a}(\frac{\lambda}{2} e_n) \in \mathcal{S}(\mathbb{R}^n)$$
+This function is in the Schwartz space because we assume that $a \in C_c^\infty$. Therefore, its Fourier tranform is also in the Schwartz function and we can obtain as much decay as we would like. 
+\end{proof}
+\noindent We will now try to work for proving results for stationary phase, but first a geometric lemma. \\
+
+\noindent \textbf{Morse Lemma} \\
+\noindent Suppose $\Omega \subseteq \mathbb{R}^n$ is open, $f: \Omega \rightarrow \mathbb{R}^n$ is $C^\infty$, $p \in \Omega$, $\nabla f (p) = 0$  and suppose the Hessian matrix (this is to get rid of degenerate cases)
+$$H_f(p) = \begin{bmatrix}\frac{\partial^2 f}{\partial x_i \partial x_j} (p) \end{bmatrix} \text{ is invertible}.$$
+Then for $a$ unique $k$, $0 \leq k \leq n$, there exists neighborhoods $U$ and $V$ of $0$ and $p$ respectively and a $C^\infty$ diffeomorphism $G: U \rightarrow V$ with $G(0)=p$ and (the $G$ changes the coordinates)
+$$(f \circ G) (x) = f(p) + \sum_{j=1}^k x_j^2 - \sum_{j=k+1}^n x_j^2$$
+(we add squared terms for the positive eigenvalues of the Hessian and subtract squared terms negative eigenvalues of the Hessian. The purpose of this is to make the geometry nicer by using a good coordinate system).
+
+\begin{proof}
+Without loss of generality, assume $p=0$ and $f(p)=0$. Write 
+$$f(y_1, \dots, y_n) = \int^1_0 \frac{df}{dt}(ty_1 \dots, ty_n) \,dt$$
+(think of this as a path integral).
+$$=\int_0^1 \sum_{i=1}^n y_i\frac{\partial f}{\partial y_i }(ty_1, \dots, ty_n) \,dt $$
+Thus if we set
+$$g_i (y_1, \dots, y_n) = \int^1_0 \frac{\partial f}{\partial y_i }(ty_1, \dots, ty_n) \,dt$$
+then,
+$$f(y_1, \dots, y_n) = \sum^n_{i=1} y_ig_i(y_1, \dots y_n)$$
+This has highlighted the linear parts. I don't believe that any of these functions are constants. Since we have a critical point at $0$, we have that 
+$$g_i(0) = \frac{\partial f}{\partial y_i}(0) = 0$$
+We can repeat the process and write 
+$$g_i(y_1, \dots, y_n) = \sum^n_{j=1} y_i h_{ij}(y_1, \dots, y_n)$$
+and thus 
+$$f(y_1, \dots, y_n) = \sum^{n}_{ij=1} y_i y_j h_{ij}(y_1, \dots, y_n)$$
+Can assume that $h_{ij} = h_{ji}$ by replacing $h_{ij}$ with $\tilde{h}_{ij} = \frac{h_{ij} + h_{ji}}{2}$ if necessary. This bring about symmetry. Note that $\frac{\partial^2 f}{\partial x_i \partial x_j}(0) = 2h_{ij}(0)$. So $[h_{ij}(0)]$ is invertible (by the Hessian of $f$). We can apply a linear coordinate change in $y_1, \dots, y_n$ to diagonalize 
+$$\sum^n_{ij=1} y_iy_j h_{ij}(0)$$
+(the sum evaluated at the origin. Now we push to the entire neighborhood.) and since $[h_{ij}(0)]$ is invertible, then diagonal terms are nonzero, so in fact, we can assume that $h_{11} \not = 0$. In fact, $h_11$ is non-zero in the entire neighborhood of $0$ since it is continuous. We define new coordinates as $(x_1, y_2, \dots, y_n)$ where $x_1 = \sqrt{\vert h_{11} \vert } (y_1 + \sum^n_{i=2} y_i \frac{h_{1i}}{h_{11}}$. Note (the Jacobian)
+$$ \frac{\partial(x_1, y_2 \dots y_n)}{\partial(y_1, y_2 \dots y_n)} = \text{det}\begin{bmatrix} \sqrt{\vert h_{11}(0)\vert} & ? & \cdots & ? \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\ 0 & 0 &  \cdots& 1 \end{bmatrix}$$
+is invertible so by the Implicit Function Theorem, there exists a diffeomorphism such that $(y_1, \dots, y_n) \mapsto (x_1, y_2, \dots, y_n)$ in a small neighborhood of $0$. 
+Therefore,
+$$x_1^2 = \vert h_{11} \vert (y_1 + \sum^n_{i=2} y_i \frac{h_{1i}}{h_11})^2 $$
+$$ = h_{11} y_1^2 + 2 \sum^n_{i=2} y_1y_ih_{1i} + \frac{(\sum^n_{i=2} y_i h_{1i})^2)}{h_11}$$
+if $h_{11} > 0$ and same with minus if $h_{11} < 0$, then 
+$$f(y_1, \dots, y_n) = y_1^2 h_{11} + 2 \sum^n_{i=2} y_1 y_i h_{1i} + \sum_{ij > 1}y_iy_j h_{ij} ( \cdots )$$
+become in new coordinates
+$$\pm x_1^2 + \sum_{ij>1} y_i y_j \tilde{h}_{ij}$$
+for new symmetric $\tilde{h}_{ij}$. We continue to finish the process until every coordinates is changed.
+\end{proof}
+\end{document}

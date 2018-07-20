@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 20: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+
+\noindent \textbf{Proposition}: Let us begin with an oscillatory function, 
+$$G_T(x)=e^{-\pi i \langle Tx,x\rangle}$$ \\
+where $T$ is an invertible, real, and symmetric matrix with signature $\sigma = k_+ - k_-$ where $k_+$ and $k_-$ are the number of positive and negative eigenvalues of $T$ counted with multiplicity, respectively. Then, our Fourier transform will be,
+$$\hat{G}_T = e^{-\pi i \sigma/4} \vert \text{det} T \vert^{-1/2} G_{-T^{-1}}$$
+Recall that 
+$$\widehat{e^{-\pi ax^2}}(\xi) = \frac{1}{\sqrt{a}} e^{-\pi \xi^2/a}$$
+The Fourier transform of these exponentials look very similar. Here are the main ideas behind proving this proposition. \\
+
+\noindent \textbf{Ideas}: Show that
+$$\int e^{-\pi i \langle Tx, x \rangle} \hat{\phi}(x) \,dx = e^{-\pi i \sigma/4} \vert \text{det} T \vert^{-1/2} \int e^{\pi i \langle T^{-1} \xi, \xi \rangle} \phi(\xi) \, d\xi$$
+for any $\phi \in \mathcal{S}$. Let us begin with a simple case in one variable, let $n=1$ and say that $T(x)=ax$, where $a>0$ (similar calculations will work when $a$ is negative). Then, we have the following integral,
+$$\int e^{-\pi i a x^2}\hat{\phi}(x) \, dx$$
+Let's do something illegal,
+$$\int e^{-\pi i a x^2}\hat{\phi}(x) \, dx = \int \frac{1}{\sqrt{ai}} e^{-\pi \xi^2/(ai)} \phi(\xi) \, d\xi$$
+We have to do some fixing, 
+$$\int e^{-\pi i a x^2}\hat{\phi}(x) \, dx = \int \frac{1}{\sqrt{a}\sqrt{i}} e^{\pi i\xi^2/a} \phi(\xi) \, d\xi$$
+\noindent The determinant of the matrix $T$ is just $a$, and we still have a square root of $i$, recall from complex that this just means we change the angle,
+$$\int e^{-\pi i a x^2}\hat{\phi}(x) \, dx = \int \frac{1}{\sqrt{a}e^{-\pi/4}} e^{\pi i\xi^2/a} \phi(\xi) \, d\xi$$
+\noindent The numerology works out fine, but we still need to find why it actually works. We can say for now, that it works by analytic continuation. What about with higher dimensions? For $n \geq 2$, if true, $T$ then also true for $S=UTU^{-1}$ with $U \in \text{SO}(n)$. Basically, we can diagonalize $T$. We begin with the following:
+$$\int e^{-\pi i \langle Sx, x \rangle } \hat{\phi}(x) \, dx = \int e^{- \pi i \langle TU^{-1}x, U^{-1}x \rangle}\hat{\phi}(x) \,dx $$
+The $U^{-1}$ is messing with us, so we do a change of variables.
+$$ = \int e^{-\pi i \langle Tx, x \rangle } \hat{\phi}(Ux) \, dx$$
+The Jacobian of these rotations is 1, so we don't need to multiply by any extra terms. We are going to use the properties of Fourier transforms, in particular, we can write it as the following:
+$$=\int e^{-\pi i \langle Tx, x \rangle} \widehat{\phi \circ U}(x) \,dx$$
+$$=e^{-\pi i \sigma/4} \vert \text{det} T \vert^{-1/2} \int e^{\pi i \langle T^{-1} \xi, \xi \rangle} (\phi \circ U)(\xi) \, d\xi$$
+Now, 
+$$=e^{-\pi i \sigma/4} \vert \text{det} T \vert^{-1/2} \int e^{\pi i \langle T^{-1}U^{-1} \xi, U^{-1}\xi \rangle} (\phi)(\xi) \, d\xi$$
+$$=e^{-\pi i \sigma/4} \vert \text{det} S \vert^{-1/2} \int e^{\pi i \langle S^{-1} \xi, \xi \rangle} (\phi)(\xi) \, d\xi$$
+Thus, it is enough to prove for $T$ diagonal but if $T = \begin{bmatrix} d_1 & \cdots & 0 \\
+\vdots & \ddots & \vdots \\ 0 & \cdots & d_n \end{bmatrix}$, then $\langle Tx, x \rangle = d_1x_1^2 + \cdots + d_nx_n^2$. So this follows from repeated use of $n=1$ case. \\
+
+\noindent \textbf{Proposition}: Let $T$ be a real, symmetric, and invertible matrix with signature $\sigma$, $a \in C_c^\infty$ (compactly supported and infinitely differentiable) and define
+$$I(\lambda) = \int e^{-\pi i \lambda \langle Tx, x \rangle} a(x) \, dx$$
+Then, for any $N$
+$$I(\lambda) = e^{-\pi i \sigma/4} \vert \text{det} T \vert^{-1/2} \lambda^{-1/2} (a(0) + \sum^N_{j=1} \lambda^{-j} \mathcal{D}_ja(0) + O(\lambda^{-(n+1)})$$
+Here $\mathcal{D}_j$ are explicit homogeneous constant coefficient differential operators of order $2j$. (If you knew something about the $a$ function a priori, then we could do more explicit computation). 
+
+\begin{proof}
+Let 
+$$I(\lambda) = \int e^{-\pi i \lambda \langle Tx, x \rangle} \hat{a}(x) \,dx $$
+$$= e^{-\pi i \sigma/4} \lambda^{-n/2} \vert \text{det} \vert^{-1/2} \int e^{\pi i \lambda^{-1} \langle T^{-1} \xi, \xi \rangle} \hat{a}(-\xi) \, d\xi $$
+We expand the exponential using a Taylor series,
+$$e^{\pi i \lambda^{-1} \langle T^{-1} \xi, \xi\rangle} = 1 + \sum^N_{j=1} \frac{(\pi i \lambda^{-1}\langle T^{-1} \xi, \xi\rangle)^j}{j!} + O(\frac{\vert \xi \vert^{2N+2}}{\lambda^{N+1}})$$
+Note that 
+$$\int \hat{a}(-\xi) \,d\xi = \int \hat{a}(\xi) e^{2\pi i \xi \cdot 0} \, d\xi = a(0)$$
+Then,
+$$\int \hat{a}(-\xi) \frac{(\pi i \langle T^{-1}\xi, \xi \rangle)^j}{j!} \, d\xi$$
+$$= \int \widehat{\mathcal{D}_ja}(-\xi) \,d\xi = \mathcal{D}_ja(0)$$ 
+\end{proof} 
+\noindent \textbf{Lemma}: Suppose that $\phi$ is smooth, such that $\nabla \phi(p) = 0$ and $G$ is a smooth diffeomorphism $G(0)=p$. Then, (where $D$ is the derivative)
+$$H_{\phi \circ G} (0) = DG(0)^TH_\phi(p)DG(0)$$
+Thus $H_\phi(p)$ and $H_{\phi \circ G}(0)$ have the same signature and 
+$$\text{det} ( H_{\phi \circ G}(0)= \text{det} (DG(0))^2 \text{det}(H_{\phi}(p))$$
+
+\noindent \textbf{Theorem}: (Stationary Phase) \\
+\noindent Let $\phi \in C^\infty(\mathbb{R}^n)$ and assume that $\nabla \phi(p) =0$ and $H_\phi(p)$ invertible. Let $\sigma$ be the signature of $H_\phi(p)$ and let $\Delta = 2^{-n} \vert \text{det} H_\phi(p) \vert$. Then, let $a \in C_c^\infty(\mathbb{R}^n)$ supported in a sufficiently small neighborhood of $p$. Define
+$$I(\lambda) = \int e^{-\pi i \lambda \phi (x)}a(x) \,dx$$
+Then for any $N$, 
+$$I(\lambda)= e^{-\pi i \lambda \phi(p)} e^{-\pi i \sigma/4} \Delta^{-1/2} \lambda^{-n/2}(a(p) + \sum^N_{j=1} \lambda^{-j}\mathcal{D}_ja(p) + O(\lambda^{-(N+1)})$$
+where $\mathcal{D}_j$ are differential operators of degree $2j$. \\
+
+\noindent \textbf{Idea}: Without loss of generality, assume that $\phi(p)=0$, else replace $\phi$ with $\phi - \phi(p)$. Choose a smooth diffeomorphism by Morse's Lemma and use smooth diffeomorphism invariance to get 
+$$I(\lambda) = \int e^{- \pi i \lambda \langle Tx, x \rangle} a(G(y))\vert \text{det} (DG(y))\vert \, dy$$
+where $T$ is a diagonal matrix with diagonal entires $\pm 1$ and signature $\sigma$. Let $b(y) = a(Gy) \vert \text{det} (DG(y))\vert$. Then by the previous proposition, we get 
+$$I(\lambda) = e^{-\pi i \sigma/4}\lambda^{-n/2}(b(0) + \cdots)$$
+By the previous Lemma, $\vert \text{det} (DG(0))\vert = \Delta^{-1/2}$. So in particular, this means that $b(0)= \Delta^{-1/2}a(p)$. Any $2j$th order derivative of $b(y)$ can be expressed as a linear combination of derivatives of $a$ at $p$ up to order $2j$. 
+\end{document}

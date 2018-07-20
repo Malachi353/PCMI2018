@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{An Introduction to Harmonic Analysis}
+\noindent \textbf{Lecture 2: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{Motivation}
+\noindent One of the motivations for Harmonic Analysis is diffusion, which are related to problems involving Partial Differential Equations. One common problem is heat diffusion. \\
+
+\noindent Suppose that we are studying the heat diffusion of a square region $S$ (shown in Figure \ref{square}). Suppose that heat is given by the function $u(x,y,t)$, where $(x,y)$ is a coordinate on the square and $t$ is a given time.  
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\textwidth]{2Square.pdf}
+\caption{}
+\label{square}
+\end{figure}
+
+\noindent We can describe heat using the following equation, where $\sigma$ is the specific heat,
+$$H(t) = \sigma \iint_S u(x,y,t)\,dx\,dy$$
+\noindent and we can obtain the flow of heat by taking the partial derivative of $H(t)$ with respect to $t$. This gives us the following flow equation:
+\begin{align*}
+\frac{dH}{dt} &= \sigma \iint_S \frac{\partial u}{\partial t} (x,y,t) \, dx \, dy \\
+&\approx h^2 \cdot \frac{\partial u}{\partial t} (x,y,t)
+\end{align*}
+
+\noindent By Newton's Law on the right side: 
+$$h\cdot k \Big( \frac{\partial u}{\partial x} (x_0 + \frac{h}{2}, y_0, t) - \frac{\partial u}{\partial x} ( x_0 - \frac{h}{2}, y_0, t) + \frac{\partial u}{\partial y} (x_0, y_0 + \frac{h}{2}, t) - \frac{\partial u}{\partial y} (x_0, y_0-\frac{h}{2},y)\Big) $$
+\end{document}

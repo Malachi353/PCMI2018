@@ -1,0 +1,120 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 6: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{Mean Value Property} \\
+\noindent \textbf{Theorem}: If $u$ is harmonic in $\Omega$ and $\overline{B_r(x_0)} \subset \Omega$, then 
+$$u(x_0) = \frac{1}{\vert S_r(x_0)\vert} \int_{S_r} u(\xi)d\sigma(\xi)$$
+
+\noindent Whenever you have a harmonic function, if you take the average of the function over any sphere, you always get the value at the center. The idea of the proof is use Green's Theorem (1)
+
+\begin{proof}
+By translation, we can assume that $\textbf{x}_0 = \textbf{0}$. Green's Theorem states:
+$$\int_\Omega (u \Delta v - v \Delta u)dx = \int_{\partial \Omega} (u \partial_{\hat{n}} v - v\partial_{\hat{n}} u) d \sigma $$
+
+\noindent  Special case: $u$ harmonic, $v=1$: 
+$$\int_{\partial \Omega} (\partial_{\hat{n}}u) d \sigma = 0$$
+
+\noindent We have to choose two functions, 
+$$v(x) = \begin{cases}
+\log \vert x \vert, d = 2 \\
+\frac{1}{\vert x \vert^{d-2}} d>2
+\end{cases} $$
+
+$$\partial_i v(x) = \begin{cases}
+\frac{x_i}{\vert x \vert^2} \\
+(2-d)\frac{x_i}{\vert x \vert^d} = c_d \frac{x_i}{\vert x \vert^d} \\
+\end{cases}  $$
+
+Our normal vector $\hat{n}$ is given by
+
+$$ \hat{n}=\begin{cases}
+\hat{x}/r, x \in S_r \\
+\hat{x}/\epsilon, x \in S_\epsilon
+\end{cases}$$
+
+$$\partial_{\hat{n}} v = \nabla b \cdot \hat{n} = c_d \frac{\hat{x}}{\vert x \vert^d \cdot \hat{n}} =\begin{cases}
+\frac{c_d}{r^{d-1}}, x \in S_r \\
+-\frac{c_d}{\epsilon^{d-1}}, x \in S_\epsilon
+\end{cases} $$
+(3)
+\begin{align*}
+0&= \int_{S_r} \Big( u \frac{c_d}{r^{d-1}}-(\log r) \partial_{\hat{n}}u\Big) d\sigma + 
+\int_{S_\epsilon} \Big( u \frac{c_d}{\epsilon^{d-1}}-(\log \epsilon) \partial_{\hat{n}}u\Big) d\sigma \\
+&= \frac{c_d}{r^{d-1}}\int_{S_r} u d\sigma - \frac{c_d}{\epsilon^{d-1}}\int_{S_\epsilon} u d\sigma \\
+\frac{c_d}{r^{d-1}}\int_{S_r} u d\sigma &= \frac{c_d}{\epsilon^{d-1}}\int_{S_\epsilon} u d\sigma \\
+\frac{c_d\omega_d}{r^{d-1}}\int_{S_r} u d\sigma &= \frac{c_d\omega_d}{\epsilon^{d-1}}\int_{S_\epsilon} u d\sigma
+\end{align*}
+This value approaches the center $u(0)$.
+\end{proof}
+
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt]
+\item 
+$$ \frac{1}{\vert B_r(x_0)\vert} \int_{B_r(x_0)} u dx = u (x_0) \text{ if } u \text{ is harmonic ( integrate with spherical coordinates)}$$
+\item Maximal principle: If $\Omega$ is connected and $u$ is harmonic, then $u$ doesn't take a maximum, unless $u$ is a constant. 
+\begin{proof}
+Suppose that $M=\max\{u(x): x\in \Omega \}$ and let $A=\{x \in \Omega : u(x)=M\}$. Since we are assuming there is a maximum, $A \not = \emptyset$. $A$ is a closed. Let $x_0 \in A$. Assume $\overline{B_r(x_0)} \subset \Omega$.
+$$M=u(x_0) = \frac{1}{\vert B_r(x_0)\vert } \int_{B_r(x_0)} u dx$$
+$B_r(x_0) \subset A$, so $A$ is open, so it is clopen, but $\Omega$ is connected and $A$ is nonempty, therefore $A=\Omega$. This argument works just as well for a minimum.  
+(4)
+\end{proof}
+\item If $\Omega$ is bounded ($\overline{\Omega}$ compact), and $u$ is harmonic in $\Omega$ continuous on $\overline{\Omega}$, then $u$ takes its maximum and minimum on the boundary of $\Omega$, $\partial \Omega$. 
+\item If $\Omega$ is bounded, $u$, $v$ are harmonic on $\overline{\Omega}$ such that $u = v$ on $\partial \Omega$, then $u=v$. 
+\item The Dirichlet Problem
+$$\begin{cases}
+\Delta u = 0 \text{ in } \Omega \\
+u = f \text{ on } \partial \Omega
+\end{cases} $$
+has at most one solution if $\Omega$ is bounded. 
+\item Louiville's Theorem \\
+If $u$ is harmonic in $\mathbb{R}^d$ and bounded, then it is constant. 
+\begin{proof}
+Suppose that $\vert u \vert \leq M$ and let $x,y\in \mathbb{R}^d$. Then,
+$$u(x) = \frac{1}{\vert B_R(x)\vert} \int_{B_R(x)} u dz, \hspace*{25pt} u(y) = \frac{1}{\vert B_R(y)\vert} \int_{B_R(y)} u dz$$
+
+\begin{align*}
+\vert u(x)-u(y) \vert &= \frac{1}{\frac{w_d}{d}R^d} \Big[ \int_{B_r(x)} u dz - \int_{B_r(y)} u dz\Big] \leq \frac{c}{R^d} \int_{R-\vert x-y \vert < \vert x-z \vert < R + \vert x -y\vert } u dz \\
+&= \frac{c}{R^d}\Big((R+\vert x-y\vert)^d - (R-\vert x - y \vert)^d\Big) \\
+&\leq \frac{C_{x,y}}{R^d}(R^{d-1}) \\
+&= \frac{C_{x,y}}{R}
+\end{align*}
+For any large $R$. 
+
+(5)
+\end{proof}
+\end{enumerate}
+
+\end{document}

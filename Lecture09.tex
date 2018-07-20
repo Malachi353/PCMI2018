@@ -1,0 +1,147 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 9: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Convolution} \\
+\noindent Recall the convolution operation between two functions $f$ and $g$, 
+$$(f * g)(x) = \frac{1}{2\pi} \int^\pi_{-\pi} f(y)g(x-y)\, dy$$ \\
+
+\noindent \textbf{Dirichlet Kernel} \\
+We obtain the Dirichlet Kernel by looking at the partial sums for our Fourier series. Let $S_N(f)(x)$ be the $N$th partial sum of the function $f$:
+
+\begin{align*}
+S_N(f)(x) &= \sum^N_{n=-N} \hat{f}(n)e^{inx} \\
+&= \sum^N_{n=-N} \Big(\frac{1}{2\pi} \int^{\pi}_{-\pi} f(y) e^{-iny} \,dy\Big) e^{inx} && \text{ by definition of } \hat{f}(n) \\
+&= \frac{1}{2\pi} \int^{\pi}_{-\pi} f(y) \sum^N_{n=-N} e^{in(x-y)} \, dy \\
+&= \frac{1}{2\pi} \int^{\pi}_{-\pi} f(y) D_N(x-y) \, dy &&\text{where } D_N(x-y)= \sum^N_{n=-N} e^{in(x-y)} \\
+&= (f * D_N)(x) && \text{ by convolution}
+\end{align*} 
+We call the function $D_N(x)$ the $N$th Dirichlet Kernel. There are a few important facts to be aware of about the Dirichlet Kernel:
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt] 
+\item As with the Poisson Kernel, we have the analogous property, 
+$$ \frac{1}{2\pi} \int^{\pi}_{-\pi} D_n(x) \, dx = 1$$
+\item We have a closed form for the Dirichlet Kernel, which is given by,
+$$D_N(x) = \frac{\sin ((N+\frac{1}{2})x)}{\sin(\frac{x}{2})}.$$
+\item And, we have an upper bound in the size of the Dirichlet Kernel given by the following
+$$\vert D_N(x) \vert \leq C \cdot \min \Big\{ N, \frac{1}{\vert x \vert}\Big\} \text{ if } x\in [-\pi, \pi] \text{ and } N\geq 1$$
+\end{enumerate}
+
+\noindent \textbf{Good Kernel on the Circle} \\
+\noindent A family of kernels $\{K_n(x)\}^\infty_{n=1}$ on the circle are said to be a family of good kernels if
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt] 
+\item For all $n\geq 1$,
+$$\frac{1}{2\pi} \int^{\pi}_{-\pi} K_n(x) \, dx = 1$$
+\item There exists $M>0$ such that 
+$$\int^\pi_{-\pi} \vert K_n(x) \vert \, dx \leq M$$
+\item For every $\delta>0$,
+$$\int_{\delta \leq \vert x \vert \leq \pi} \vert K_n(x) \vert \, dx \rightarrow 0 \text{ as } n \rightarrow \infty$$
+\end{enumerate}
+\noindent For kernels, we want larger coefficients closer to $n=0$ and smaller coefficients as $\vert n \vert$ gets large. This allows for good approximation without needing to compute the coefficients up to a large value of $n$ (whether negative or positive). A benefit of good kernels is given in the following theorem: \\
+
+\noindent \textbf{Theorem}: Let $\{K_n\}$ be a family of good kernels and let $f$ be bounded and integrable on the circle. Then,
+$$ \lim_{n\rightarrow \infty} (f * K_n)(x)=f(x)$$
+whenever $f$ is continuous at $x$. If $f$ is continuous everywhere, then the convergence is uniform. \\
+
+\noindent The question is now, is the Dirichlet kernel a good kernel? Unfortunately not, this is seen if we analyze the second condition,
+$$\int^\pi_{-\pi} \vert D_n(x) \vert \, dx \geq C \cdot \log(N) \text{ as } N \rightarrow \infty.$$
+\noindent Since $D_n$ is bounded below by $C \cdot \log(N)$ for some constant $C$, it is clear that the value tends towards infinity as $N$ gets large (although slow it is still a problem). Therefore, we can conclude that $\{D_n\}$ is not a family of good kernels. So, why did we even bring up Dirichlet kernels? Well, it turns out if we weaken the notion of convergence, we can obtain a good kernel called the Fej\'er Kernel. \\
+
+\noindent \textbf{Fej\'er Kernel} \\
+\noindent We begin with defining a new type of convergence for series. Let $S=\sum^\infty_{k=0} c_k$ be a series, we say $S$ is Ces\'aro summable to $\sigma$ if $\lim_{N\rightarrow \infty} \sigma_N = \sigma$, where $\sigma_N = \frac{S_0 + S_1 + \cdots + S_{N-1}}{N}$ is the $N$th Ces\'aro mean. So, how is this notion of convergence for series weaker? We give an example. \\
+
+\noindent \textbf{Example}: Recall that the series $\sum^\infty_{k=0}(-1)^k$ does not converge since the sum oscillates between 1 and 0; however, this series is Ces\'aro summable to $\frac{1}{2}$. \\
+
+\noindent For Fourier series, the $N$th Ces\'aro mean is
+\begin{align*}
+\sigma_N(f)(x) &= \frac{S_0(f)(x)+ \cdots + S_{N-1}(f)(x)}{N} \\
+&= \frac{(f*D_0)(x) + \cdots + (f*D_{N-1})(x)}{N} \\
+&= \Big(f*\Big(\frac{D_0+ \cdots + D_{N-1}}{N}\Big)\Big)(x) \\
+&= (f*F_n)(x) && \text{where } F_N =\frac{D_0 + \cdots + D_{N-1}}{N} 
+\end{align*}
+\noindent We call $F_N$ the Fej\'er Kernel. We list some facts about the Fej\'er Kernel. \\
+
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt] 
+\item For all $n\geq 1$,
+$$\frac{1}{2\pi} \int^{\pi}_{-\pi} F_n(x) \, dx = 1$$
+\item We have a closed form for the Fej\'er Kernel, which is given by,
+$$F_N(x) = \frac{1}{N} \frac{\sin^2(\frac{Nx}{2})}{\sin^2(\frac{x}{2})}$$
+\item $\{F_N\}$ is a family of good kernels (the second condition for a good kernel follows immediately from (2). 
+\end{enumerate}
+\noindent Using the Fej\'er Kernel, we can prove the following theorem. \\
+
+\noindent \textbf{Weierstrass Approximation Theorem}: For every continuous function $f: \mathbb{R} \rightarrow \mathbb{C}$ with period $2\pi$, and for every $\varepsilon>0$, we can find a trigonometric polynomial $P$ such that for all $x$, $\vert f(x) - P(x)\vert < \varepsilon$. 
+
+\begin{proof}
+We begin by taking a Ces\'aro mean,
+$$\sigma_N(f)(x) = \frac{S_0(f)(x) + \cdots + S_{N-1}(f)(x)}{N} = (f * F_N)(x)$$
+\noindent Recall that the partial sums contain powers of $e^{ix}$, therefore, $S_0(f)(x) + \cdots + S_{N-1}(f)(x)$ (that we divide by a constant $N$) is a trigonometric polynomial. Therefore, since $f$ is continuous everywhere and $F_N$ is a family of good kernel, then $(f*F_N) \rightarrow f$ uniformly. 
+\end{proof}
+
+\noindent \textbf{Mean-Square Convergence of Fourier Series} \\
+\noindent Let $f$ be a continuous function on the circle. Then $\Vert f- S_N(f) \Vert_2 \rightarrow 0$ as $N\rightarrow \infty$.
+
+\begin{proof}
+By the Weierstrass Approximation Theorem, for any given $\varepsilon>0$, there exists a trigonometric polynomial $P$ of degree $M$ such that 
+$$\vert f(x) - P(x) \vert < \varepsilon \text{ for all } x \in [0,2\pi]$$
+\noindent then,
+$$\Vert f - P\Vert_2 = \Big( \frac{1}{2\pi} \int^{2\pi}_0 \vert f(x) - P(x)\vert^2 \, dx \Big)^\frac{1}{2} < \varepsilon$$
+\noindent If $\vert f(x)-P(x) \vert < \varepsilon$, then we get the average of the function, and in fact, we chose the polynomial $P$ such that it fit this condition, therefore, by the Best Approximation Theorem, then,
+$$\Vert f- S_N(f)(x)\Vert_2 < \varepsilon \text{ whenever } N \geq M$$
+\end{proof}
+
+\noindent \textbf{Parseval's Identity} \\
+\noindent From general theory about orthonormal sequences, we have:
+\begin{enumerate}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt] 
+\item Bessel's Inequality
+$$ \sum^\infty_{n=-\infty} \vert \hat{f}(n) \vert^2 \leq \Vert f \Vert_2^2.$$
+\item Riemann-Lebesgue Lemma:
+$$\hat{f}(n) \rightarrow 0 \text { as } \vert n \vert \rightarrow \infty.$$
+In other words, 
+$$\int^{2\pi}_0 \sin(nx) \, dx \rightarrow 0 \hspace*{25pt} \text{ and } \hspace*{25pt} 
+\int^{2\pi}_0 \cos(nx) \, dx \rightarrow 0$$
+\end{enumerate}
+
+\noindent \textbf{Theorem}: Parseval's Identity
+\noindent If we assume that $f$ is continuous on the circle, then 
+$$\sum^\infty_{n=-\infty} \vert \hat{f}(n) \vert^2 = \Vert f \Vert_2^2$$
+
+\begin{proof}
+By the Best Approximation Theorem, we obtain
+$$\Vert f \vert^2_2 = \Vert f - S_N(f) \Vert_2^2 + \sum_{\vert n \vert \leq N} \vert \hat{f}(n) \vert^2$$
+As $N \rightarrow \infty$, $\Vert f- S_N(f)\Vert_2^2 \rightarrow 0$. So, 
+$$\Vert f \Vert_2^2 = \sum_{\vert n \vert \leq N} \vert \hat{f}{(n) \vert^2} \text{ as } N \rightarrow \infty$$
+\end{proof}
+\end{document}

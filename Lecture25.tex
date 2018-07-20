@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 25: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent Recall that,
+$$I_s(\mu)= \iint \vert x-y \vert^{-s} \, d\mu(x) \, d\mu(y) = \gamma(s,d) \int \vert \hat{\mu}(\xi) \vert^2 \vert \xi \vert^{s-d} \,d\xi$$
+
+\noindent \textbf{Theorem}: For $A \subset \mathbb{R}^d$ compact, 
+$$\dim_H(A) = \sup \{ s : \text{ there is a measure } \mu \text{ supported on } A \text{ such that } I_s(\mu) < \infty\}$$
+
+\noindent We connected the dimension set to the finiteness of energy integral. Energy integrals can be rewritten using Fourier transforms. Here is the idea of the proof of the theorem:
+
+\noindent Idea: Say $H_s(A)>0$ so $\dim_H(A) \geq S$. We are starting with the geometric information here. Then, by Frostman's Lemma (there is a nice measure) there exists measure $\mu$ such that (it is a probability measure and supported on $A$ and) $\mu(B(x,r))\leq C r^s$ for all balls $B(x,r)$. If I measure the energy for anything smaller than $s$, I will get something finite, for $0 < t < s$  
+
+$$I_t(\mu) = \iint\vert x -y \vert^{-t} \, d\mu(y) \, d\mu(x)$$
+We rewrite it in a more complicated way using the fundamental theorem of calculus,
+$$= \iint \int_{\vert x-y \vert}^\infty tr^{-t-1} \, dr \,d \mu(y) \, d\mu(x)$$
+
+(1) 
+
+$$= \int t \int^{\text{diam(supp(}\mu))}_0 \frac{\mu(B(x,r))}{r^{t+1}} \,dr \,d\mu(x)$$
+Since we have a compact set, we don't need to go all the way to infinity. 
+$$ \leq t\mu(\mathbb{R}^d) = t$$
+
+So our integral, 
+$$c\int^{\text{diam(supp(}\mu))}_0 r^{-s-t-1} \, dr$$
+will be finite. We start with the dimension, find the measure with a finite energy integral, then we have to go the other way around.
+If on the other hand, $I_s(\mu)<\infty$, then
+$$ \int \vert x-y \vert^{-s} \, d\mu(y) < \infty$$
+for $\mu$ almost all $x \in \mathbb{R}^d$ and (we can find an upper bound that it is less than most of the time) we can find $0 < \mu < \infty$ such that $\tilde{A} = \{x \in A : \int \vert x-y \vert^{-s} \, d\mu(y) < M \}$ has positive $\mu$ measure. Therefore, there is a nonzero integral that will be bounded. 
+
+If we take the restriction of the measure to $A$, then,
+$$u\vert_{\tilde{A}} (B(x,r)) = \int_{B(x,r)} \, d\mu \vert_{\tilde{A}}$$
+$$\leq \int_{B(x,r)} \vert x-y \vert^{-s} r^s d\mu\vert_{\tilde{A}}$$
+$$ \leq M r^s$$
+which means we started with a measure with finite energy and we were able to take a chunk of it (that was nice) and that satisfies conditions needed. Suppose that the measure we just constructed is not a probability measure, then we can scale our values so that it is. So,
+$\mu\vert_{\tilde{A}}$ propertly normalized can be turned into a Frostman measure supported on $A$. Then finish with Frostman's Lemma.
+
+What is this all good for?
+
+\noindent Recall the Erd\"os distinct distance problem
+
+\noindent Let $E = \{x_1, \dots, x_n\} \subseteq \mathbb{R}^2$. Let $\Delta(E)$ be the distance set, 
+$$\Delta(E)=\{\vert x_i - x_j \vert : 1 \leq i < j \leq N\}$$
+Erd\"os was interested in, 
+$\#(\Delta(E)) \geq ?$
+Conjecture was $\#(\Delta(E)) \gtrsim \frac{N}{\sqrt{\log N}}$ as $N\rightarrow \infty$. 
+Guth-Katz proved $\#(\Delta(E)) \gtrsim \frac{N}{\log N}$ as $N\rightarrow \infty$.
+
+\textbf{Falcones (distinct) distance problem} \\
+
+Let $E \subseteq \mathbb{R}^d$ is compact (for control and prevent cases of going off to infinity. Then, we have the distance set
+$$\Delta(E) = \{ \vert x- y \vert: x,y \in E\}$$
+We are asking if I want $N$ distances, how many points do I need? (for Erd\"os problem). For the Falconer set, since we may have an infinite number of points, we need a better measure then the counting measure. How big does $\dim_H(E)$ needs to be to ensure that $\vert \Delta(E)\vert>0$? For example, the set of rational numbers would not be a big set since it has measure 0. 
+
+\noindent Conjecture: $\dim_H(E) > \frac{d}{2} \rightarrow \vert \Delta(E)\vert > 0$. 
+
+Falconer used the same lattice as Erd\"os, but used balls around each point to get the threshold with $\frac{d}{2}$. Some results
+$$\dim_H(E) > \frac{d}{2} +\frac{1}{3}$$
+$$\dim_H(E) > 1.8 \text{ in } \mathbb{R}^3$$
+$$\dim_H(E)>\frac{d}{2} + \frac{1}{4} + \frac{1}{8d-4}$$
+$$\dim_H(E) > \frac{d}{2} + \frac{1}{4}$$
+
+\noindent \textbf{Theorem}: (Falconer '85)
+$$\dim_H(E) > \frac{d}{2} + \frac{1}{2} \rightarrow \vert \Delta(E) \vert >0$$
+\noindent Idea: Incidence theorem is sufficient
+$$\mu \times \mu \{x,y \in E : \vert\vert x-y \vert -t \vert < \varepsilon \} \lesssim \varepsilon$$
+for all $t > 0$ where $\mu$ is a Frostman measure supported on $E$. 
+
+Reason: Cover $\Delta(E)$ by balls $B(t_i, r_i)$ with $r_i < \varepsilon$. 
+$$1 = \mu \times \mu(E\times E)$$
+$$ \leq \sum_j \mu\times\mu(B(t_i,r_i))$$
+If we know that this holds true, then 
+$$\mu \times \mu \{x,y \in E : \vert\vert x-y \vert -t_i \vert < r_i \} \lesssim \varepsilon$$
+$$\lesssim \sum_j r_j$$
+Then we can conclude that $\vert \Delta(E) \vert > 0$. Why is the incidence theorem true? 
+$$\mu \times \mu\{ x,y \in E : \vert \vert x-y\vert - t \vert < \varepsilon \}$$
+$$=\iint \chi_{\{x,y \in E : \vert \vert x-y \vert - t\vert < \varepsilon\}} \,d\mu(x) \,d\mu(y)$$
+$$\lesssim \varepsilon \iint \sigma_t(x-y)\,d\mu(x)\,d\mu(y)$$
+If we are able to this, then we can use Fourier analysis by writing in its inverse Fourier transform form. 
+$$= \varepsilon \iint \int \hat{\sigma}_t (\xi) e^{2\pi i (x-y) \cdot\xi} \, d\xi \,d\mu(x) \, d\mu(y)$$
+$$ = \varepsilon \int \hat{\sigma}_t(\xi) (\int e^{2\pi i x \cdot \xi}\, d\mu(x))(\int e^{-2\pi i x \cdot \xi}\, d\mu(y))\, d\xi$$
+$$= \int \hat{\sigma}_t(\xi) \vert \hat{u}(\xi)\vert^2 \, d\xi$$
+$$\lesssim \varepsilon \int \vert \xi \vert^{-\frac{d-1}{2}} \vert \hat{u} (\xi) \vert^2 \, d\xi$$
+$$= \varepsilon I_{\frac{d+1}{2}}(\mu) <\infty$$
+$$\lesssim \varepsilon$$
+
+What else can we do? 
+
+\noindent We can look at angles instead of distances. (2)
+$$\Delta_{\text{angle}}(E) = \{ \frac{x-y}{\vert x-y\vert} \cdot \frac{z-y}{\vert z-y \vert}: x,y,z \in E\}$$
+Best result
+$$\dim_H(E)> \frac{d}{2} \rightarrow \vert \Delta_{\text{angle}}(E)\vert >0$$
+\end{document}

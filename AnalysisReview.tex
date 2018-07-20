@@ -1,0 +1,176 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools, multicol}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Abstract Integration} \\
+
+\noindent A strong understanding of integration requires topological spaces, open sets, continuous functions, measurable spaces, measurable sets, and measurable functions. \\
+
+\noindent \textbf{Topological Space} \\
+\noindent Let $X$ be a set, and let $\tau$ be a collection of subsets of $X$. We say that $\tau$ is a topology in $X$ if:
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt]
+\item The sets $\emptyset \in \tau$ and $X \in \tau$. 
+\item If $V_i \in \tau$ for $1 \leq i \leq n$, then $v_1 \cap \cdots \cap V_n \in \tau$. 
+\item If $\{V_n\}$ is an arbitrary collection of members of $\tau$, then any union of these members is also in $\tau$.
+\end{enumerate}
+\noindent We call $(X, \tau)$ a topological space, where elements of $\tau$ are open sets. If we have two topological spaces $X$ and $Y$, then $f:X\rightarrow Y$ is continuous if $f^{-1}(V)$ is open in $X$ for every open set $V$ in $Y$. This is the characterization of the continuous function in the context of topology. Topologies can be finite or infinite, just to give a few examples:  \\
+
+\begin{enumerate}[itemsep=0pt, parsep=0pt, partopsep=0pt, topsep=0pt]
+\item $\{X, \emptyset, \{1\}, \{2,3,4\}\}$
+\item $\{X, \emptyset, \{1\}, \{1,2\}\}$
+\item $\{X, \emptyset, \{1\}, \{1,2,3\}\}$
+\item $\{X, \emptyset, \{1,2\}, \{1,2,3\}\}$
+\item \textbf{Discrete Space}: $X$ any non-empty set, $\tau=\mathcal{P}(X)$, where $\tau$ is the discrete topology. 
+\item \textbf{Indiscrete Space}: $X$ any non-empty set, $\tau=\{X,\emptyset\}$, where $\tau$ is the indiscrete topology.
+\item \textbf{Finite-Closed Topology or Cofinite Topology}: Let $X$ be any non-empty set, the topology $\tau$ is finite-closed or cofinite, if all closed subsets of $X$ are $X$ and finite subsets, and if all open sets are $\emptyset$ and all subsets whose complements are finite. 
+\item \textbf{Initial Segment Topology}: $\tau$ consists of $\mathbb{N}$, $\emptyset$ and every set $\{1,2,\dots, n\}$ for any positive integer $n$.
+\item \textbf{Final Segment Topology}: $\tau$ consists of $\mathbb{N}$, $\emptyset$ and every set $\{n,n+1,\dots \}$ for any positive integer $n$. 
+\item \textbf{Countable-Closed Topology}: Let $X$ be any non-empty set, the topology $\tau$ is countable-closed if all closed sets are $X$ and countable subsets of $X$. 
+\item \textbf{Intersection of Topologies}: Let $\tau_1$ and $\tau_2$ be two topologies, then $\tau_1 \cap \tau_2$ is a topology. 
+\item \textbf{Door Space}: Every subset of $X$ is either open or closed or both.
+\item \textbf{Euclidean Topology}: For each $x \in S$, there exists $a,b$ in $\mathbb{R}$ with $a<b$, such that $x\in(a,b)\subseteq S$. \\
+\end{enumerate}
+
+\noindent \textbf{Measurable Space} \\
+\noindent Let $X$ be a set, and let $\mathcal{A}$ be a collection of subsets of $X$. We say that $\mathcal{A}$ is a $\sigma$-algebra in $X$ if:
+
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt]
+\item The set $\emptyset \in \mathcal{A}$. 
+\item If $A \in \mathcal{A}$, then $A^c \in \mathcal{A}$.  
+\item If $\{V_n\}$ is an countable collection of members of, then the union of all these members is also in $\mathcal{A}$.
+\end{enumerate}
+\noindent We call $(X,\mathcal{A})$ a measurable space, where elements of $\mathcal{A}$ are measurable sets. If $X$ is a meaurable space, and $Y$ is a topological space, and $f:X\rightarrow Y$ is measurable if $f^{-1}(V)$ is a measurable set in $X$ for every open set $V$ in $Y$. \\
+
+\noindent \textbf{Metric Spaces} \\
+\noindent A common topological space is a metric space. A metric space is a set $X$ where there is a function $d:X \times X \rightarrow \mathbb{R}$ (called a metric) defined on $X$ such that
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt]
+\item $d(x,y) \geq 0$ for all $x,y\in x$. 
+\item $d(x,y)=0$ if and only if $x=y$.
+\item $d(x,y) = d(y,x)$ for all $x,y \in X$.
+\item $d(x,y) \leq d(x,z)+d(z,y)$ for all $x,y,z \in X$. 
+\end{enumerate}
+
+\noindent Let $x \in X$ and $r \geq 0$, and open ball of radius $r$ is the set $\{y \in X: d(x,y) < r\}$. A closed ball of radius $r$ is the set $\{y \in X: d(x,y) \leq r\}$. \\
+
+\noindent With a metric, we can generalize the idea of disks around points. Let $X$ be a metric and let $\tau$ be the collection of arbitrary unions of open balls. This forms a topology on $X$. The empty set $\emptyset$ is obtained by an empty union of open balls. The whole set $X$ is obtained by taking a union of all open balls. Let $B_1$ and $B_2$ be open balls, then let $x \in B_1 \cap B_2$. Then there exists an open ball $B$ such that $x$ is the center and $B \subseteq B_1 \cap B_2$. Therefore, by taking a union of each of these open balls for each $x \in B_1 \cap B_2$, $B_1\cap B_2$ is open. Let $A_1, \dots, A_k, A_{k+1}$ be open balls. Then, if $A_1 \cap \dots \cap A_k$ is open, then $A_1 \cap \cdots A_k \cap A_{k+1}$ is open by letting $B_1 = A_1 \cap \cdots \cap A_k$ and $B_2 = B_{k+1}$. \\
+
+\noindent Open intervals in $\mathbb{R}$ form the open balls of $\mathbb{R}$ and open disks form open balls in $\mathbb{R}^2$ (under the Euclidean metric of $\mathbb{R}$ and $\mathbb{R}^2$).  Another topological space is the extended real line, where $(a,b)$, $[-\infty,a)$ and $(a, \infty)$ are the open sets. \\
+
+\noindent \textbf{Continuity} \\
+\noindent Continuity is defined by considering neighborhoods of points (which are just open sets containing that point, typically we use open balls). We say that a  function $f: X \rightarrow Y$ is continuous at $x_0 \in X$ if every neighborhood $V$ of $f(x_0)$ there is a neighborhood $W$ of $x_0$ such that $f(W) \subseteq V$.  When we have a metric, we can use the usual delta-epsilon definition. \\
+
+\noindent \textbf{Proposition 1.5}: Let $X,Y$ be topological spaces. A mapping $f: X\rightarrow Y$ is continuous if and only if $f$ is continuous at every point of $X$. 
+\begin{proof}
+Let $f$ be continuous. Let $x_0 \in X$, and let $V$ be a neighborhood of $f(x_0)$. Then $f^{-1}(V)$ is a neighborhood of $x_0$. And $f(f^{-1}(V)) \subseteq V$, therefore, $f$ is continuous at every point $x_0 \in X$. \\
+
+\noindent Let $f$ be continuous at every point $x_0 \in X$. Let $V$ be open in $Y$, for all $x \in f^{-1}(V)$, let $W_x$ be a neighborhood such that $f(W_x) \subseteq V$. Therefore, $W_x \subseteq f^{-1}(V)$ and $f^{-1}(V)$ is equal to the union of all $W_x$, therefore, $f^{-1}(V)$ is open. Therefore $f$ is continuous. 
+\end{proof}
+
+\noindent \textbf{Proposition 1.6}: $X \in \mathcal{A}$ by (ii). $A_1 \cup \cdots \cup A_n \in \mathcal{A}$ be letting $A_k = \emptyset$ for $k \geq n+1$. A countable intersection is in $\mathcal{A}$ by taking the complement of a countable union of the complement of the sets you are interested in. $A-B \in \mathcal{A}$ since $A-B = B^c \cap A$. \\
+
+\noindent \textbf{Note}: If we change condition (iii) to only include finite unions, $\mathcal{A}$ is an algebra. \\
+
+\noindent \textbf{Theorem 1.7}: Let $Y,Z$ be topological spaces, and let $g: Y \rightarrow Z$ be continuous.  \\
+
+\noindent **** 1) If $X$ is a topological space, $f: X\rightarrow Y$ is continuous and if $h=g \circ f$ then, $h:X \rightarrow Z$ is continuous. \\
+\begin{proof}
+Let $x \in X$ and let $V$ be a neighborhood of $h(x_0)$. Then $h(x_0)=(g \circ f)(x_0)=g(f(x_0))$. By continuity of $g$ there exists a neighborhood $W$ of $f(x_0)$ such that $g(W) \subseteq V$. By continuity of $f$, there exists a neighborhood $U$ of $x_0$ such that $f(U) \subseteq W$. Therefore, there exists a neighborhood $W$ such that $g(f(W))\subseteq V$ or $h(W)\subseteq V$. Therefore, $h$ is continuous.   
+\end{proof}
+
+\noindent **** 2) If $X$ is a measurable space, $f:X\rightarrow Y$ is measurable and $h=g \circ f$, then $h: X \rightarrow Z$ is measurable. 
+\begin{proof}
+Let $V$ be an open set in $Z$, then $f^{-1}(V) \in \mathcal{A}$
+\end{proof}
+
+\noindent \textbf{Theorem 1.8} Let $u$ and $v$ be real measurable functions on measure space $X$, let $\phi$ be a continuous mapping of the plane in a topological space $Y$, and define $h(x)=\phi(u(x),v(x))$ for $x \in X$. Then $h: X \rightarrow Y$ is measurable. 
+
+\begin{proof}
+Let $f(x)=(u(x),v(x))$. And let $h=\phi \circ f$. By Theorem 1.7, we must show that $f$ is measurable. Let $R=I_1 \times I_2$, then $f^{-1}(R)=u^{-1}(I_1) \cap v^{-1}(I_2)$. This is measurable since $u$ and $v$ are measurable functions (and so the two sets are measurable and we are taking a intersection of a countable number of measurable sets). We can represent any open set $V$ in $\mathbb{R}^2$ using  a countable union of rectangles $R_i$.  Therefore, since
+$$f^{-1}(V) = f^{-1}\Big(\bigcup_{n \in \mathbb{N}} R_i \Big) = \bigcup_{n \in \mathbb{N}} f^{-1}\Big( R_i \Big) $$
+then $f^{-1}(V)$ is measurable. 
+\end{proof}
+
+\noindent Using Theorem 1.7 and 1.8, we obtain that $f$ is a complex measurable function on $X$ if $f=u+iv$, where $u$ and $v$ are real measurable functions. In addition, $\vert f \vert$ is real measurable. If $g$ is a complex measurable function, then $f+g$ and $fg$ are complex measurable functions. If $E$ is a measurable set in $X$ and 
+$$\chi_E(x) = \left\{ \begin{array}{l l} 1 & x\in E \\ 0 & x \not \in E \end{array} \right.$$
+The function $\chi_E$ is called the characteristic function of $E$. Let $f$ be a complex measurable function, then there is a complex measurable function $\alpha$ such that  $\vert \alpha \vert = 1$ and $f = \alpha \vert f \vert$.  \\
+
+\noindent \textbf{Theorem 1.10} If $\mathcal{A}$ is an collection of subsets of $X$, there exists a smallest $\sigma$-algebra $\mathcal{A}'$ in $X$ such that $\mathcal{A} \subseteq \mathcal{A}'$.  
+
+\begin{proof}
+Let $\Omega$ be the collection of all $\sigma$-algebras. This set is non-empty since the power set of $X$, $P(X)$ is a $\sigma$-algebra. By the definition of $\sigma$-algebra, we are guaranteed that $\emptyset \in \mathcal{A}'$ by the definition of $\sigma$-algebra, so if $\mathcal{A}$ does not have $\emptyset$, then $\mathcal{A}'$ will. Let $A \in \mathcal{A}$, suppose that $A^c \not \in \mathcal{A}$, then we add $A^c$ to $\mathcal{A}'$. Let $\{A_n\}$ be a sequence of sets in $\mathcal{A}$, if $\bigcup \{A_n\}$ is not in $\mathcal{A}$, then we add it to $\mathcal{A}'$. Therefore, $\mathcal{A}'$ is a $\sigma$-algebra.    
+\end{proof}
+
+\noindent \textbf{Borel Sets} \\
+\noindent Let $X$ be a topological space. By Theorem 1.10, there exists a smallest $\sigma$-algebra $\mathcal{A}$ of $X$ such that every open set of $X$ belongs to $\mathcal{A}$. The elements of this $\sigma$-algebra is called the Borel sets. We are guaranteed to have some of the closed sets of the topology, by the complement condition in (ii). We also have the countable union of closed sets $F_{\sigma}$ and the countable union of open sets $G_{\delta}$. Therefore, in this $\sigma$-algebra, we obtain half-open intervals in $\mathbb{R}$. 
+Every continuous mapping of $X$ is Borel measurable. \\
+
+\noindent \textbf{Theorem 1.12}: Let $\mathcal{A}$ be a $\sigma$-algebra in $X$, and let $Y$ be a topological space. Let $f:X\rightarrow Y$. \\
+
+\noindent If $\Omega$ is the collection of all sets $E \subseteq Y$ such that $f^{-1}(E) \in \mathcal{A}$, then $\Omega$ is a $\sigma$-algebra in $Y$. 
+\begin{proof}
+For condition (i), $\emptyset \in \Omega$, therefore since $f^{-1}(\emptyset) = \emptyset \in \mathcal{A}$, then $\emptyset \in \Omega$. For condition (ii), let $A \in \Omega$ such that $f^{-1}(A) \in \mathcal{A}$. Since $f^{-1}(A^c)= f^{-1}(A)^c$, then $A^c \in \Omega$. For condition (iii), let $\{A_n\}$ be a sequence of sets in $\Omega$. Then since $f^{-1}(A_1 \cup \cdots \cup A_n \cup \cdots) = f^{-1}(A_1) \cup \cdots \cup f^{-1}(A_n) \cup \cdots$, then $\bigcup A_n \in \Omega$. Therefore $\Omega$ is a $\sigma$-algebra.  
+\end{proof} 
+
+\noindent If $f$ is measurable and $E$ is a Borel set in $Y$, then $f^{-1}(E) \in \mathcal{A}$.
+
+\begin{proof}
+Let $f$ be measurable and let $E$ be a Borel set. By definition of $f$, for every open set $V$ of $Y$, $f^{-1}(V) \in \mathcal{A}$. By part (a), since we contain all open sets, and $\mathcal{A}'$ is a $\sigma$-algebra of $Y$, then for every Borel set $E$, $f^{-1}(E) \in \mathcal{A}$. Therefore, $f^{-1}(E)$ is a measurable set for all Borel sets $E$. 
+\end{proof}
+
+\noindent If $Y=[-\infty,\infty]$ and $f^{-1}((\alpha,\infty]) \in \mathcal{A}$ for every $\alpha \in \mathcal{A}$, then $f$ is measurable. 
+\begin{proof}
+Since $Y$ is the extended real line, $(a,b)$, $[-\infty, \alpha)$ and $(\alpha, \infty]$ are the open sets of $Y$. By our premise, we are given that $(\alpha, \infty] \in \mathcal{A}$, so we must show that $(a,b)$ and $[-\infty, \alpha)$ is in $\mathcal{A}$. Let $\{\alpha_n\}=\{\alpha-\frac{1}{n}\}$, and let $A_n=(\alpha, \infty]$, by (ii), for each $n$, $A_n^c = [-\infty, \alpha_n] \in \mathcal{A}$. Therefore, by (iii), 
+$\bigcup_{n\in\mathbb{N}} A_n = [-\infty, \alpha)$. For any $\alpha,\beta \in \mathbb{R}$ such that $\alpha<\beta$, $[-\infty, \beta)$, $(\alpha, \infty] \in \mathcal{A}$. Therefore $[-\infty, \beta) \cap (\alpha, \infty] = (\alpha, \beta) \in \mathcal{A}$. Therefore $f$ is measurable.  
+\end{proof}
+
+\noindent ***** If $f$ is measurable, if $Z$ is a topological space, if $g: Y \rightarrow Z$ is a Borel mapping, and if $h = g \circ f$, then $h: X \rightarrow Z$ is measurable. 
+\begin{proof}
+\end{proof}
+
+\noindent \textbf{Upper Limit} \\
+\noindent Let $\{a_n\}$ be a sequence in the extended real line, let $b_k = \sup \{a_k, a_{k+1}, \dots\}$ for $k \in \mathbb{N}$, and let $\beta = \inf\{b_1, b_2, b_3\}$. Then $\beta$ is called the upper limit of $\{a_n\}$, and is denoted by: 
+$$\beta = \limsup_{n \rightarrow \infty} a_n.$$
+
+\noindent We can verify that $b_1 \geq b_2 \geq \cdots$ such that $b_k \rightarrow \beta$ as $k \rightarrow \infty$. \\
+
+\noindent \textbf{Example}: Let $\{a_n\} = \frac{1}{n}$. Then,
+$$b_1 = \sup \{1, \frac{1}{2}, \frac{1}{3}, \cdots\} = 1$$
+$$b_2 = \sup \{\frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \cdots \} = \frac{1}{2}$$
+$$b_3 = \sup \{\frac{1}{3}, \frac{1}{4}, \frac{1}{5}, \cdots \} = \frac{1}{3}$$
+$$b_k = \sup \{\frac{1}{k}, \frac{1}{k+1}, \frac{1}{k+2}, \frac{1}{k+3}\} = \frac{1}{k}$$
+Therefore, $\beta = \inf \{1, \frac{1}{2}, \dots\}$ and $1 \geq \frac{1}{2} \geq \frac{1}{3} \geq \cdots$
+Therefore, $\beta = 0$. 
+
+The reason why $b_1 \geq b_2 \geq \cdots$ is because if we are removing the first $k$ elements of the sequence, the largest element was either in the first $k$ elements of the sequence and therefore $b_i > b_k$ for some $i <k$, or the largest element in some $l > k$, and therefore, $b_i = b_k$ for all $1 \leq i \leq k$. 
+
+\end{document}

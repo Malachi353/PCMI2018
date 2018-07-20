@@ -1,0 +1,109 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 4: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{General Euclidean Space}: $\mathbb{R}^d = \{ (x_1, \dots, x_d) \mid x_i \in \mathbb{R}\}$.  \\
+
+\noindent We will use $x$ for $(x_1,x_2,\dots, x_d)$. For $d=2$, then $x = (x_1, x_2)$.  \\
+
+\noindent Functions of several variables. \\
+\noindent Let $u(x): \Omega \rightarrow \mathbb{R}$, where $\Omega \subset \mathbb{R}^d$, where $\Omega$ is open (meaning it does not contain its boundary). \\
+
+\noindent \textbf{Open Ball}: $B_r(x) = \{y \in \mathbb{R}^d : \Vert x-y \Vert < r \}$, where $\Vert \cdot \Vert$ is the normal Euclidean norm. \\
+
+\noindent \textbf{Closed Ball}: $\overline{B}_r(x) = \{y \in \mathbb{R}^d : \Vert x-y \Vert < r \}$, where $\Vert \cdot \Vert$ is the normal Euclidean norm. \\
+
+\noindent \textbf{Generalized Circle}: $S_r(x) = \{y \in \mathbb{R}^d : \Vert x-y \Vert = r\}$.  \\
+
+\noindent \textbf{Notation}: 
+$$\frac{\partial u }{\partial x_j} = \partial_{x_j}u = \partial_ju$$
+$$\alpha = (\alpha_1, \alpha_2, \dots, \alpha_d), j \in \mathbb{N}$$
+
+\noindent \textbf{The Laplacian in $d$-Dimensions}: \\
+\noindent The Laplacian of $u:\Omega \rightarrow \mathbb{R}$ is defined by $\Delta u:= \partial^2_1 u + \partial^2_2 u + \cdots + \partial^2_d u$. We say that $u$ is harmonic in $\Omega$ if $\Delta u(x) = 0$ for all $x \in \Omega$. 
+\begin{enumerate}[itemsep=0pt, parsep=0pt, partopsep=0pt, topsep=0pt]
+\item Constant functions are harmonic.
+\item Linear functions are harmonic.
+$$ u(x)= a_1x_2 + a_2x_2 + \cdots a_dx_d + b $$
+\item $u(x,y) = xy$ is harmonic in $\mathbb{R}^2$.
+\item $u(x,y) = x^2 - y^2$ is harmonic in $\mathbb{R}^2$.
+\item $u(x,y) = x^3 - 3xy^2$ is harmonic in $\mathbb{R}^2$. 
+\item $u(x,y) = y^3 - 3yx^2$ is harmonic in $\mathbb{R}^2$. 
+\end{enumerate}
+Whenever you take a holomorphic function, you get harmonic functions. For (5) and (6), if we take a linear combination of the two polynomials, we form a basis for all harmonic functions of degree 3. \\
+
+\noindent \textbf{Mean Value Property}: If $u$ is harmonic in $\Omega$ and $\overline{B}_r(x_0) \subset \Omega$, then
+$$\frac{1}{\vert S_r(x_0)\vert} \int_{S_r(x_0)} u(\xi) d\sigma(\xi) = u(x_0)$$
+
+(1)
+
+In $d=2$, then $d\sigma = d\theta$ and
+$$\frac{1}{2\pi}\int^{2\pi}_0 u(x_0 + r \cos\theta, t_0 + r\sin \theta)d \theta$$
+
+
+In $d=3$, then 
+$$\frac{1}{4\pi}\int^{2\pi}_0\int^\pi_0 u(\text{spherical coordinates}) \sin\phi \frac{d\phi d \theta}{d\sigma}$$
+
+$$u(x_0) = \frac{1}{\omega_d} \int_{\mathbb{S}} u(x_0 + r \xi) d\sigma(\xi)$$
+$$\int_{\mathbb{R}^d} u dx = \int_{\mathbb{S}}\int^\infty_0 u (r \xi)r^{d-1} dr d\sigma$$
+where $\omega_d = \frac{2\pi^{d/2}}{\Gamma(d/2)}$. 
+
+For $\alpha>0$, $$\Gamma(\alpha) = \int^\infty_0 t^\alpha e^{-t} \frac{dt}{t}$$
+$$\Gamma(1)=1$$
+$$\Gamma(\alpha) = (\alpha-1)\Gamma(\alpha-1)$$
+$$\Gamma(2) = 1$$ 
+$$\Gamma(3) = 2\Gamma(2) = 2$$
+
+$$\Gamma(d+1) = d!$$
+The Gamma function generalizes the factorial. 
+$$\Gamma(\frac{1}{2}) = \int^\infty_0 t^{1/2} e^{-t} \frac{dt}{t} = \int^\infty_{-\infty} e^{-s^2} ds = \sqrt{\pi}$$
+
+$$\int_{\mathbb{R}^d} e^{-\pi \vert x \vert^2} dx = 1$$
+
+\noindent Some multivariable calculus: Green's Identity. \\
+\noindent Let $\Omega$ be a domain with a smooth boundary. For any smooth boundary, we can define a normal vector from each point on the boundary. 
+$$ \int_{\partial\Omega} (u\Delta v - v \Delta u) dx = \int (u \partial_{\hat{n}} - v \partial_{\hat{n}}u)  d\sigma $$
+
+\noindent Directional Derivative: $\partial_{\hat{n}} u = \nabla u \cdot \hat{n}$.
+
+\noindent Let $u$ be a harmonic, and let $v=1$. If you integrate a harmonic function over the boundary, you will get zero.
+$$ \int_{\partial\Omega} \partial_{\hat{n}}u d\sigma = 0$$
+
+\noindent From a physics perspective, a harmonic function is a case where the heat is flowing out in every direction. 
+
+
+
+\end{document}

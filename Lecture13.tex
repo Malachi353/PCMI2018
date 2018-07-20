@@ -1,0 +1,156 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 13: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Useful Facts}: \\
+\noindent 
+\begin{enumerate}[itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt, label=(\roman*)]
+\addtocounter{enumi}{3}
+\item $f'(x) \Longrightarrow 2\pi i \xi \hat{f}(\xi)$
+\item $-2\pi ix f(x) \Longrightarrow \frac{d}{d\xi} \hat{f}(\xi)$
+\end{enumerate}
+
+\noindent We were talking about Fourier transform, we showed some comparison that were natural for transforms, and then we defined Schwartz spaces. There may be problems with reconstruction. We chose the Schwartz function because we wanted to say something about the Fourier transform, we begin with the following theorem.
+
+\noindent \textbf{Theorem}: If $f \in \mathcal{S}(\mathbb{R})$, then $\hat{f} \in \mathcal{S}(\mathbb{R})$. \\
+\begin{proof}
+$$ \vert \xi^k (\frac{d}{d\xi}^i \hat{f}(\xi) \vert = \vert \widehat{\frac{1}{2\pi i}^k (\frac{d}{dx})^k ( ( -2\pi ix)^if(x))(\xi)}\vert$$ 
+This is still in $\mathcal{S}(\mathbb{R})$, so it is still bounded. OR $< \infty$. 
+
+\end{proof}
+
+This is a good thing, we now understand for recovering a signal in a good space.  \\
+
+There are a couple basic facts,
+$$ \int^\infty_{-\infty} e^{-\pi x^2} \, dx = 1$$
+
+\noindent \textbf{Theorem}: If $f(x) = e^{-\pi x^2}$ then $\hat{f}(\xi) = e^{-\pi \xi^2}$. 
+
+\begin{proof}
+We define $$F(\xi) = \hat{f}(\xi) = \int^\infty_{-\infty} e^{-\pi x^2} e^{-2\pi i x \xi x^2} \, dx$$
+Then, $F(0)=1$ by the fact above. All these functions are nice, so we can sneak the derivative under the integral. There, we get that
+$$F'(\xi) = \int^\infty_{-\infty} e^{-\pi x^2}(-2\pi x) i e^{-2\pi ix \xi } \, dx$$
+
+We choose to do this, because we observe that the $e^{-\pi x^2}(-2\pi x)$ is the derivative of $f$. If I pull out the $i$, then I am left with the original derivative of the Gaussian with an $i$ in the front.
+$$= i \hat{f'}(\xi)$$
+$$=i(2\pi i \xi) \hat{f}(\xi)$$
+$$= -2\pi \xi F(\xi)$$
+
+Set $G(\xi) = F(\xi)e^{\pi\xi^2}$. Then $G(0)=F(0)=1$ and we hope that its derivative is zero then. So,
+$$G'(\xi) = F'(\xi) e^{\pi \xi^2} + F(\xi) 2\pi \xi e^{\pi \xi^2} = 0$$
+Note that $F'(\xi) = -2\pi \xi F(\xi)$, so things cancel out. Therefore $G(\xi)=1$ and thus $F(\xi) = e^{-\pi\xi^2}$
+\end{proof}
+For $\delta> 0$, we will define 
+$K_\delta (x) = \delta^{-\frac{1}{2}} e^{-\pi x^2 / \delta}$, then $\hat{K}_\delta (\xi) = e^{-\pi\delta\xi^2}$. Make sure that you can make that change. What does this do as delta get small, here is a picture: (1) It narrows the support where the values get large. On the other hand, the transform stretches it out. This is when $\delta$ is small. We can also perform convolution on the real line, just as we could on the circle. We define convolution on the real line, this will work for integrable functions as well.
+
+Let $f,g \in \mathcal{S}(\mathbb{R})$, their convolution is defined by 
+$$(f*g)(x) = \int^{\infty}_{-\infty} f(x-t) g(t) \,dt$$
+There are a few properties that need to be worked out,
+
+\textbf{Note}: These are similar as on the circle. \\
+\noindent For $f,g \in \mathcal{S}(\mathbb{R})$ (this does not work for just integrable). \\
+\begin{enumerate}
+\item $f*g \in \mathcal{S}(\mathbb{R})$
+\item $f*g = g*f$
+\item $\widehat{f*g} = \hat{f}\hat{g}$
+\end{enumerate}
+
+\textbf{Theorem}: The collection of $\{K_\delta\}_{\delta>0}$ (we can use real numbers, not just countable sets) is a family of good kernels as $\delta \rightarrow 0^+$. We need to say something as the parameter goes towards a value. 
+
+\noindent If $f \in \mathcal{S}(\mathbb{R})$, then $(f * K_\delta)(x) \rightarrow f(x)$ uniformly in $x$ as $\delta \rightarrow 0^+$. 
+
+\textbf{Note}: That this works for any good kernel. \\
+
+\noindent We need one last thing before we get to the big theorem. \\
+
+\noindent \textbf{Proposition}: If $f,g \in \mathcal{S}(\mathbb{R})$, then 
+$$\int^{\infty}_{-\infty}f(x)\hat{g}(x) \,dx = \int^{\infty}_{-\infty}\hat{f}(y)g(y) \,dy$$
+\begin{proof}
+$$\int^{\infty}_{-\infty}f(x)\hat{g}(x) \,dx $$
+$$= \int^{\infty}_{-\infty}\int^{\infty}_{-\infty}f(x)g(y)e^{-2\pi ixy} \,dy \,dx$$
+$$= \int^{\infty}_{-\infty} g(y)\int^{\infty}_{-\infty}f(x)e^{-2\pi ixy} \,dx \,dy $$
+$$ = \int^{\infty}_{-\infty}\hat{f}(y)g(y) \,dy$$
+\end{proof}
+
+We did all of this work because we wanted to reconstruct our function from the Fourier transform. 
+
+\noindent \textbf{Theorem} (Fourier Inversion)
+
+\noindent If $f,g \in \mathcal{S}(\mathbb{R})$, then $f(x) = \int^\infty_{-\infty} \hat{f}(\xi)e^{2\pi i x \xi } \, d \xi$.
+
+\begin{proof}
+First note  let $x =0$,
+$$f(0)= \lim_{\delta \rightarrow 0^+} (f*K_\delta)(0)$$
+$$f(0)= \lim_{\delta \rightarrow 0^+} \int^\infty_{-\infty} f(x) K_\delta(0-x)\, dx$$
+$$f(0)= \lim_{\delta \rightarrow 0^+} \int^\infty_{-\infty} f(x) \delta^{-1/2}e^{-\pi x^2/\delta} \,dx$$
+As a side note, 
+$$e^{-\pi x^2} = \widehat{e^{\pi \xi^2}(x)}$$
+$$= \delta^{-1/2} e^{-\pi x^2/ \delta} = \delta^{-1/2} \widehat{e^{\pi \xi^2}(x)} (\delta^{-1/2}x)$$
+$$= \widehat{e^{-\pi \delta \xi^2}(x)}$$
+------
+
+
+
+$$ = \lim_{\delta \rightarrow 0^+} \int^{\infty}_{-\infty}$$
+
+\end{proof}
+As a side note, 
+$$e^{-\pi x^2} = \widehat{e^{\pi \xi^2}(x)}$$
+$$= \delta^{-1/2} e^{-\pi x^2/ \delta} = \delta^{-1/2} \widehat{e^{\pi \xi^2}(x)} (\delta^{-1/2}x)$$
+$$= \widehat{e^{-\pi \delta \xi^2}(x)}$$
+
+
+
+
+\noindent \textbf{Corollary} The Fourier transform is a bijective mapping on  $\mathcal{S}(\mathbb{R})$. (3) \\
+$$\mathcal{F}(f)(\xi) = \int^{\infty}_{-\infty}d(x) e^{-2\pi i x \xi} \, dx $$
+If you apply the fourier transform, you get the negative, and if you do it four times, then you get the original function. \\
+
+
+How does the square integrability work with Fourier transform. Inner product and norm on $\mathcal{S}(\mathbb{R})$. 
+We can use the usual, where the inner product
+$$\langle f, g \rangle = \int^\infty_{-\infty} f(x)\overline{g(x)} \, dx$$
+and
+$$\Vert f \Vert_2 = \Big(\int^\infty_{-\infty} \vert f(x) \vert^2 \, dx\Big)^{\frac{1}{2}}$$
+Another theorem that is important is the following,
+
+\noindent \textbf{Theorem} (Plancharel)\\
+
+(4)
+
+
+
+\end{document}

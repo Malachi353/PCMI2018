@@ -1,0 +1,112 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 17: Ricardo S\'aenz} \\
+\noindent http://fejer.ucol.mx/ricardo/ \\
+
+\noindent \textbf{The Conjugate Function} \\
+\noindent We will begin with a problem in the upper-half plane. If we have a function defined on the real line, and $f \in L^1(\mathbb{R})$. Then, the function $u(x,y) = P_y * f(x) = \int^\infty_{-\infty} P_y(s)f(y-s) \,dy$. Recall that the Poisson kernel is given by
+$$ P_\delta (x) = \frac{y}{\pi(x^2+y^2)}.$$
+For every harmonic function $u$ in the plane, there exists a conjugate harmonic function $v$. Remember, they must satisfy the Cauchy-Riemann equations:
+$$\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}  \text{ and } \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$$
+
+The conjugate function can be given by $Q_y * f(x)$, where 
+$$Q_y(x) = \frac{x}{\pi(x^2+y^2)}$$
+Facts: 
+\begin{enumerate}
+\item The function $u(x,y) + iv(x,y)$ is analytic in the upper half space.
+\item $(x,y) \mapsto Q_y(x)$ is harmonic and conjugate to $P_y(x)$
+\item $P_y(x) + i Q_y(x) = \frac{i}{\pi z}$
+Recall that $\frac{1}{z} = \frac{1}{x+iy} = \frac{x-iy}{x^2+y^2}$. So,
+$$\frac{1}{ i z} = \frac{x-iy}{ i(x^2 + y^2)} = \frac{-y}{x^2+y^2} - \frac{ix}{x^2+y^2} = -\Big( \frac{y}{x^2+y^2} + \frac{ix}{x^2+y^2} = P_y + iQ_y$$
+
+Therefore, $v(x,y) = Q_y * f(y)$, $f \in L^1(\mathbb{R})$. In this context, we need to check that $Q_y$ is a good kernel. The first condition,
+$$\int^\infty_{-\infty} P_y(x) \,dx = 1 \hspace*{25pt} \int^\infty_{-\infty} Q_y(x) \, dx = \frac{1}{\pi} \int^\infty_{-\infty} \frac{x}{x^2+y^2} \, dx$$
+But, this integral on the right is not even defined... but that is okay, because it is bounded.
+$$ \vert \int Q_y(s) f(x-s) \,ds \vert \leq \int \vert Q_y(s) \vert \vert f(x-s) \vert \, ds \leq M_y \int \vert f \vert,$$
+where $M_y = \frac{1}{y^2}$. The convolution is okay! It is still harmonic. We can stop trying to prove it is a good kernel. When $y \rightarrow 0$, our constant goes to infinity. When, $y \rightarrow 0$,
+$$\frac{1}{\pi} \int^\infty_{-\infty} \frac{s}{s^2+y^2} f(x-s) \,ds \rightarrow \frac{1}{\pi} \int^\infty_{-\infty} \frac{1}{s} f(x-s) \, ds$$
+But this is okay, because we can rewrite as an improper integral.
+$$\lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert s \vert \geq \varepsilon} \frac{1}{s} f(x-s) \,ds$$
+As we get close to zero, 
+(2)
+
+$$\int^{-\varepsilon}_{-\delta} \frac{1}{s} f(x-s) \,ds + \int^{\varepsilon}_{\delta} \frac{1}{s} f(x-s) \,ds$$
+These integrals will cancel each other out. But we need to be careful because we are taking two limits. We need to make sure that the two limits are the same. Note that one of these limits may not exist. If one of them exists, we want the other to exist. 
+
+\noindent \textbf{Lemma}: Let $f \in L^1(\mathbb{R})$. Then, 
+$$\lim_{\varepsilon\rightarrow 0} \frac{1}{\pi} \Big( \int^\infty_{-\infty} \frac{s}{s^2 + \varepsilon^2} f(x-s) \,ds - \int_{\vert s \vert \geq \varepsilon} \frac{1}{s} f(x-s) \,ds\Big) =0$$
+for almost every $x \in \mathbb{R}$.
+
+\noindent For each $\varepsilon$, 
+$$\int^\infty_{-\infty} \frac{s}{s^2 + \varepsilon^2} f(x-s) \,ds - \int_{\vert s \vert \geq \varepsilon} \frac{1}{s} f(x-s) \,ds = \int^\infty_{-\infty} \Phi_\varepsilon(s) f(x-s) \,ds,$$
+where $\Phi_\varepsilon(s) = \frac{1}{\varepsilon} \Phi_1 \Big(\frac{s}{\varepsilon}\Big)$ and
+(3)
+
+We need to check that 
+$$\frac{1}{\varepsilon} \Phi_1 (\frac{s}{\varepsilon}) = \frac{1}{\varepsilon} \frac{ s/\varepsilon}{(s/\varepsilon)^2}+1 - \frac{1}{\varepsilon} \frac{1}{s/\varepsilon} = \frac{s}{s^2+\varepsilon^2} - \frac{1}{s}$$
+\end{enumerate}
+
+The family of kernels $\Phi_\varepsilon$ is collection of better kernels.
+\begin{enumerate}
+\item For all $\varepsilon$, 
+$$\int^\infty_{-\infty} \Phi_\varepsilon = 0 $$
+\item For all $\varepsilon$, 
+$$\vert \Phi_\varepsilon(x) \vert \leq \frac{1}{\varepsilon}$$
+\item For all $\varepsilon$,
+$$\vert \Phi_\varepsilon (x) \vert \leq \frac{\varepsilon}{x^2}.$$
+\end{enumerate}
+Using these conditions, we can show that $\Phi_\varepsilon$ is a good kernel. In fact, we can show, using this kernel, that 
+$$\vert \Phi_\varepsilon * f(x) \vert \leq A Mf(x).$$
+Begin bounded by the maximal function implies that it converges pointwise. For this better kernel, $\Phi_\varepsilon * f(x) \rightarrow 0$ as $\varepsilon \rightarrow 0$. \\
+
+\noindent \textbf{The Hilbert transform}:  \\
+For any $f \in L^1(\mathbb{R})$
+$$Hf(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert s \vert \geq \varepsilon} \frac{1}{s} f(x-s) \,ds$$
+\begin{enuemerate}
+\addotocounter{enumi}{3}
+\item Defined, at least, $f \in C_c(\mathbb{R})$. 
+\item If $f_n \in C_n$ such that $f_n \rightarrow f$ in $L^1$, then $\int \vert f_n - f\vert \rightarrow 0 $. 
+We would like to have a constant $A$ such that $$\Vert H(f_n - f) \Vert_1 \leq A\Vert f_n - f\Vert_1$$
+This condition is "bounded in $L^1$".
+In particular we want any function $g$ but it is not true.
+\item $f = \chi_{[0,1]}$
+$$Hf(x) = \lim_{\varepsilon \rightarrow 0} \frac{1}{\pi} \int_{\vert s \vert \geq \varepsilon} \frac{1}{s} \Chi_{[0,1]} (x \cdot s) \, ds = \frac{1}{\pi} \int^1_0 \frac{1}{x-s} \,ds > \frac{1}{\pi x} \not \in L^1$$
+\item However, if $f \in L^2(\mathbb{R})$, then $Hf\in L^2(\mathbb{R})$.  Using Fourier transforms, $$\widehat{Q_y * f}(\xi) = -u \text{sgn}(\xi)e^{-2\pi y \ver \xi \vert \hat{f}(\xi)$$
+We need to show the equation above is the Fourier transform of $Q_y(\xi)$. This means that 
+$$\widehat{Hf}(\xi) =-i\text{sgn}(\xi) \hat{f}(\xi)$$
+$$\Vert \widehat{Hf}(\xi) \Vert_2  =\Vert \hat{f}(\xi)\Vert_2 $$
+$$ \Vert Hf \Vert_2 $$
+\end{enumerate}
+\end{document}

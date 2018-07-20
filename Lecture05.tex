@@ -1,0 +1,142 @@
+\documentclass[12pt]{article}
+\usepackage{float, amsmath, amssymb, amsthm, algorithm, algorithmic, graphicx, caption, subcaption, mathrsfs, color, cancel, verbatim, cite, authblk, mathtools}
+\usepackage{enumitem}
+
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\topskip}{0in}
+\setlength{\textheight}{9.5in}
+\font\bigbf = cmbx10 scaled \magstep1
+\font\medbf = cmbx10 scaled \magstephalf
+\font\medrm = cmr10 scaled \magstephalf
+\font\bigrm = cmr10 scaled \magstep1
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\title{Harmonic Analysis}
+\begin{document}
+\noindent \textbf{Lecture 5: Eyvindur Palsson} \\
+\noindent www.math.vt.edu/people/palsson/pcmi.html \\
+
+\noindent \textbf{Fourier Series} \\
+
+\noindent \textbf{Theorem}: Let $f \in V$, Let $W_n$ be a subspace of $V$ with an orthonormal basis $\{\phi_1, \dots, \phi_n\}$. Then the element $W_n$ in the subspace that minimizes $\Vert f - w \Vert$ is $w= \text{proj}_{W_n}(f)$. \\
+
+\noindent In other words, the best approximation is given the projection of the function onto the subspace. 
+
+\begin{proof}
+Write $w = \sum^n_{i=1} \beta_i \phi_i$ and let $\alpha_i = \langle f, \phi_i\rangle$ for $i = 1, \dots, n$. (Our basis and subspace is fixed). 
+\begin{align*}
+\Vert f - w \Vert^2 &= \langle f-w, f-w \rangle \\
+&= \Vert f \Vert^2 - \langle f, \sum^n_{i=1}\beta_i\phi_i\rangle - \langle f, \overline{\sum^n_{i=1}\beta_i\phi_i\rangle} + \langle \sum^n_{i=1}\beta_i\phi_i, \sum^n_{i=1}\beta_i\phi_i\rangle \\
+&= \Vert f \Vert^2 - \sum^n_{i=1}\overline{\beta_i} \langle f, \phi_i \rangle - \sum^n_{i=1}\overline{\overline{\beta_i}} \overline{\langle f, \phi_i \rangle} + \sum^n_{i=1}\sum^n_{j=1} \beta_i \overline{\beta_j} \langle \phi_i, \phi_j \rangle \\
+&= \Vert f \vert^2 - \sum^n_{i=1} \overline{\beta_i}\alpha_i - \sum^n_{i=1}\beta \overline{\alpha_i} + \sum^n_{i=1} \vert \beta_i \vert^2 \\
+&= \Vert f \Vert^2 + \sum^n_{i=1}(\beta_i - \alpha_i)\overline{(\beta - \alpha_i)} - \sum^n_{i=1} \vert \alpha_i \vert^2 \\
+&= \Vert f \Vert^2 - \sum^n_{i=1} \vert \langle, \phi_i\rangle \vert^2 + \sum^n_{i=1} \vert \beta_i - \alpha_i \vert^2
+\end{align*}
+So, we can minimize by selecting $\beta_i$ such that $\beta_i = \alpha_i = \langle f, \phi_i \rangle$. 
+Therefore, $$\sum^n_{i=1} \langle f, \phi_i \rangle \phi_i$$
+provides the best approximation for $f$. 
+\end{proof}
+
+\noindent This provides a definition for Fourier Series, but it does not contain sines or cosines. Sines and cosines are important because they oscillate and many applications utilize oscillations. There are several consequences to this proof that are worth mentioning. \\
+
+\noindent \textbf{Corollary}: 
+$$\sum^n_{i=1}\vert \langle f, \phi_i \rangle \vert^2 \leq \Vert f\Vert^2$$
+
+\noindent \textbf{Bessel's Inequality}: 
+$$ \sum^\infty_{i=1} \vert \langle f, \phi_i \vert^2 \leq \Vert f \vert^2$$
+
+\noindent \textbf{Riemann-Lebesgue Lemma}: $$\lim_{i \rightarrow \infty} \langle f, \phi_i \rangle = 0$$
+
+\noindent \textbf{Motivation}: 
+$$ \frac{1}{2\pi} \int^{2\pi}_{0} \cos (nx) \cos(mx) dx =
+\begin{cases}
+0, n \not= m\\
+\frac{1}{2}, n=m\not=0\\
+1, n=m=0
+\end{cases}$$
+$$ \frac{1}{2\pi} \int^{2\pi}_{0} \sin (nx) \sin(mx) dx =
+\begin{cases}
+\frac{1}{2}, n = m \not= 0\\
+0, \text{ otherwise}\\
+\end{cases}$$
+$$ \frac{1}{2\pi} \int^{2\pi}_{0} \sin (nx) \cos(mx) dx = 0 $$
+
+The set, 
+$$\{1, \sqrt{2}\cos(x), \sqrt{2}\sin(x), \sqrt{2}\cos(2x), \sqrt{2}\sin(2x), \dots\} $$
+forms an orthonormal sequence on $[0, 2\pi]$. The best finite approximation up to level $n$ of a function $f$ is $a_0 \cdot 1 + a_1 \sqrt{2}\cos(x) + b_1\sqrt{2}\sin(x)+\cdots$, where 
+\begin{align*}
+a_0 &= \frac{1}{2\pi} \int^{2\pi}_0 f(x) \cdot 1 dx \\
+a_j &= \frac{1}{2\pi} \int^{2\pi}_0 \sqrt{2}\cos(jx)  dx \\ 
+b_k &= \frac{1}{2\pi} \int^{2\pi}_0 \sqrt{2}\sin(kx)dx 
+\end{align*}
+
+\noindent \textbf{Trigonometric Series} \\
+$$\frac{1}{2}A_0 + \sum^\infty_{n=1}(A_n\cos(nx) + B_n \sin(nx))$$
+if in addition
+$$A_n = \frac{1}{\pi} \int^{2\pi}_0 f(x) \cos(nx) dx$$
+and
+$$B_n = \frac{1}{\pi} \int^{2\pi}_0 f(x)\sin(nx) dx$$
+then called Fourier series. \\
+
+Is there a simplification? We could have started with the orthonormal sequence
+$$e^{inx}, n \in \mathbb{Z}, \text{ on } [0,2\pi]$$
+\begin{align*}
+\langle e^{inx}, e^{imx}\rangle &=  \frac{1}{2\pi} \int^{2\pi}_0 e^{inx}\overline{e^{imx}} dx \\
+&= \frac{1}{2\pi} \int^{2\pi}_0 e^{i(n-m)}dx \\
+&= \begin{cases}
+\frac{1}{2\pi} \Big[ \frac{1}{i(n-m)} e^{i(n-m)x}\Big]^{2\pi}_0 = 0, \text{ if } n \not=m \\
+\frac{1}{2} \int^{2\pi}_0 1 dx =\pi, \text{ if } n=m \\
+\end{cases}
+\end{align*}
+
+\noindent Gives best approximation up to level $n>0$ of a function $f$ (both positive and negative sides). 
+$$c_{-n} e^{i(-n)x} + \cdots + c_0 \cdot 1 + \cdots + c_n e^{inx}$$
+with the corresponding series
+$$\sum_{n\in \mathbb{Z}} c_n e^{inx} $$
+where,
+$$c_n = \frac{1}{2\pi} \int^{2\pi}_0 f(x) \overline{e^{inx}} dx = \frac{1}{2\pi} \int^{2\pi}_0 f(x) e^{-inx} dx$$
+Note, 
+\begin{align*}
+c_n &= \frac{1}{2\pi} \int^{2\pi}_0 f(x) \cos(nx) dx - i\frac{1}{2\pi} \int^{2\pi}_0 f(x) \sin(nx) dx \\
+&= \begin{cases}
+\frac{1}{2}(A_n-iB_n), \text{ if } n > 0 \\
+\frac{1}{2}A_0, \text{ if } n = 0 \\
+\frac{1}{2}(A_{\vert n \vert} + i B_{\vert n \vert}, \text{ if } n >0
+\end{cases}
+\end{align*}
+For $n>0$,
+$$c_n e^{inx} + c_{-n} e^{i(-n)x} = A_n \cos(nx) + B_n \sin (nx)$$
+All the same terms as before! \\
+
+ 
+\noindent \textbf{Intervals}:
+The function $e^{inx}$ works on any interval of length $2\pi$. 
+The function $e^{2\pi inx / L}$ works on any interval of length $L$. \\
+
+\noindent \textbf{Fourier Series}
+If $f$ is integrable on $[a,b]$ of length $L$, then the $n$th Fourier coefficient of $f$ is defined by 
+$$\hat{f}(n) = \frac{1}{L} \int^b_a f(x) e^{-2\pi inx / L} dx, n \in \mathbb{Z}$$
+and its Fourier series
+$$\sum_{n \in \mathbb{Z}} \hat{f}(n) e^{2\pi inx / L}$$
+\end{document}
+
+
